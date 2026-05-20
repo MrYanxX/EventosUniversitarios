@@ -1,3 +1,5 @@
 import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+import { ComentariosComponent} from './components/comentarios/comentarios';
+export const routes: Routes = [
+    {path:'comentarios',component: ComentariosComponent}
+];
