@@ -1,0 +1,46 @@
+<div class="modal fade" tabindex="-1" #modalInscritosRef>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    {{ editingIndex !== null ? 'Editar Inscripción' : 'Nueva Inscripción' }}
+                </h5>
+                <!-- Usamos modalRef.hide() para cerrar -->
+                <button type="button" class="btn-close btn-close-white" (click)="modalRef.hide()"></button>
+            </div>
+
+            <div class="modal-body p-4">
+                <form [formGroup]="formularioInscripcion" (submit)="guardarInscripcion()">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nombre Completo</label>
+                        <input type="text" class="form-control" formControlName="nombre"
+                               [class.is-invalid]="formularioInscripcion.get('nombre')?.invalid && formularioInscripcion.get('nombre')?.touched">
+                        
+                        @if(formularioInscripcion.get('nombre')?.invalid && formularioInscripcion.get('nombre')?.touched) {
+                            <div class="invalid-feedback">Por favor, ingrese un nombre válido (min. 3 letras).</div>
+                        }
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Número de Cédula</label>
+                        <input type="text" class="form-control" formControlName="cedula" placeholder="Ej: 0912345678"
+                               [class.is-invalid]="formularioInscripcion.get('cedula')?.invalid && formularioInscripcion.get('cedula')?.touched">
+                        
+                        @if(formularioInscripcion.get('cedula')?.invalid && formularioInscripcion.get('cedula')?.touched) {
+                            <div class="invalid-feedback">La cédula debe tener exactamente 10 dígitos numéricos.</div>
+                        }
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary" [disabled]="formularioInscripcion.invalid">
+                            {{ editingIndex !== null ? 'Actualizar Datos' : 'Confirmar Inscripción' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>

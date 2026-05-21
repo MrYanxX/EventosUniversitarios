@@ -23,6 +23,18 @@ export class ServEventsJsonService {
     return this.http.get<Evento>(`${this.eventosUrl}/${id}`);
   }
 
+  addEvento(evento: Evento) : Observable<Evento> {
+    return this.http.post<Evento>(this.eventosUrl, evento);
+  }
+
+  updateEvento(evento: Evento) : Observable<Evento> {
+    return this.http.put<Evento>(`${this.eventosUrl}/${evento.id}`, evento);
+  }
+
+  deleteEvento(id:number) : Observable<void> {
+    return this.http.delete<void>(`${this.eventosUrl}/${id}`);
+  }
+
   getTipoEventos(): Observable<TipoEvento[]> {
     return this.http.get<TipoEvento[]>(this.tiposEventosUrl);
   }

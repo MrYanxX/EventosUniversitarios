@@ -1,0 +1,52 @@
+<div class="modal fade" tabindex="-1" #modalRef>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+            
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold">Lista de Inscritos</h5>
+                <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
+            </div>
+            
+            <div class="modal-body p-0">
+                <!-- Estado 1: Cargando -->
+                @if (cargando()) {
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mt-3 text-muted fw-bold">Buscando inscritos...</p>
+                    </div>
+                } 
+                <!-- Estado 2: Ya cargó -->
+                @else {
+                    
+                    <!-- Si hay gente inscrita -->
+                    @if (inscripciones().length > 0) {
+                        <ul class="list-group list-group-flush">
+                            @for (inscrito of inscripciones(); track inscrito.id) {
+                                <li class="list-group-item px-4 py-3 d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">{{ inscrito.nombre }}</h6>
+                                        <small class="text-muted">C.I: {{ inscrito.cedula }}</small>
+                                    </div>
+                                    <span class="badge bg-light text-dark border">Inscrito</span>
+                                </li>
+                            }
+                        </ul>
+                    } 
+                    <!-- Si la lista está vacía -->
+                    @else {
+                        <div class="text-center py-5">
+                            <span class="display-4 text-muted mb-3 d-block">📭</span>
+                            <h5 class="text-muted fw-normal">Nadie se ha inscrito aún.</h5>
+                            <p class="text-muted small">Sé el primero en compartir este evento.</p>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="modal-footer bg-light border-0">
+                <button type="button" class="btn btn-secondary w-100 fw-bold" (click)="cerrarModal()">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,29 +1,33 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild, OnInit } from '@angular/core';
 import { Evento } from '../../../models/evento.model';
 import { ServEventsJsonService } from '../../../services/serv-events-json.service';
 import { ActivatedRoute } from '@angular/router';
 import { ComentariosComponent } from "../../comentarios/comentarios";
 
+// 1. Importamos el nuevo modal
+import { LeerInscripciones } from '../../inscripciones/leer-inscripciones/leer-inscripciones';
+
 @Component({
   selector: 'app-mostrar-evento',
-  imports: [ComentariosComponent],
+  standalone: true,
+  imports: [ComentariosComponent, LeerInscripciones], // 2. Lo agregamos aquí
   templateUrl: './mostrar-evento.html',
   styleUrl: './mostrar-evento.css',
 })
-export class MostrarEvento {
-  //Signals vacíos
+export class MostrarEvento implements OnInit {
   evento = signal<Evento | null>(null);
   tipoEvento = signal<string>('Cargando tipo...');
+
+  // 3. Obtenemos el control remoto del modal
+  @ViewChild(LeerInscripciones) modalInscripciones!: LeerInscripciones;
 
   private servicoEventos = inject(ServEventsJsonService);
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    //Obtener el ID de entrada
     const id = Number(this.route.snapshot.paramMap.get('id') ?? '');
 
-    //llama al servicio con el ID que recibio
     this.servicoEventos.getEventoPorId(id).subscribe((data) => {
       this.evento.set(data);
 
@@ -31,5 +35,10 @@ export class MostrarEvento {
         this.tipoEvento.set(tipo.nombre);
       });
     });
+  }
+
+  // 4. Creamos la función que abrirá el modal al dar clic en el botón
+  abrirListaInscritos() {
+    this.modalInscripciones.abrirModal();
   }
 }
