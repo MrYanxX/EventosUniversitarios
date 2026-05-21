@@ -5,4 +5,5 @@ export interface Comentario {
   calificacion: number; // Tipo: Combo / Select (1 a 5)
   anonimo: boolean;     // Tipo: Checkbox
   eventoId: number;     // Para asociarlo al Portal de Eventos
+  
 }

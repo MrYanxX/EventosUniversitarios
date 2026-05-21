@@ -1,0 +1,27 @@
+<div class="modal fade" tabindex="-1" #alertaModalRef>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 shadow">
+      
+      <!-- Cambia de color dependiendo si es un error o un éxito -->
+      <div class="modal-header text-white" [class.bg-danger]="esError" [class.bg-success]="!esError">
+        <h5 class="modal-title fw-bold">
+            {{ esError ? '❌ ' : '✅ ' }} {{ titulo }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="confirmar()"></button>
+      </div>
+
+      <div class="modal-body text-center p-4">
+        <p class="mb-0 fs-5">{{ mensaje }}</p>
+      </div>
+
+      <div class="modal-footer justify-content-center border-0">
+        <button type="button" class="btn px-4" 
+                [class.btn-danger]="esError" [class.btn-success]="!esError" 
+                (click)="confirmar()">
+            Aceptar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

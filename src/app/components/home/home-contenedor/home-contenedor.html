@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <h1 class="text-center fw-bold">{{titulo}}</h1>
+
+    <div class="row">
+        <!--Filtro y Busqueda-->
+        <!--Componente para filtrar eventos-->
+        <app-filtro-eventos class="col-md-4" [tipos]="tiposEventos()" (filtroCamiado)="aplicarFiltro($event)">
+        </app-filtro-eventos>
+
+        <!--Componente para buscar-->
+        <app-barra-busqueda class="col-md-8"></app-barra-busqueda>
+    </div>
+
+    <div class="row mt-4">
+        @for (evento of eventosFiltrados(); track evento.id) {
+        <div class="col-md-4 mb-3">
+            <!--Inyectamos los datos al componente tarjeta-evento-->
+            <app-tarjeta-eventos [evento]="evento" [nombreTipo]="obtenerNombreDelTipoDeEvento(evento.tipoEventoId)">
+            </app-tarjeta-eventos>
+        </div>
+        }
+
+        @if (eventosFiltrados().length == 0) {
+        <div class="col-12 text-center text-muted mt-5">
+            <h4>No se encontraron eventos de este tipo.</h4>
+        </div>
+        }
+    </div>
+    
+</div>
+
+<section class="bg-light py-5 mt-5 border-top">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                               <h2 class="fw-bold text-dark">Gestión del Sistema de Comentarios</h2>
+             
+            </div>
+        </div>
+
+        <div class="card shadow-sm p-4 bg-white rounded">
+            <app-comentarios>
+                
+            </app-comentarios>
+        </div>
+    </div>
+</section>
