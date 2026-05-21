@@ -1,1 +1,55 @@
-<p>mostrar-evento works!</p>
+<!-- Usamos @if para esperar a que la signal tenga datos -->
+@if (evento(); as ev) {
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+
+            <img [src]="ev.imagen" class="img-fluid rounded shadow-sm mb-4 w-100"
+                style="max-height: 400px; object-fit: cover;" alt="Imagen de {{ ev.titulo }}">
+
+            <h1 class="fw-bold mb-3">{{ ev.titulo }}</h1>
+
+            <div class="d-flex gap-2 mb-4">
+                <span class="badge bg-primary fs-6 py-2 px-3">
+                    {{ tipoEvento() }}
+                </span>
+                <span class="badge bg-secondary fs-6 py-2 px-3">
+                    📅 {{ ev.fecha }}
+                </span>
+            </div>
+
+            <div class="card shadow-sm mb-4 border-0 bg-light">
+                <div class="card-body p-4">
+                    <h4 class="card-title fw-bold border-bottom pb-2 mb-3">Detalles del evento</h4>
+                    <p class="card-text text-muted" style="white-space: pre-wrap; font-size: 1.1rem;">
+                        {{ ev.detalles }}
+                    </p>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalInscritos">
+                👥 Ver lista de inscritos
+            </button>
+        </div>
+
+        <!--Columna para la sección de comentarios-->
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100 border-0 border-start border-3 border-primary rounded-end">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">Comentarios</h4>
+                    <app-comentarios></app-comentarios>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+} @else {
+<!-- Pantalla de carga mientras se llama al backend simulado-->
+<div class="container mt-5 pt-5 text-center min-vh-50 d-flex flex-column justify-content-center align-items-center">
+    <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+    <h4 class="text-muted fw-normal">Cargando detalles del evento...</h4>
+</div>
+}
