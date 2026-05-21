@@ -43,13 +43,37 @@
     }
   ],
   "comentarios": [
-    {
-      "id": 1,
-      "estudiante": "Carlos Vera",
-      "contenido": "Excelente taller de Angular, muy práctico.",
-      "calificacion": 5,
-      "anonimo": false,
-      "eventoId": 101
-    }
-  ]
-}
+  {
+    "id": 1,
+    "estudiante": "Carlos Vera",
+    "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.",
+    "calificacion": 5,
+    "anonimo": false,
+    "eventoId": 1
+  },
+  {
+    "id": 2,
+    "estudiante": "Ana Solis",
+    "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes de la FCMF.",
+    "calificacion": 4,
+    "anonimo": true,
+    "eventoId": 1
+  },
+  {
+    "id": 3,
+    "estudiante": "Juan Bajaña",
+    "contenido": "El concurso del desayuno estuvo muy reñido, excelente organización.",
+    "calificacion": 5,
+    "anonimo": false,
+    "eventoId": 2
+  },
+  {
+    "id": 4,
+    "estudiante": "Milena Cedeño",
+    "contenido": "Llegué un poco tarde al taller y ya se habían terminado las raciones.",
+    "calificacion": 3,
+    "anonimo": false,
+    "eventoId": 3
+  }
+]
+ }

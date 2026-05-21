@@ -7,10 +7,11 @@ import { Evento } from '../../../models/evento.model';
 import { ServEventsJsonService } from '../../../services/serv-events-json.service';
 import { Router } from '@angular/router';
 import { TipoEvento } from '../../../models/tipoEvento.model';
+import { ComentariosComponent } from "../../comentarios/comentarios";
 
 @Component({
   selector: 'app-home-contenedor',
-  imports: [HeaderNav, FiltroEventos, TarjetaEventos, BarraBusqueda],
+  imports: [HeaderNav, FiltroEventos, TarjetaEventos, BarraBusqueda, ComentariosComponent],
   templateUrl: './home-contenedor.html',
   styleUrl: './home-contenedor.css',
 })
