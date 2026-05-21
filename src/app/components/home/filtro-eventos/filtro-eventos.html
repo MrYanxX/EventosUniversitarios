@@ -1,0 +1,16 @@
+<div class="card shadow-sm mb-4">
+    <div class="card-body d-flex align-items-center gap-3">
+        <label class="fw-bold mb-0 text-nowrap">Filtrar:</label>
+        
+        <!-- Cuando cambie, ejecuta la función onCambioSeleccionado -->
+        <select class="form-select" (change)="onCambioSeleccionado($event)">
+            <!-- Opción por defecto con valor 0 -->
+            <option value="0">Todos los eventos</option>
+            
+            <!-- Genera las opciones dinamicamente con la lista de tipos inyectada -->
+            @for (tipo of tipos; track tipo.id) {
+                <option [value]="tipo.id">{{ tipo.nombre }}</option>
+            }
+        </select>
+    </div>
+</div>
