@@ -1,21 +1,30 @@
 {
   "tiposEventos": [
-    { "id": 1, "nombre": "Charla" },
-    { "id": 2, "nombre": "Concurso" },
-    { "id": 3, "nombre": "Taller" }
+    {
+      "id": "1",
+      "nombre": "Charla"
+    },
+    {
+      "id": "2",
+      "nombre": "Concurso"
+    },
+    {
+      "id": "3",
+      "nombre": "Taller"
+    }
   ],
   "eventos": [
     {
-      "id": 1,
-      "organizadorId": 1,
       "titulo": "Desayuno en la FCMF",
       "tipoEventoId": 1,
       "fecha": "2026-05-30",
       "detalles": "En este evento se brindara pan y cafe a los estudiantes.",
-      "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg"
+      "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg",
+      "organizadorId": 1,
+      "id": "1"
     },
     {
-      "id": 2,
+      "id": "2",
       "organizadorId": 1,
       "titulo": "Desayuno en la FCMF",
       "tipoEventoId": 2,
@@ -24,56 +33,68 @@
       "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg"
     },
     {
-      "id": 3,
+      "id": "3",
       "organizadorId": 1,
       "titulo": "Desayuno en la FCMF",
       "tipoEventoId": 3,
       "fecha": "2026-05-30",
       "detalles": "En este evento se brindara pan y cafe a los estudiantes.",
       "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg"
-    },
-    {
-      "id": 4,
-      "organizadorId": 1,
-      "titulo": "Desayuno en la FCMF",
-      "tipoEventoId": 1,
-      "fecha": "2026-05-30",
-      "detalles": "En este evento se brindara pan y cafe a los estudiantes.",
-      "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg"
     }
   ],
   "comentarios": [
-  {
-    "id": 1,
-    "estudiante": "Carlos Vera",
-    "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.",
-    "calificacion": 5,
-    "anonimo": false,
-    "eventoId": 1
-  },
-  {
-    "id": 2,
-    "estudiante": "Ana Solis",
-    "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes de la FCMF.",
-    "calificacion": 4,
-    "anonimo": true,
-    "eventoId": 1
-  },
-  {
-    "id": 3,
-    "estudiante": "Juan Bajaña",
-    "contenido": "El concurso del desayuno estuvo muy reñido, excelente organización.",
-    "calificacion": 5,
-    "anonimo": false,
-    "eventoId": 2
-  },
-  {
-    "id": 4,
-    "estudiante": "Milena Cedeño",
-    "contenido": "Llegué un poco tarde al taller y ya se habían terminado las raciones.",
-    "calificacion": 3,
-    "anonimo": false,
-    "eventoId": 3
-  }
-]
- }
+    {
+      "id": "1",
+      "estudiante": "Carlos Vera",
+      "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": 1
+    },
+    {
+      "id": "2",
+      "estudiante": "Ana Solis",
+      "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes de la FCMF.",
+      "calificacion": 4,
+      "anonimo": true,
+      "eventoId": 1
+    },
+    {
+      "id": "3",
+      "estudiante": "Juan Bajaña",
+      "contenido": "El concurso del desayuno estuvo muy reñido, excelente organización.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": 2
+    },
+    {
+      "id": "4",
+      "estudiante": "Milena Cedeño",
+      "contenido": "Llegué un poco tarde al taller y ya se habían terminado las raciones.",
+      "calificacion": 3,
+      "anonimo": false,
+      "eventoId": 3
+    }
+  ],
+  "inscripciones": [
+    {
+      "nombre": "Allan Erazo",
+      "cedula": "0999999999",
+      "eventoId": "eaHljhUBYUc",
+      "id": "xgHBpDJQnRM"
+    },
+    {
+      "eventoId": "1",
+      "nombre": "Allan Erazo",
+      "cedula": "0999999999",
+      "id": "5MTt_dN_TF8"
+    },
+    {
+      "eventoId": "1",
+      "nombre": "Josue Idrovo",
+      "cedula": "0999999999",
+      "id": "ABXSJALRMCg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,5 +1,4 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { HeaderNav } from '../../globales/header-nav/header-nav';
 import { FiltroEventos } from '../filtro-eventos/filtro-eventos';
 import { BarraBusqueda } from '../barra-busqueda/barra-busqueda';
 import { TarjetaEventos } from '../tarjeta-eventos/tarjeta-eventos';

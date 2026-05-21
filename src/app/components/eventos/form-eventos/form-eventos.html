@@ -1,0 +1,117 @@
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4 p-md-5">
+        <form [formGroup]="eventoForm" (ngSubmit)="publicarEvento()">
+            <div class="row">
+                
+                <!-- COLUMNA IMAGEN -->
+                <div class="col-md-4 mb-4 text-center d-flex flex-column align-items-center">
+                    
+                    <!-- Cuadro de Previsualización -->
+                    <div class="border rounded bg-light d-flex align-items-center justify-content-center mb-3 shadow-sm" 
+                         style="width: 100%; aspect-ratio: 1/1; overflow: hidden;">
+                        
+                        <!-- Si hay imagen en el formulario, la mostramos -->
+                        @if(eventoForm.value.imagen) {
+                            <img [src]="eventoForm.value.imagen" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                        } 
+                        <!-- Si no, mostramos un icono placeholder -->
+                        @else {
+                            <div class="text-muted text-center">
+                                <span class="display-1">📷</span>
+                                <p class="mt-2 mb-0">Sin imagen</p>
+                                <!-- Mensaje de error si intenta guardar sin foto -->
+                                @if(eventoForm.get('imagen')?.invalid && eventoForm.get('imagen')?.touched) {
+                                    <small class="text-danger d-block mt-2">La imagen es obligatoria</small>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <!-- EL TRUCO: Input file real pero oculto -->
+                    <input type="file" class="d-none" #fileInput accept="image/*" (change)="onFileSelected($event)">
+
+                    <!-- Botón bonito de Bootstrap que simula el clic en el input oculto -->
+                    <button type="button" class="btn btn-outline-secondary w-100 mb-2 fw-bold" (click)="fileInput.click()">
+                        Subir Imagen
+                    </button>
+                </div>
+
+                <!-- COLUMNA DATOS -->
+                <div class="col-md-8">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Título de Evento</label>
+                        <input type="text" class="form-control" formControlName="titulo">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tipo de evento</label>
+                        <select class="form-select" formControlName="tipoEventoId">
+                            <option value="" disabled selected>Seleccione el tipo de evento</option>
+                            @for (tipo of tiposEvento(); track tipo.id) {
+                                <option [value]="tipo.id">{{ tipo.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Fecha</label>
+                        <input type="date" class="form-control" formControlName="fecha">
+                    </div>
+
+                    <!-- SECCIÓN INSCRITOS -->
+                    <div class="mb-4 p-4 border rounded bg-light">
+                        <label class="form-label fw-bold mb-3 d-block border-bottom pb-2">Lista de Inscritos</label>
+                        
+                        <ul class="list-group mb-3 shadow-sm">
+                            @for (inscrito of inscritosTemporales(); track $index) {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ inscrito.nombre }}</strong> <br>
+                                        <small class="text-muted">C.I: {{ inscrito.cedula }}</small>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" 
+                                                (click)="abrirModalEditar(inscrito, $index)">✏️</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                (click)="eliminarInscritoTemporal($index)">❌</button>
+                                    </div>
+                                </li>
+                            }
+                            
+                            @if (inscritosTemporales().length === 0) {
+                                <li class="list-group-item text-center text-muted fst-italic py-3">No hay inscritos aún.</li>
+                            }
+                        </ul>
+
+                        <button type="button" class="btn btn-outline-primary w-100 fw-bold" (click)="abrirModalNuevo()">
+                            Añadir Inscripción
+                        </button>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Detalles Adicionales</label>
+                        <textarea class="form-control" rows="3" formControlName="detalles"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-center mt-4 border-top pt-4">
+                <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" [disabled]="isSaving()">
+                    @if(isSaving()) {
+                        Guardando datos...
+                    } @else {
+                        {{ eventoEditandoId ? 'Guardar Cambios' : 'Publicar Evento' }}
+                    }
+                </button>
+                <!-- Botón para cancelar y regresar a la tabla -->
+                <button type="button" class="btn btn-light btn-lg px-4 ms-2" routerLink="/tabla-eventos">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tus dos modales conviviendo en armonía -->
+<app-modal-inscripcion (registroExitoso)="procesarInscritoDesdeModal($event)"></app-modal-inscripcion>
+<app-modal-alerta (cerrado)="volverAlHome()"></app-modal-alerta>

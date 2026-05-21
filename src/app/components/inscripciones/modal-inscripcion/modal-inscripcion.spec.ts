@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegistrarEvento } from './registrar-evento';
+import { ModalInscripcion } from './modal-inscripcion';
 
-describe('RegistrarEvento', () => {
-  let component: RegistrarEvento;
-  let fixture: ComponentFixture<RegistrarEvento>;
+describe('ModalInscripcion', () => {
+  let component: ModalInscripcion;
+  let fixture: ComponentFixture<ModalInscripcion>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegistrarEvento],
+      imports: [ModalInscripcion],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RegistrarEvento);
+    fixture = TestBed.createComponent(ModalInscripcion);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
