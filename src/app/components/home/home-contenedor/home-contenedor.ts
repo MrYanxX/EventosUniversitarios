@@ -11,7 +11,7 @@ import { ComentariosComponent } from "../../comentarios/comentarios";
 
 @Component({
   selector: 'app-home-contenedor',
-  imports: [HeaderNav, FiltroEventos, TarjetaEventos, BarraBusqueda, ComentariosComponent],
+  imports: [FiltroEventos, TarjetaEventos, BarraBusqueda, ComentariosComponent],
   templateUrl: './home-contenedor.html',
   styleUrl: './home-contenedor.css',
 })

@@ -19,7 +19,15 @@ export class ServEventsJsonService {
     return this.http.get<Evento[]>(this.eventosUrl);
   }
 
+  getEventoPorId(id:number): Observable<Evento> {
+    return this.http.get<Evento>(`${this.eventosUrl}/${id}`);
+  }
+
   getTipoEventos(): Observable<TipoEvento[]> {
     return this.http.get<TipoEvento[]>(this.tiposEventosUrl);
+  }
+
+  getTipoEventoPorId(id:number): Observable<TipoEvento> {
+    return this.http.get<TipoEvento>(`${this.tiposEventosUrl}/${id}`);
   }
 }
