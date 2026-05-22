@@ -1,135 +1,158 @@
-<div class="row">
-    <!-- FORMULARIO DE COMENTARIOS (CREAR / EDITAR) -->
-    <div class="col-md-5 mb-4">
-        <div class="card border-0 bg-light p-3 shadow-sm">
-            <h4 class="fw-bold mb-3 text-primary">
-                <span>{{ idComentarioEdicion ? 'Editar Comentario' : 'Añadir Comentario' }}</span>
-            </h4>
+<!-- CONTENEDOR PRINCIPAL VERTICAL -->
+<div class="container-fluid p-0">
+    
+    <!-- BLOQUE SUPERIOR: FORMULARIO (ANCHO COMPLETO) -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 bg-light p-4 shadow-sm">
+                <h4 class="fw-bold mb-4 text-primary d-flex align-items-center">
+                    <span class="me-2">✏️</span>
+                    <span>{{ idComentarioEdicion ? 'Modificar Opinión Existente' : 'Escribir un Nuevo Comentario' }}</span>
+                </h4>
 
-            <!-- Se enlaza el formulario garantizando la existencia de comentarioForm -->
-            @if (comentarioForm) {
-                <form [formGroup]="comentarioForm" (ngSubmit)="guardarComentario()">
-                    
-                    <!-- CAMPO 1 (Input / Texto) -->
-                    <div class="mb-3">
-                        <label for="estudiante" class="form-label fw-semibold">Nombre del Estudiante</label>
-                        <input type="text" id="estudiante" formControlName="estudiante" class="form-control" placeholder="Ej. Carlos Vera">
-                        
-                        @if (comentarioForm.get('estudiante')?.touched && comentarioForm.get('estudiante')?.errors?.['required']) {
-                            <div class="text-danger small mt-1">El nombre es obligatorio.</div>
-                        }
-                        @if (comentarioForm.get('estudiante')?.touched && comentarioForm.get('estudiante')?.errors?.['minlength']) {
-                            <div class="text-danger small mt-1">Debe tener al menos 3 caracteres.</div>
-                        }
-                    </div>
+                @if (comentarioForm) {
+                    <form [formGroup]="comentarioForm" (ngSubmit)="guardarComentario()">
+                        <div class="row g-3">
+                            <!-- CAMPO 1: Estudiante -->
+                            <div class="col-md-6">
+                                <label for="estudiante" class="form-label fw-semibold text-dark">Nombre del Estudiante</label>
+                                <input type="text" id="estudiante" formControlName="estudiante" class="form-control form-control-lg" placeholder="Ej. Carlos Vera">
+                                
+                                @if (comentarioForm.get('estudiante')?.touched && comentarioForm.get('estudiante')?.errors?.['required']) {
+                                    <div class="text-danger small mt-1">El nombre es obligatorio.</div>
+                                }
+                                @if (comentarioForm.get('estudiante')?.touched && comentarioForm.get('estudiante')?.errors?.['minlength']) {
+                                    <div class="text-danger small mt-1">Debe tener al menos 3 caracteres.</div>
+                                }
+                            </div>
 
-                    <!-- CAMPO 2 (Textarea / Área de texto) -->
-                    <div class="mb-3">
-                        <label for="contenido" class="form-label fw-semibold">Comentario / Opinión</label>
-                        <textarea id="contenido" formControlName="contenido" class="form-control" rows="3" placeholder="Escribe aquí tu opinión..."></textarea>
-                        
-                        @if (comentarioForm.get('contenido')?.touched && comentarioForm.get('contenido')?.errors?.['required']) {
-                            <div class="text-danger small mt-1">El comentario no puede estar vacío.</div>
-                        }
-                        @if (comentarioForm.get('contenido')?.touched && comentarioForm.get('contenido')?.errors?.['minlength']) {
-                            <div class="text-danger small mt-1">El comentario debe tener al menos 10 caracteres.</div>
-                        }
-                    </div>
+                            <!-- CAMPO 3: Calificación -->
+                            <div class="col-md-6">
+                                <label for="calificacion" class="form-label fw-semibold text-dark">Calificación del Evento</label>
+                                <select id="calificacion" formControlName="calificacion" class="form-select form-select-lg">
+                                    <option value="" disabled>Selecciona una puntuación</option>
+                                    <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                                    <option value="4">⭐⭐⭐⭐ (Muy Bueno)</option>
+                                    <option value="3">⭐⭐⭐ (Regular)</option>
+                                    <option value="2">⭐⭐ (Malo)</option>
+                                    <option value="1">⭐ (Muy Malo)</option>
+                                </select>
+                                
+                                @if (comentarioForm.get('calificacion')?.touched && comentarioForm.get('calificacion')?.errors?.['required']) {
+                                    <div class="text-danger small mt-1">Debes calificar el evento.</div>
+                                }
+                            </div>
 
-                    <!-- CAMPO 3 (Select / Combo) -->
-                    <div class="mb-3">
-                        <label for="calificacion" class="form-label fw-semibold">Calificación del Evento</label>
-                        <select id="calificacion" formControlName="calificacion" class="form-select">
-                            <option value="" disabled>Selecciona una puntuación</option>
-                            <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
-                            <option value="4">⭐⭐⭐⭐ (Muy Bueno)</option>
-                            <option value="3">⭐⭐⭐ (Regular)</option>
-                            <option value="2">⭐⭐ (Malo)</option>
-                            <option value="1">⭐ (Muy Malo)</option>
-                        </select>
-                        
-                        @if (comentarioForm.get('calificacion')?.touched && comentarioForm.get('calificacion')?.errors?.['required']) {
-                            <div class="text-danger small mt-1">Debes calificar el evento.</div>
-                        }
-                    </div>
+                            <!-- CAMPO 2: Área de texto -->
+                            <div class="col-12">
+                                <label for="contenido" class="form-label fw-semibold text-dark">Tu Comentario u Opinión</label>
+                                <textarea id="contenido" formControlName="contenido" class="form-control text-dark" rows="3" placeholder="Describe tu experiencia en el desayuno, taller o conferencia..."></textarea>
+                                
+                                @if (comentarioForm.get('contenido')?.touched && comentarioForm.get('contenido')?.errors?.['required']) {
+                                    <div class="text-danger small mt-1">El comentario no puede estar vacío.</div>
+                                }
+                                @if (comentarioForm.get('contenido')?.touched && comentarioForm.get('contenido')?.errors?.['minlength']) {
+                                    <div class="text-danger small mt-1">El comentario debe tener al menos 10 caracteres.</div>
+                                }
+                            </div>
 
-                    <!-- CAMPO 4 (Checkbox / Switch) -->
-                    <div class="mb-3 form-check form-switch">
-                        <input type="checkbox" id="anonimo" formControlName="anonimo" class="form-check-input" role="switch">
-                        <label for="anonimo" class="form-check-label text-muted">Publicar de forma anónima</label>
-                    </div>
+                            <!-- CAMPO 4 y BOTONES DE ACCIÓN ALINEADOS -->
+                            <div class="col-12 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mt-4">
+                                <!-- Checkbox Anónimo -->
+                                <div class="form-check form-switch m-0">
+                                    <input type="checkbox" id="anonimo" formControlName="anonimo" class="form-check-input" role="switch">
+                                    <label for="anonimo" class="form-check-label text-muted fw-medium">Ocultar mi identidad (Publicar de forma anónima)</label>
+                                </div>
 
-                    <!-- BOTONES DE ACCIÓN -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                        @if (idComentarioEdicion) {
-                            <button type="button" (click)="cancelarEdicion()" class="btn btn-secondary btn-sm px-3 me-md-2">Cancelar</button>
-                        }
-                        <button type="submit" [disabled]="comentarioForm.invalid" class="btn btn-primary btn-sm px-4">
-                            {{ idComentarioEdicion ? 'Actualizar' : 'Guardar' }}
-                        </button>
-                    </div>
-                </form>
-            }
+                                <!-- Botonera -->
+                                <div class="d-flex gap-2">
+                                    @if (idComentarioEdicion) {
+                                        <button type="button" (click)="cancelarEdicion()" class="btn btn-outline-secondary px-4 py-2">Cancelar</button>
+                                    }
+                                    <button type="submit" [disabled]="comentarioForm.invalid" class="btn btn-primary px-5 py-2 fw-semibold">
+                                        {{ idComentarioEdicion ? 'Actualizar Comentario' : 'Enviar Comentario' }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
         </div>
     </div>
 
-    <!-- LISTADO / TABLA DE COMENTARIOS (LEER / ELIMINAR) -->
-    <div class="col-md-7">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="fw-bold m-0 text-dark">Historial de Comentarios (Evento #{{eventoIdSimulado}})</h4>
-            <span class="badge bg-secondary">Filtrados: {{comentariosFiltrados.length}}</span>
-        </div>
+    <!-- BLOQUE INFERIOR: HISTORIAL DE COMENTARIOS (ABAJO Y ANCHO COMPLETO) -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-b">
+                <h4 class="fw-bold m-0 text-dark d-flex align-items-center">
+                    <span class="me-2">💬</span>
+                    <span>Historial de Comentarios (Evento #{{eventoId}})</span>
+                </h4>
+                <span class="badge bg-dark fs-6 px-3 py-2">Total: {{comentariosFiltrados.length}}</span>
+            </div>
 
-        <!-- BARRA DE BÚSQUEDA -->
-        <div class="input-group mb-3">
-            <span class="input-group-text bg-white border-end-0 text-muted">🔍</span>
-            <input type="text" [(ngModel)]="textoBusqueda" (input)="filtrarComentarios()" class="form-control border-start-0" placeholder="Buscar por estudiante o contenido...">
-        </div>
-
-        <!-- TABLA CON NUEVO SINTAXIS @IF / @FOR -->
-        @if (comentariosFiltrados.length > 0) {
-            <div class="table-responsive">
-                <table class="table table-hover align-middle border">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Estudiante</th>
-                            <th>Opinión</th>
-                            <th class="text-center">Calificación</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (comentario of comentariosFiltrados; track comentario.id) {
+            @if (comentariosFiltrados.length > 0) {
+                <div class="table-responsive shadow-sm rounded border">
+                    <table class="table table-hover table-striped align-middle m-0 bg-white">
+                        <thead class="table-dark text-uppercase fs-7">
                             <tr>
-                                <td>
-                                    <span class="fw-bold" [class.text-muted]="comentario.anonimo">
-                                        {{ comentario.anonimo ? 'Anónimo' : comentario.estudiante }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <p class="mb-0 small text-wrap" style="max-width: 250px;">
-                                        {{comentario.contenido}}
-                                    </p>
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge bg-warning text-dark fw-bold">{{comentario.calificacion}} ⭐</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group" role="group">
-                                        <button type="button" (click)="seleccionarParaEditar(comentario)" class="btn btn-outline-warning btn-sm" title="Editar"> Editar </button>
-                                        <button type="button" (click)="eliminarComentario(comentario.id)" class="btn btn-outline-danger btn-sm" title="Eliminar"> Eliminar </button>
-                                    </div>
-                                </td>
+                                <th style="width: 25%;" class="ps-4 py-3">Estudiante</th>
+                                <th style="width: 50%;" class="py-3">Opinión / Reseña</th>
+                                <th style="width: 13%;" class="text-center py-3">Puntuación</th>
+                                <th style="width: 12%;" class="text-center py-3 pe-4">Acciones</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        } @else {
-  
-            <div class="text-center text-muted py-5 border rounded bg-light">
-                <h5>No existen comentarios registrados todavía para este evento.</h5>
-            </div>
-        }
+                        </thead>
+                        <tbody>
+                            @for (comentario of comentariosFiltrados; track comentario.id) {
+                                <tr>
+                                    <!-- Celda Estudiante -->
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-placeholder me-2 bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center small fw-bold" style="width: 32px; height: 32px;">
+                                                {{ comentario.anonimo ? '👤' : (comentario.estudiante | slice:0:1) }}
+                                            </div>
+                                            <span class="fw-bold text-dark" [class.text-muted]="comentario.anonimo" [class.fst-italic]="comentario.anonimo">
+                                                {{ comentario.anonimo ? 'Estudiante Anónimo' : comentario.estudiante }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <!-- Celda Contenido -->
+                                    <td>
+                                        <p class="mb-0 text-secondary text-wrap py-1" style="line-height: 1.5;">
+                                            {{comentario.contenido}}
+                                        </p>
+                                    </td>
+                                    <!-- Celda Calificación -->
+                                    <td class="text-center">
+                                        <span class="badge bg-warning text-dark fw-bold px-3 py-2 fs-7 rounded-pill">
+                                            {{comentario.calificacion}} ⭐
+                                        </span>
+                                    </td>
+                                    <!-- Celda Acciones -->
+                                    <td class="text-center pe-4">
+                                        <div class="btn-group shadow-sm" role="group">
+                                            <button type="button" (click)="seleccionarParaEditar(comentario)" class="btn btn-light border btn-sm text-warning px-3" title="Editar opinión">
+                                                ✏️ <span class="d-none d-lg-inline ms-1 text-dark small">Editar</span>
+                                            </button>
+                                            <button type="button" (click)="eliminarComentario(comentario.id)" class="btn btn-light border btn-sm text-danger px-3" title="Borrar opinión">
+                                                🗑️ <span class="d-none d-lg-inline ms-1 text-dark small">Eliminar</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            } @else {
+                <!-- Mensaje vacío estilizado -->
+                <div class="text-center text-muted py-5 border border-dashed rounded bg-white shadow-sm">
+                    <div class="fs-1 mb-2">💭</div>
+                    <h5 class="fw-semibold text-dark">Sin opiniones registradas</h5>
+                    <p class="text-muted small mb-0 px-3">Sé el primero en compartir tu experiencia sobre este evento usando el formulario de arriba.</p>
+                </div>
+            }
+        </div>
     </div>
 </div>

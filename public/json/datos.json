@@ -1,100 +1,134 @@
 {
   "tiposEventos": [
-    {
-      "id": "1",
-      "nombre": "Charla"
-    },
-    {
-      "id": "2",
-      "nombre": "Concurso"
-    },
-    {
-      "id": "3",
-      "nombre": "Taller"
-    }
+    { "id": "1", "nombre": "Charla" },
+    { "id": "2", "nombre": "Concurso" },
+    { "id": "3", "nombre": "Taller" },
+    { "id": "4", "nombre": "Seminario" }
   ],
   "eventos": [
     {
-      "titulo": "Desayuno en la FCMF",
+      "id": "1",
+      "organizadorId": 1,
+      "titulo": "Desayuno Tecnológico en la FCMF",
       "tipoEventoId": 1,
       "fecha": "2026-05-30",
-      "detalles": "En este evento se brindara pan y cafe a los estudiantes.",
-      "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg",
-      "organizadorId": 1,
-      "id": "1"
+      "detalles": "Un espacio para compartir café, pan y debatir sobre las nuevas tendencias de desarrollo de software en la facultad.",
+      "imagen": "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       "id": "2",
       "organizadorId": 1,
-      "titulo": "Desayuno en la FCMF",
+      "titulo": "Hackathon Interfacultades UG 2026",
       "tipoEventoId": 2,
-      "fecha": "2026-05-30",
-      "detalles": "En este evento se brindara pan y cafe a los estudiantes.",
-      "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg"
+      "fecha": "2026-06-05",
+      "detalles": "Competencia de programación de 24 horas continuas para resolver problemáticas de la comunidad universitaria.",
+      "imagen": "https://plus.unsplash.com/premium_photo-1678565999332-1cde462f7b24?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       "id": "3",
-      "organizadorId": 1,
-      "titulo": "Desayuno en la FCMF",
+      "organizadorId": 2,
+      "titulo": "Taller Avanzado de Angular Standalone",
       "tipoEventoId": 3,
-      "fecha": "2026-05-30",
-      "detalles": "En este evento se brindara pan y cafe a los estudiantes.",
-      "imagen": "https://static-cla-nys.pro.centrallecheraasturiana.es/uploads/2022/04/iStock-938158500-1024x683.jpg"
-    }
-  ],
-  "comentarios": [
-    {
-      "id": "1",
-      "estudiante": "Carlos Vera",
-      "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.",
-      "calificacion": 5,
-      "anonimo": false,
-      "eventoId": 1
-    },
-    {
-      "id": "2",
-      "estudiante": "Ana Solis",
-      "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes de la FCMF.",
-      "calificacion": 4,
-      "anonimo": true,
-      "eventoId": 1
-    },
-    {
-      "id": "3",
-      "estudiante": "Juan Bajaña",
-      "contenido": "El concurso del desayuno estuvo muy reñido, excelente organización.",
-      "calificacion": 5,
-      "anonimo": false,
-      "eventoId": 2
+      "fecha": "2026-06-12",
+      "detalles": "Aprende a estructurar aplicaciones modernas sin módulos utilizando el nuevo sistema de control de flujo de Angular.",
+      "imagen": "https://plus.unsplash.com/premium_photo-1673984261110-d1d931e062c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       "id": "4",
-      "estudiante": "Milena Cedeño",
-      "contenido": "Llegué un poco tarde al taller y ya se habían terminado las raciones.",
-      "calificacion": 3,
-      "anonimo": false,
-      "eventoId": 3
+      "organizadorId": 3,
+      "titulo": "Seminario de Ciberseguridad Institucional",
+      "tipoEventoId": 4,
+      "fecha": "2026-06-18",
+      "detalles": "Especialistas analizan la protección de datos y mitigación de ataques en entornos estudiantiles.",
+      "imagen": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": "5",
+      "organizadorId": 2,
+      "titulo": "Feria de Ciencias e Innovación Industrial",
+      "tipoEventoId": 2,
+      "fecha": "2026-06-25",
+      "detalles": "Exposición de prototipos mecánicos y químicos desarrollados por estudiantes del último ciclo.",
+      "imagen": "https://unsplash.com"
+    },
+    {
+      "id": "6",
+      "organizadorId": 4,
+      "titulo": "Conferencia de Inteligencia Artificial y Ética",
+      "tipoEventoId": 1,
+      "fecha": "2026-07-02",
+      "detalles": "Debate abierto sobre el impacto de los modelos de lenguaje en el plagio académico y la investigación.",
+      "imagen": "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": "7",
+      "organizadorId": 1,
+      "titulo": "Taller Práctico de Base de Datos PostgreSQL",
+      "tipoEventoId": 3,
+      "fecha": "2026-07-09",
+      "detalles": "Optimización de consultas, indexación y modelado relacional avanzado para proyectos universitarios.",
+      "imagen": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": "8",
+      "organizadorId": 5,
+      "titulo": "Foro de Oratoria y Debate Jurídico",
+      "tipoEventoId": 2,
+      "fecha": "2026-07-15",
+      "detalles": "Concurso de litigación oral simulada organizado por la Facultad de Jurisprudencia.",
+      "imagen": "https://plus.unsplash.com/premium_photo-1691962725045-57ff9e77f0bd?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": "9",
+      "organizadorId": 3,
+      "titulo": "Charla: Introducción a la Computación en la Nube",
+      "tipoEventoId": 1,
+      "fecha": "2026-07-22",
+      "detalles": "Conceptos básicos de AWS, Azure y Google Cloud aplicados al despliegue de aplicaciones web de bajo costo.",
+      "imagen": "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": "10",
+      "organizadorId": 4,
+      "titulo": "Workshop de Desarrollo de Videojuegos con Unity",
+      "tipoEventoId": 3,
+      "fecha": "2026-07-30",
+      "detalles": "Crea tu primer prototipo interactivo en 2D utilizando scripts básicos de C#.",
+      "imagen": "https://plus.unsplash.com/premium_photo-1680807869780-e0876a6f3cd5?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     }
   ],
+  "comentarios": [
+    { "id": "1", "estudiante": "Carlos Vera", "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.", "calificacion": 5, "anonimo": false, "eventoId": "1" },
+    { "id": "2", "estudiante": "Ana Solis", "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes.", "calificacion": 4, "anonimo": true, "eventoId": "1" },
+    { "id": "3", "estudiante": "Kevin Mora", "contenido": "Muy dinámico, ideal para arrancar la jornada académica con energía.", "calificacion": 5, "anonimo": false, "eventoId": "1" },
+    
+    { "id": "4", "estudiante": "Juan Bajaña", "contenido": "El concurso de la Hackathon estuvo muy reñido, excelente organización.", "calificacion": 5, "anonimo": false, "eventoId": "2" },
+    { "id": "5", "estudiante": "Diana Macías", "contenido": "Faltaron más tomacorrientes en el laboratorio, pero los mentores ayudaron muchísimo.", "calificacion": 4, "anonimo": false, "eventoId": "2" },
+    
+    { "id": "6", "estudiante": "Milena Cedeño", "contenido": "Llegué un poco tarde al taller y ya se habían terminado las guías impresas.", "calificacion": 3, "anonimo": false, "eventoId": "3" },
+    { "id": "7", "estudiante": "Bryan Lucas", "contenido": "El mejor taller de Angular del semestre. Todo muy directo al grano.", "calificacion": 5, "anonimo": false, "eventoId": "3" },
+    
+    { "id": "8", "estudiante": "Pedro Alarcón", "contenido": "Faltó material de apoyo digital. Sería bueno que compartan los slides al correo institucional.", "calificacion": 3, "anonimo": true, "eventoId": "4" },
+    { "id": "9", "estudiante": "Luis Chiriboga", "contenido": "Temas muy actuales sobre Phishing. Excelente el expositor invitado.", "calificacion": 5, "anonimo": false, "eventoId": "4" },
+    
+    { "id": "10", "estudiante": "Gisella Ortiz", "contenido": "Los proyectos químicos presentados tenían un gran nivel técnico.", "calificacion": 5, "anonimo": false, "eventoId": "5" },
+    { "id": "11", "estudiante": "Jorge Intriago", "contenido": "Un poco desorganizado el orden de los stands, pero buena experiencia.", "calificacion": 4, "anonimo": false, "eventoId": "5" },
+    
+    { "id": "12", "estudiante": "Robert Castro", "contenido": "El debate sobre chatGPT dejó muchas dudas aclaradas en investigación.", "calificacion": 5, "anonimo": false, "eventoId": "6" },
+    { "id": "13", "estudiante": "Elena Mendoza", "contenido": "Interesante enfoque, aunque el auditorio se llenó demasiado rápido.", "calificacion": 4, "anonimo": true, "eventoId": "6" },
+    
+    { "id": "14", "estudiante": "William Solórzano", "contenido": "Los ejercicios de uniones y triggers sirvieron para pasar el examen de bases.", "calificacion": 5, "anonimo": false, "eventoId": "7" },
+    
+    { "id": "15", "estudiante": "Doménica Vélez", "contenido": "Gran nivel de los jurados de la Facultad de Jurisprudencia. Formativo.", "calificacion": 5, "anonimo": false, "eventoId": "8" },
+    
+    { "id": "16", "estudiante": "Anthony Pita", "contenido": "Explicación muy superficial de AWS, debió ser más práctico.", "calificacion": 3, "anonimo": false, "eventoId": "9" },
+    
+    { "id": "17", "estudiante": "María José Alva", "contenido": "Unity es increíble, salí con mi minijuego funcional en solo tres horas.", "calificacion": 5, "anonimo": false, "eventoId": "10" },
+    { "id": "18", "estudiante": "Cristhian Barros", "contenido": "El profesor dominaba mucho el tema de animaciones 2D.", "calificacion": 5, "anonimo": true, "eventoId": "10" }
+  ],
   "inscripciones": [
-    {
-      "nombre": "Allan Erazo",
-      "cedula": "0999999999",
-      "eventoId": "eaHljhUBYUc",
-      "id": "xgHBpDJQnRM"
-    },
-    {
-      "eventoId": "1",
-      "nombre": "Allan Erazo",
-      "cedula": "0999999999",
-      "id": "5MTt_dN_TF8"
-    },
-    {
-      "eventoId": "1",
-      "nombre": "Josue Idrovo",
-      "cedula": "0999999999",
-      "id": "ABXSJALRMCg"
-    }
+    { "id": "1", "eventoId": "1", "nombre": "Allan Erazo", "cedula": "0999999999" },
+    { "id": "2", "eventoId": "1", "nombre": "Josue Idrovo", "cedula": "0999999999" }
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }
