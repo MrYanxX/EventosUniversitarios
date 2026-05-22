@@ -26,7 +26,6 @@
                             <td class="fw-bold">{{ evento.titulo }}</td>
                             <td>{{ evento.fecha }}</td>
                             <td class="text-center">
-                                <!-- ESTE BOTÓN ES LA MAGIA: Nos lleva al formulario pero pasándole el ID -->
                                 <a [routerLink]="['/editar-evento', evento.id]" class="btn btn-sm btn-outline-primary me-2">
                                     ✏️ Editar
                                 </a>

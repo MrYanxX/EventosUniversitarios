@@ -33,11 +33,8 @@ export class HomeContenedor {
     const textoBuscado = this.terminoBusqueda().toLowerCase();
 
     return todosLosEventos.filter((evento) => {
-      // Condición del Combobox (Si es 0, cuenta como válido para todos. Si no, debe coincidir el ID)
-      // Usamos Number() por si el select de HTML devuelve un string
       const coincideTipo = filtroId == 0 || evento.tipoEventoId === filtroId;
 
-      // Condición del Buscador 
       const coincideTexto = evento.titulo.toLowerCase().includes(textoBuscado);
 
       return coincideTipo && coincideTexto;

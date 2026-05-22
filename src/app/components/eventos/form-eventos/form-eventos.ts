@@ -33,7 +33,6 @@ export class FormEventos implements OnInit {
   isSaving = signal(false);
   eventoEditandoId: number | null = null; 
 
-  // NUEVA BANDERA: Para saber qué hacer cuando el modal se cierre
   redireccionarTrasModal: boolean = false; 
 
   @ViewChild(ModalInscripcion) modalHijo!: ModalInscripcion;
@@ -109,7 +108,7 @@ export class FormEventos implements OnInit {
   publicarEvento() {
     if (this.eventoForm.invalid) {
       this.eventoForm.markAllAsTouched();
-      this.redireccionarTrasModal = false; // NO REDIRIGIR porque es error
+      this.redireccionarTrasModal = false; 
       this.modalAlerta.mostrar(
         'Atención',
         'Por favor, revisa los campos en rojo, incluyendo la imagen.',
@@ -128,7 +127,6 @@ export class FormEventos implements OnInit {
       detalles: formVal.detalles || '',
       imagen: formVal.imagen || '',
       organizadorId: 1, 
-      // MAGIA AQUÍ: Si es edición usamos su ID, si es nuevo le damos un número único basado en el tiempo
       id: this.eventoEditandoId || Date.now(), 
     };
 
@@ -165,7 +163,6 @@ export class FormEventos implements OnInit {
       peticiones.push(this.servicioInscripciones.deleteInscripcion(idBorrado));
     });
 
-    // Guardado exitoso: SI REDIRIGIR AL TERMINAR
     this.redireccionarTrasModal = true; 
 
     if (peticiones.length > 0) {
@@ -179,10 +176,9 @@ export class FormEventos implements OnInit {
     }
   }
 
-  // Ahora esta función decide inteligentemente a dónde ir
   manejarCierreModalAlerta() {
     if (this.redireccionarTrasModal) {
-      this.router.navigate(['/tabla-eventos']); // Vamos al dashboard de eventos
+      this.router.navigate(['/tabla-eventos']); 
     }
   }
 }

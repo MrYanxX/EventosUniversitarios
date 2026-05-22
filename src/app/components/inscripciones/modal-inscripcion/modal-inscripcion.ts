@@ -45,7 +45,7 @@ export class ModalInscripcion implements AfterViewInit {
   guardarInscripcion() {
     if (this.formularioInscripcion.valid) {
       const nuevoInscrito = {
-        eventoId: this.eventoId ?? '', // 💡 CORREGIDO: Usamos texto vacío como fallback
+        eventoId: this.eventoId ?? '', 
         nombre: this.formularioInscripcion.value.nombre || '', 
         cedula: this.formularioInscripcion.value.cedula || ''
       } as Inscripcion; 

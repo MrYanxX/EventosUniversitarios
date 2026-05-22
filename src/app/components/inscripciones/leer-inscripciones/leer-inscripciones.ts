@@ -25,16 +25,14 @@ export class LeerInscripciones implements AfterViewInit {
     this.modalInstance = new bootstrap.Modal(this.modalElement.nativeElement);
   }
 
-  // Esta función la llamará el componente MostrarEvento
   abrirModal() {
-    this.cargando.set(true); // Mostramos un spinner mientras busca
-    this.modalInstance.show(); // Abrimos la ventana
+    this.cargando.set(true); 
+    this.modalInstance.show(); 
 
-    // Llamamos a tu servicio para filtrar solo los inscritos de este evento
     this.servicioInscripciones.getInscripcionesByEventoId(this.eventoId).subscribe({
       next: (data) => {
-        this.inscripciones.set(data); // Guardamos los datos
-        this.cargando.set(false); // Ocultamos el spinner
+        this.inscripciones.set(data);
+        this.cargando.set(false); 
       },
       error: (err) => {
         console.error("Error al cargar los inscritos:", err);
