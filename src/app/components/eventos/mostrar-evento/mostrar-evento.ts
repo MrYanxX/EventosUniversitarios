@@ -15,6 +15,7 @@ import { LeerInscripciones } from '../../inscripciones/leer-inscripciones/leer-i
   styleUrl: './mostrar-evento.css',
 })
 export class MostrarEvento implements OnInit {
+    protected readonly String = String;
   evento = signal<Evento | null>(null);
   tipoEvento = signal<string>('Cargando tipo...');
 
