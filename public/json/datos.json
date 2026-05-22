@@ -222,14 +222,6 @@
       "eventoId": "8"
     },
     {
-      "id": "16",
-      "estudiante": "Anthony Pita",
-      "contenido": "Explicación muy superficial de AWS, debió ser más práctico.",
-      "calificacion": 3,
-      "anonimo": false,
-      "eventoId": "9"
-    },
-    {
       "id": "17",
       "estudiante": "María José Alva",
       "contenido": "Unity es increíble, salí con mi minijuego funcional en solo tres horas.",
@@ -244,6 +236,14 @@
       "calificacion": 5,
       "anonimo": true,
       "eventoId": "10"
+    },
+    {
+      "estudiante": "Elver Galarga",
+      "contenido": "No me dieron nepe",
+      "calificacion": 3,
+      "anonimo": false,
+      "eventoId": "6",
+      "id": "ahiwQnwqmhk"
     }
   ],
   "inscripciones": [

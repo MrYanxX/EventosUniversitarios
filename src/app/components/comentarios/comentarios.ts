@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http'; 
 import { Comentario } from '../../models/comentario.model';
+import { ComentarioService } from '../../services/comentario.service'; 
 
 @Component({
   selector: 'app-comentarios',
@@ -17,15 +17,12 @@ export class ComentariosComponent implements OnInit {
   comentarioForm!: FormGroup;
   listaComentarios: Comentario[] = [];
   comentariosFiltrados: Comentario[] = [];
-  
-  // 💡 CORREGIDO: Ahora el ID en edición se maneja como string o null
   idComentarioEdicion: string | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.inicializarFormulario();
-  }
-
+  private fb = inject(FormBuilder);
+  private comentarioService = inject(ComentarioService);
   ngOnInit(): void {
+    this.inicializarFormulario();
     this.cargarDatosIniciales();
   }
 
@@ -37,16 +34,13 @@ export class ComentariosComponent implements OnInit {
       anonimo: [false]
     });
   }
-
   private cargarDatosIniciales(): void {
-    this.http.get<Comentario[]>('http://localhost:3000/comentarios').subscribe({
+    this.comentarioService.obtenerComentarios().subscribe({
       next: (datos) => {
         this.listaComentarios = datos || [];
         this.filtrarComentarios(); 
       },
-      error: (err) => {
-        console.error('Error cargando los comentarios de la API:', err);
-      }
+      error: (err) => console.error('Error al obtener comentarios:', err)
     });
   }
 
@@ -56,6 +50,7 @@ export class ComentariosComponent implements OnInit {
     });
   }
 
+  
   guardarComentario(): void {
     if (this.comentarioForm.invalid) {
       this.comentarioForm.markAllAsTouched();
@@ -63,30 +58,32 @@ export class ComentariosComponent implements OnInit {
     }
 
     const datosFormulario = this.comentarioForm.value;
+    const comentarioData = {
+      estudiante: datosFormulario.estudiante,
+      contenido: datosFormulario.contenido,
+      calificacion: Number(datosFormulario.calificacion),
+      anonimo: datosFormulario.anonimo,
+      eventoId: String(this.eventoId)
+    };
 
     if (this.idComentarioEdicion !== null) {
-      this.listaComentarios = this.listaComentarios.map(c => {
-        if (String(c.id) === String(this.idComentarioEdicion)) {
-          return { ...c, ...datosFormulario };
+      
+      this.comentarioService.actualizarComentario(this.idComentarioEdicion, comentarioData).subscribe({
+        next: () => {
+          this.idComentarioEdicion = null;
+          this.comentarioForm.reset({ anonimo: false, calificacion: '' });
+          this.cargarDatosIniciales(); // Recarga la lista desde la API real
         }
-        return c;
       });
-      this.idComentarioEdicion = null;
     } else {
-      // ---> MODO CREAR <---
-      const nuevoComentario: Comentario = {
-        id: this.listaComentarios.length > 0 ? String(Math.max(...this.listaComentarios.map(c => Number(c.id) || 0)) + 1) : '1',
-        estudiante: datosFormulario.estudiante,
-        contenido: datosFormulario.contenido,
-        calificacion: Number(datosFormulario.calificacion),
-        anonimo: datosFormulario.anonimo,
-        eventoId: String(this.eventoId)
-      };
-      this.listaComentarios.push(nuevoComentario);
+     
+      this.comentarioService.crearComentario(comentarioData).subscribe({
+        next: () => {
+          this.comentarioForm.reset({ anonimo: false, calificacion: '' });
+          this.cargarDatosIniciales();
+        }
+      });
     }
-
-    this.comentarioForm.reset({ anonimo: false, calificacion: '' });
-    this.filtrarComentarios();
   }
 
   seleccionarParaEditar(comentario: Comentario): void {
@@ -102,12 +99,16 @@ export class ComentariosComponent implements OnInit {
   eliminarComentario(id: string | number | undefined): void {
     if (!id) return;
     if (confirm('¿Está seguro de que desea eliminar este comentario?')) {
-      this.listaComentarios = this.listaComentarios.filter(c => String(c.id) !== String(id));
-      this.filtrarComentarios();
-      
-      if (String(this.idComentarioEdicion) === String(id)) {
-        this.cancelarEdicion();
-      }
+
+      this.comentarioService.eliminarComentario(String(id)).subscribe({
+        next: () => {
+          this.cargarDatosIniciales();
+          if (String(this.idComentarioEdicion) === String(id)) {
+            this.cancelarEdicion();
+          }
+        },
+        error: (err) => console.error('Error al eliminar comentario:', err)
+      });
     }
   }
 
