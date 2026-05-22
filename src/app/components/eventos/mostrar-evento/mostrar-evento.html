@@ -1,9 +1,7 @@
-@if (evento(); as ev) {
-<div class="container mt-4 mb-5">
-    <div class="row">
-        <!-- DETALLES DEL EVENTO (ANCHO COMPLETO SI QUITAMOS LA BARRA LATERAL) -->
-        <div class="col-lg-12 mb-4">
-
+<div class="container">
+    @if (evento(); as ev) {
+    <div>
+        <div>
             <img [src]="ev.imagen" class="img-fluid rounded shadow-sm mb-4 w-100"
                 style="max-height: 400px; object-fit: cover;" alt="Imagen de {{ ev.titulo }}">
 
@@ -31,31 +29,19 @@
                 Ver lista de inscritos
             </button>
         </div>
-    </div> <!-- Aquí termina la sección del evento principal -->
+    </div>
 
-    <!-- ======================================================= -->
-    <!--  NUEVA UBICACIÓN: SECCIÓN DE COMENTARIOS ABAJO   -->
-    <!-- ======================================================= -->
     <div class="row mt-5 border-top pt-5">
         <div class="col-12">
             <div class="card shadow-sm border-0 rounded p-4 bg-white">
-                <!-- 💡 CORREGIDO: Le pasamos el id del evento real de forma dinámica -->
-
-                <app-comentarios [eventoId]="String(ev.id)"></app-comentarios>
-
+                <app-comentarios [eventoId]="$any(ev.id)"></app-comentarios>
             </div>
         </div>
     </div>
 
-    <!-- Componente Modal para inscripciones -->
-    <app-leer-inscripciones [eventoId]="ev.id!"></app-leer-inscripciones>
-    
+    <!-- Hacemos lo mismo aquí abajo por si acaso -->
+    <app-leer-inscripciones [eventoId]="$any(ev.id)"></app-leer-inscripciones>
+
+    }
+
 </div>
-} @else {
-<div class="container mt-5 pt-5 text-center min-vh-50 d-flex flex-column justify-content-center align-items-center">
-    <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
-        <span class="visually-hidden">Cargando...</span>
-    </div>
-    <h4 class="text-muted fw-normal">Cargando detalles del evento...</h4>
-</div>
-}
