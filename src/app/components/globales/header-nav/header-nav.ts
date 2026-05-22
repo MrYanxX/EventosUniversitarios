@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header-nav',
@@ -8,7 +9,19 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header-nav.css',
 })
 export class HeaderNav {
-  estaLogueado:boolean = false;
-}
+  constructor(public authService: AuthService, private router: Router) {}
 
+  get estaLogueado(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/home']);
+  }
+
+  irCuenta(): void {
+    this.router.navigate(['/cuenta']);
+  }
+}
 

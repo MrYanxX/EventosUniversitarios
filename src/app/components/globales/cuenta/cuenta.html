@@ -1,0 +1,58 @@
+<div class="container py-4">
+  <h2 class="mb-4">Mi Cuenta</h2>
+
+  @if (authService.isLoggedIn()) {
+    <div class="card p-4 mb-4">
+      <h4>Bienvenido, {{ authService.getCurrentUser()?.nombre }}</h4>
+      <p>Email: {{ authService.getCurrentUser()?.email }}</p>
+      <p>Carrera: {{ authService.getCurrentUser()?.carrera || 'No especificada' }}</p>
+      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
+    </div>
+  } @else {
+    <div class="row g-4">
+      <section class="col-md-6">
+        <div class="card p-4 h-100">
+          <h4>Iniciar sesión</h4>
+          <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input class="form-control" type="email" [(ngModel)]="loginEmail" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input class="form-control" type="password" [(ngModel)]="loginPassword" />
+          </div>
+          <button class="btn btn-primary" (click)="login()">Ingresar</button>
+          @if (mensajeLogin) {
+            <div class="alert alert-info mt-3">{{ mensajeLogin }}</div>
+          }
+        </div>
+      </section>
+
+      <section class="col-md-6">
+        <div class="card p-4 h-100">
+          <h4>Registro de estudiante</h4>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" type="text" [(ngModel)]="regNombre" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input class="form-control" type="email" [(ngModel)]="regEmail" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input class="form-control" type="password" [(ngModel)]="regPassword" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Carrera</label>
+            <input class="form-control" type="text" [(ngModel)]="regCarrera" />
+          </div>
+          <button class="btn btn-success" (click)="register()">Registrar estudiante</button>
+          @if (mensajeRegistro) {
+            <div class="alert alert-info mt-3">{{ mensajeRegistro }}</div>
+          }
+        </div>
+      </section>
+    </div>
+  }
+</div>

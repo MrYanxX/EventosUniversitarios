@@ -4,13 +4,11 @@
   </a>
 
   <div>
-    <a routerLink="/cuenta" class="text-white me-3">Mi Cuenta</a>
-
-    <!-- Condicional para cambiar el boton -->
     @if (estaLogueado) {
-      <button class="btn btn-danger">Salir</button>
+      <a routerLink="/cuenta" class="text-white me-3">Mi Cuenta</a>
+      <button class="btn btn-danger" (click)="logout()">Salir</button>
     } @else {
-      <button class="btn btn-primary">Iniciar Sesión</button>
+      <button class="btn btn-primary" (click)="irCuenta()">Iniciar Sesión</button>
     }
   </div>
 </header>
