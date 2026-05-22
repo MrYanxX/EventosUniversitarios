@@ -19,7 +19,7 @@ export class ServEventsJsonService {
     return this.http.get<Evento[]>(this.eventosUrl);
   }
 
-  getEventoPorId(id:number): Observable<Evento> {
+  getEventoPorId(id:number | string): Observable<Evento> {
     return this.http.get<Evento>(`${this.eventosUrl}/${id}`);
   }
 
@@ -31,7 +31,7 @@ export class ServEventsJsonService {
     return this.http.put<Evento>(`${this.eventosUrl}/${evento.id}`, evento);
   }
 
-  deleteEvento(id:number) : Observable<void> {
+  deleteEvento(id:number | string) : Observable<void> {
     return this.http.delete<void>(`${this.eventosUrl}/${id}`);
   }
 
@@ -39,7 +39,7 @@ export class ServEventsJsonService {
     return this.http.get<TipoEvento[]>(this.tiposEventosUrl);
   }
 
-  getTipoEventoPorId(id:number): Observable<TipoEvento> {
+  getTipoEventoPorId(id:number | string): Observable<TipoEvento> {
     return this.http.get<TipoEvento>(`${this.tiposEventosUrl}/${id}`);
   }
 }

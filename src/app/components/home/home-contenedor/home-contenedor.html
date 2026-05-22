@@ -8,7 +8,7 @@
         </app-filtro-eventos>
 
         <!--Componente para buscar-->
-        <app-barra-busqueda class="col-md-8"></app-barra-busqueda>
+        <app-barra-busqueda (busqueda)="recibirBusqueda($event)" class="col-md-8"></app-barra-busqueda>
     </div>
 
     <div class="row mt-4">
@@ -17,13 +17,6 @@
             <!--Inyectamos los datos al componente tarjeta-evento-->
             <app-tarjeta-eventos [evento]="evento" [nombreTipo]="obtenerNombreDelTipoDeEvento(evento.tipoEventoId)">
             </app-tarjeta-eventos>
-            
-            <!-- 💡 TU BOTÓN DE ACCIÓN: Envía el ID real del evento al TypeScript al hacer clic -->
-            <div class="d-grid mt-2">
-                <button type="button" class="btn btn-outline-primary btn-sm" (click)="abrirComentarios(evento.id)">
-                    Ver Comentarios
-                </button>
-            </div>
         </div>
         }
 
@@ -35,24 +28,4 @@
     </div>
 </div>
 
-
-<!-- Al final de tu archivo home-contenedor.html -->
-@if (eventoAbiertoId()) {
-    <section class="bg-light py-5 mt-5 border-top">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2 class="fw-bold text-dark m-0">Gestión del Sistema de Comentarios</h2>
-                    <p class="text-muted small mb-0">Visualizando opiniones del Evento ID: #{{ eventoAbiertoId() }}</p>
-                </div>
-                <button type="button" class="btn btn-sm btn-secondary" (click)="cerrarComentarios()">✕ Cerrar</button>
-            </div>
-
-            <div class="card shadow-sm p-4 bg-white rounded">
-                <!-- Pasamos el valor actual de la Signal a tu Input del componente -->
-                <app-comentarios [eventoId]="eventoAbiertoId()!"></app-comentarios>
-            </div>
-        </div>
-    </section>
-}
 

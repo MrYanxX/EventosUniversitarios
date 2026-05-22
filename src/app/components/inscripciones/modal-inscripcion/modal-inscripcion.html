@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" #modalInscritosRef>
+<div class="modal fade" id="modalInscritosMagico" tabindex="-1" #modalInscritosRef>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             
@@ -6,7 +6,6 @@
                 <h5 class="modal-title">
                     {{ editingIndex !== null ? 'Editar Inscripción' : 'Nueva Inscripción' }}
                 </h5>
-                <!-- Usamos modalRef.hide() para cerrar -->
                 <button type="button" class="btn-close btn-close-white" (click)="modalRef.hide()"></button>
             </div>
 

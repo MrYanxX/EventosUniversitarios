@@ -33,6 +33,6 @@ export class ModalAlerta {
   // Se ejecuta al darle "Aceptar"
   confirmar() {
     this.modalRef.hide();
-    this.cerrado.emit(); // Le avisa al padre que ya se cerró
+    this.cerrado.emit(); // Le avisa al padre que se cerró
   }
 }
