@@ -276,6 +276,12 @@
       "nombre": "Allan Erazo",
       "cedula": "0999999999",
       "id": "KQkHQC29IKs"
+    },
+    {
+      "eventoId": null,
+      "nombre": "Allan",
+      "cedula": "0999999999",
+      "id": "S-1Lk3XbRWc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

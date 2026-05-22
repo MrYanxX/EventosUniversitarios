@@ -58,7 +58,7 @@ export class HomeContenedor {
     });
   }
 
-  obtenerNombreDelTipoDeEvento(idBuscado: number): string {
+  obtenerNombreDelTipoDeEvento(idBuscado: number | string): string {
     const tipoEncontrado = this.tiposEventos().find((tipo) => tipo.id == idBuscado);
     return tipoEncontrado ? tipoEncontrado.nombre : 'Desconocido';
   }
