@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common'; // 💡 Importante si el HTML requiere directivas comunes
 import { FiltroEventos } from '../filtro-eventos/filtro-eventos';
 import { BarraBusqueda } from '../barra-busqueda/barra-busqueda';
 import { TarjetaEventos } from '../tarjeta-eventos/tarjeta-eventos';
@@ -10,28 +11,30 @@ import { ComentariosComponent } from "../../comentarios/comentarios";
 
 @Component({
   selector: 'app-home-contenedor',
-  imports: [FiltroEventos, TarjetaEventos, BarraBusqueda, ComentariosComponent],
+  // 💡 Añadimos CommonModule por seguridad para el control de flujo
+  imports: [CommonModule, FiltroEventos, TarjetaEventos, BarraBusqueda, ComentariosComponent],
   templateUrl: './home-contenedor.html',
   styleUrl: './home-contenedor.css',
 })
 export class HomeContenedor {
   titulo = 'Eventos';
 
-  //Signals para guardar los objetos obtenidos
+  // Signals para guardar los objetos obtenidos
   eventosIniciales = signal<Evento[]>([]);
   tiposEventos = signal<TipoEvento[]>([]);
   idFiltroSeleccionado = signal<number>(0);
+
+  // 💡 TU NUEVA SIGNAL: Controla el ID del evento abierto (inicia vacío)
+  eventoAbiertoId = signal<string | null>(null);
 
   eventosFiltrados = computed(() => {
     const todosLosEventos = this.eventosIniciales();
     const filtroId = this.idFiltroSeleccionado();
 
-    //En caso de que el ID sea 0 retorna la lista estatica de Eventos que se tenía inicialmente
     if (filtroId == 0) {
       return todosLosEventos;
     }
 
-    //Filtra con la función filter los eventos que coinciden con el ID
     return todosLosEventos.filter((evento) => evento.tipoEventoId === filtroId);
   });
 
@@ -40,12 +43,10 @@ export class HomeContenedor {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    //Solicita al servicio los tipos de eventos y se suscribe para detectar cambios
     this.servicioEventos.getTipoEventos().subscribe((data) => {
       this.tiposEventos.set(data);
     });
 
-    //Solicita al servicio los eventos y se suscribe
     this.servicioEventos.getEventos().subscribe((data) => {
       this.eventosIniciales.set(data);
     });
@@ -58,5 +59,16 @@ export class HomeContenedor {
 
   aplicarFiltro(tipoId: number) {
     this.idFiltroSeleccionado.set(tipoId);
+  }
+
+  // 💡 TUS NUEVOS MÉTODOS REACTIVOS PARA LOS COMENTARIOS:
+  // Como los eventos usan IDs tipo string o número, forzamos la conversión a String segura
+  abrirComentarios(id: string | number | undefined): void {
+    if (!id) return;
+    this.eventoAbiertoId.set(String(id));
+  }
+
+  cerrarComentarios(): void {
+    this.eventoAbiertoId.set(null);
   }
 }
