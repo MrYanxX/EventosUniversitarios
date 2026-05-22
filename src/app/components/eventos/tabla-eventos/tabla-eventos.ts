@@ -23,7 +23,7 @@ export class TablaEventos implements OnInit {
   }
 
   eliminarEvento(evento: Evento) {
-    if (confirm(`¿Estás súper seguro de eliminar "${evento.titulo}"?`)) {
+    if (confirm(`¿Estás seguro de eliminar "${evento.titulo}"?`)) {
       this.servicioEventos.deleteEvento(evento.id!).subscribe(() => {
         this.eventos.update(lista => lista.filter(e => e.id !== evento.id));
       });

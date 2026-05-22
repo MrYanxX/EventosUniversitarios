@@ -2,7 +2,6 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterVie
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Inscripcion } from '../../../models/inscripcion.model';
 
-// Declaramos bootstrap para poder controlar el modal desde TypeScript
 declare const bootstrap: any; 
 
 @Component({
@@ -13,12 +12,10 @@ declare const bootstrap: any;
   styleUrl: './modal-inscripcion.css'
 })
 export class ModalInscripcion implements AfterViewInit {
-  @Input() eventoId?: number; 
+  @Input() eventoId?: string | number; 
   
-  // Emitimos el objeto Inscripcion Y el índice (null = nuevo, número = edición)
   @Output() registroExitoso = new EventEmitter<{ data: Inscripcion, index: number | null }>();
 
-  // Enganchamos el modal del HTML a TypeScript
   @ViewChild('modalInscritosRef') modalElement!: ElementRef;
   modalRef: any; 
   
@@ -30,11 +27,9 @@ export class ModalInscripcion implements AfterViewInit {
   });
 
   ngAfterViewInit(): void {
-    // Inicializamos el modal en memoria cuando la vista cargue
     this.modalRef = new bootstrap.Modal(this.modalElement.nativeElement);
   }
 
-  // --- FUNCIONES QUE EL PADRE LLAMARÁ CON @ViewChild ---
   openForNew() {
     this.editingIndex = null;
     this.formularioInscripcion.reset(); 
@@ -47,11 +42,10 @@ export class ModalInscripcion implements AfterViewInit {
     this.modalRef.show(); 
   }
 
-  // --- LÓGICA DE GUARDADO ---
   guardarInscripcion() {
     if (this.formularioInscripcion.valid) {
       const nuevoInscrito = {
-        eventoId: this.eventoId ?? 0,
+        eventoId: this.eventoId ?? '', // 💡 CORREGIDO: Usamos texto vacío como fallback
         nombre: this.formularioInscripcion.value.nombre || '', 
         cedula: this.formularioInscripcion.value.cedula || ''
       } as Inscripcion; 

@@ -9,16 +9,12 @@ import { Router } from '@angular/router';
   styleUrl: './tarjeta-eventos.css',
 })
 export class TarjetaEventos {
-  //Espera a recibir un objeto
   @Input({required: true}) evento!: Evento;
-
-  //Recibe el string del nombre por inyección del home
   @Input() nombreTipo:string = '';
 
   constructor( private router:Router ) {  }
 
-  verDetallesEvento(id: number | undefined) {
-    //Ruteo interno
+  verDetallesEvento(id: string | number | undefined) {
     this.router.navigate(["/evento", id]);
   }
 }

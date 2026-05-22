@@ -28,26 +28,25 @@ export class FormEventos implements OnInit {
 
   tiposEvento = signal<TipoEvento[]>([]);
   inscritosTemporales = signal<Inscripcion[]>([]);
-
-  // Lista para recordar a quién borramos y poder borrarlo de la BD al final
   inscritosEliminados = signal<number[]>([]);
 
   isSaving = signal(false);
-  eventoEditandoId: number | null = null; // Saber si es nuevo o edición
+  eventoEditandoId: number | null = null; 
+
+  // NUEVA BANDERA: Para saber qué hacer cuando el modal se cierre
+  redireccionarTrasModal: boolean = false; 
 
   @ViewChild(ModalInscripcion) modalHijo!: ModalInscripcion;
-  @ViewChild(ModalAlerta) modalAlerta!: ModalAlerta; // Control del modal de alertas
+  @ViewChild(ModalAlerta) modalAlerta!: ModalAlerta; 
 
   private servicioEventos = inject(ServEventsJsonService);
   private servicioInscripciones = inject(ServInscripcionesJsonService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute); // Para leer el ID de la URL
+  private route = inject(ActivatedRoute); 
 
   ngOnInit() {
-    // 1. Cargar tipos de evento
     this.servicioEventos.getTipoEventos().subscribe((data) => this.tiposEvento.set(data));
 
-    // 2. Revisar si la URL trajo un ID (Ej: /editar-evento/5)
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.eventoEditandoId = Number(idParam);
@@ -55,9 +54,7 @@ export class FormEventos implements OnInit {
     }
   }
 
-  // --- LÓGICA DE MODO EDICIÓN ---
   cargarEventoParaEdicion(id: number) {
-    // A. Buscar el evento y llenar el form
     this.servicioEventos.getEventoPorId(id).subscribe((evento) => {
       this.eventoForm.patchValue({
         ...evento,
@@ -65,13 +62,11 @@ export class FormEventos implements OnInit {
       });
     });
 
-    // B. Buscar sus inscritos (Deberás crear este método en tu servicio de inscripciones)
     this.servicioInscripciones.getInscripcionesByEventoId(id).subscribe((inscritos) => {
       this.inscritosTemporales.set(inscritos);
     });
   }
 
-  // --- LÓGICA DE LA IMAGEN ---
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -83,10 +78,10 @@ export class FormEventos implements OnInit {
     }
   }
 
-  // --- CONTROL DEL MODAL DE INSCRITOS ---
   abrirModalNuevo() {
     this.modalHijo.openForNew();
   }
+  
   abrirModalEditar(inscrito: Inscripcion, index: number) {
     this.modalHijo.openForEdit(inscrito, index);
   }
@@ -105,48 +100,42 @@ export class FormEventos implements OnInit {
 
   eliminarInscritoTemporal(index: number) {
     const inscritoABorrar = this.inscritosTemporales()[index];
-
-    // Si ya tenía un ID de base de datos, lo guardamos en la lista negra para eliminarlo al publicar
     if (inscritoABorrar.id) {
       this.inscritosEliminados.update((lista) => [...lista, inscritoABorrar.id!]);
     }
-
     this.inscritosTemporales.update((lista) => lista.filter((_, i) => i !== index));
   }
 
-  // --- GUARDADO FINAL ---
   publicarEvento() {
     if (this.eventoForm.invalid) {
       this.eventoForm.markAllAsTouched();
+      this.redireccionarTrasModal = false; // NO REDIRIGIR porque es error
       this.modalAlerta.mostrar(
         'Atención',
-        'Por favor, llena todos los campos del evento, incluyendo la imagen.',
+        'Por favor, revisa los campos en rojo, incluyendo la imagen.',
         true,
       );
       return;
     }
 
     this.isSaving.set(true);
-
-    // Armamos el evento extrayendo los valores uno por uno para asegurar los tipos
     const formVal = this.eventoForm.value;
 
     const datosEvento: Evento = {
       titulo: formVal.titulo || '',
-      tipoEventoId: Number(formVal.tipoEventoId), // ¡Lo convertimos a número!
+      tipoEventoId: String(formVal.tipoEventoId),
       fecha: formVal.fecha || '',
       detalles: formVal.detalles || '',
       imagen: formVal.imagen || '',
-      organizadorId: 1, // Tu compañero se encargará de esto después
-      id: this.eventoEditandoId || undefined, // Solo lo enviamos si existe
+      organizadorId: 1, 
+      // MAGIA AQUÍ: Si es edición usamos su ID, si es nuevo le damos un número único basado en el tiempo
+      id: this.eventoEditandoId || Date.now(), 
     };
 
-    // Si tenemos ID actualizamos (PUT), si no, creamos (POST)
     const peticionEvento = this.eventoEditandoId
       ? this.servicioEventos.updateEvento(datosEvento)
       : this.servicioEventos.addEvento(datosEvento);
 
-    // ... (el resto del subscribe se queda igualito)
     peticionEvento.subscribe({
       next: (eventoGuardado) => {
         const idFinalEvento = eventoGuardado.id!;
@@ -154,51 +143,46 @@ export class FormEventos implements OnInit {
       },
       error: (err) => {
         this.isSaving.set(false);
+        this.redireccionarTrasModal = false; 
         this.modalAlerta.mostrar('Error', 'Hubo un problema al guardar el evento.', true);
       },
     });
   }
 
-  private sincronizarInscritosBD(idEvento: number) {
+  private sincronizarInscritosBD(idEvento: any) {
     const peticiones: Observable<any>[] = [];
 
-    // 1. Nuevos o actualizados
     this.inscritosTemporales().forEach((inscrito) => {
       const payload: Inscripcion = { ...inscrito, eventoId: idEvento };
       if (inscrito.id) {
-        // Ya existía: Hacemos PUT
         peticiones.push(this.servicioInscripciones.updateInscripcion(payload));
       } else {
-        // Es nuevo: Hacemos POST
         peticiones.push(this.servicioInscripciones.addInscripcion(payload));
       }
     });
 
-    // 2. Eliminados: Hacemos DELETE
     this.inscritosEliminados().forEach((idBorrado) => {
       peticiones.push(this.servicioInscripciones.deleteInscripcion(idBorrado));
     });
 
+    // Guardado exitoso: SI REDIRIGIR AL TERMINAR
+    this.redireccionarTrasModal = true; 
+
     if (peticiones.length > 0) {
       forkJoin(peticiones).subscribe(() => {
         this.isSaving.set(false);
-        // Usamos nuestro nuevo modal de alerta!
-        this.modalAlerta.mostrar(
-          '¡Éxito!',
-          'El evento y sus inscritos se han guardado correctamente.',
-        );
+        this.modalAlerta.mostrar('¡Éxito!', 'El evento y sus inscritos se han guardado correctamente.');
       });
     } else {
       this.isSaving.set(false);
-      this.modalAlerta.mostrar(
-        '¡Éxito!',
-        'El evento se ha guardado correctamente (Sin inscritos).',
-      );
+      this.modalAlerta.mostrar('¡Éxito!', 'El evento se ha guardado correctamente (Sin inscritos).');
     }
   }
 
-  // Esta función es llamada por el @Output del ModalAlerta cuando el usuario le da a "Aceptar"
-  volverAlHome() {
-    this.router.navigate(['/home']); // O la ruta de tu tabla
+  // Ahora esta función decide inteligentemente a dónde ir
+  manejarCierreModalAlerta() {
+    if (this.redireccionarTrasModal) {
+      this.router.navigate(['/tabla-eventos']); // Vamos al dashboard de eventos
+    }
   }
 }

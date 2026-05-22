@@ -65,7 +65,6 @@ export class ComentariosComponent implements OnInit {
     const datosFormulario = this.comentarioForm.value;
 
     if (this.idComentarioEdicion !== null) {
-      // ---> MODO ACTUALIZAR <---
       this.listaComentarios = this.listaComentarios.map(c => {
         if (String(c.id) === String(this.idComentarioEdicion)) {
           return { ...c, ...datosFormulario };
@@ -90,7 +89,6 @@ export class ComentariosComponent implements OnInit {
     this.filtrarComentarios();
   }
 
-  // 💡 CORREGIDO: Asignación de ID como string directo sin forzar a numérico
   seleccionarParaEditar(comentario: Comentario): void {
     this.idComentarioEdicion = comentario.id ? String(comentario.id) : null;
     this.comentarioForm.patchValue({
@@ -101,7 +99,6 @@ export class ComentariosComponent implements OnInit {
     });
   }
 
-  // 💡 CORREGIDO: El parámetro id ahora acepta string de forma segura
   eliminarComentario(id: string | number | undefined): void {
     if (!id) return;
     if (confirm('¿Está seguro de que desea eliminar este comentario?')) {

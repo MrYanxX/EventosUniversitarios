@@ -1,23 +1,24 @@
 <div class="card h-100 shadow-sm">
-  <!-- Mostramos la imagen del evento -->
-  <img [src]="evento.imagen" class="card-img-top" alt="Imagen del evento {{ evento.titulo }}">
+  <img [src]="evento.imagen" 
+       class="card-img-top" 
+       alt="Imagen del evento {{ evento.titulo }}" 
+       style="height: 200px; width: 100%; object-fit: cover;">
   
   <div class="card-body d-flex flex-column">
-    <!-- Título del evento -->
     <h5 class="card-title fw-bold">{{ evento.titulo }}</h5>
     
-    <!-- Etiquetas para tipo de evento y fecha -->
     <div class="mb-3">
       <span class="badge bg-primary me-2">{{ nombreTipo }}</span>
       <span class="badge bg-secondary">📅 {{ evento.fecha }}</span>
     </div>
     
-    <!-- Detalles del evento (truncado si es muy largo) -->
-    <p class="card-text text-muted mb-4">
+    <p class="card-text text-muted mb-4" 
+       style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
       {{ evento.detalles }}
     </p>
     
-    <!-- Botón que en el futuro servirá para ver más o ir a la ruta del ID -->
-    <button class="btn btn-outline-primary w-100 mt-auto" (click)="verDetallesEvento(evento.id)">Ver Detalles</button>
+    <button class="btn btn-outline-primary w-100 mt-auto" (click)="verDetallesEvento(evento.id)">
+        Ver Detalles
+    </button>
   </div>
 </div>

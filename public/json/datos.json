@@ -1,19 +1,31 @@
 {
   "tiposEventos": [
-    { "id": "1", "nombre": "Charla" },
-    { "id": "2", "nombre": "Concurso" },
-    { "id": "3", "nombre": "Taller" },
-    { "id": "4", "nombre": "Seminario" }
+    {
+      "id": "1",
+      "nombre": "Charla"
+    },
+    {
+      "id": "2",
+      "nombre": "Concurso"
+    },
+    {
+      "id": "3",
+      "nombre": "Taller"
+    },
+    {
+      "id": "4",
+      "nombre": "Seminario"
+    }
   ],
   "eventos": [
     {
-      "id": "1",
-      "organizadorId": 1,
       "titulo": "Desayuno Tecnológico en la FCMF",
       "tipoEventoId": 1,
       "fecha": "2026-05-30",
       "detalles": "Un espacio para compartir café, pan y debatir sobre las nuevas tendencias de desarrollo de software en la facultad.",
-      "imagen": "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "imagen": "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "organizadorId": 1,
+      "id": "1"
     },
     {
       "id": "2",
@@ -41,15 +53,6 @@
       "fecha": "2026-06-18",
       "detalles": "Especialistas analizan la protección de datos y mitigación de ataques en entornos estudiantiles.",
       "imagen": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      "id": "5",
-      "organizadorId": 2,
-      "titulo": "Feria de Ciencias e Innovación Industrial",
-      "tipoEventoId": 2,
-      "fecha": "2026-06-25",
-      "detalles": "Exposición de prototipos mecánicos y químicos desarrollados por estudiantes del último ciclo.",
-      "imagen": "https://unsplash.com"
     },
     {
       "id": "6",
@@ -98,37 +101,182 @@
     }
   ],
   "comentarios": [
-    { "id": "1", "estudiante": "Carlos Vera", "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.", "calificacion": 5, "anonimo": false, "eventoId": "1" },
-    { "id": "2", "estudiante": "Ana Solis", "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes.", "calificacion": 4, "anonimo": true, "eventoId": "1" },
-    { "id": "3", "estudiante": "Kevin Mora", "contenido": "Muy dinámico, ideal para arrancar la jornada académica con energía.", "calificacion": 5, "anonimo": false, "eventoId": "1" },
-    
-    { "id": "4", "estudiante": "Juan Bajaña", "contenido": "El concurso de la Hackathon estuvo muy reñido, excelente organización.", "calificacion": 5, "anonimo": false, "eventoId": "2" },
-    { "id": "5", "estudiante": "Diana Macías", "contenido": "Faltaron más tomacorrientes en el laboratorio, pero los mentores ayudaron muchísimo.", "calificacion": 4, "anonimo": false, "eventoId": "2" },
-    
-    { "id": "6", "estudiante": "Milena Cedeño", "contenido": "Llegué un poco tarde al taller y ya se habían terminado las guías impresas.", "calificacion": 3, "anonimo": false, "eventoId": "3" },
-    { "id": "7", "estudiante": "Bryan Lucas", "contenido": "El mejor taller de Angular del semestre. Todo muy directo al grano.", "calificacion": 5, "anonimo": false, "eventoId": "3" },
-    
-    { "id": "8", "estudiante": "Pedro Alarcón", "contenido": "Faltó material de apoyo digital. Sería bueno que compartan los slides al correo institucional.", "calificacion": 3, "anonimo": true, "eventoId": "4" },
-    { "id": "9", "estudiante": "Luis Chiriboga", "contenido": "Temas muy actuales sobre Phishing. Excelente el expositor invitado.", "calificacion": 5, "anonimo": false, "eventoId": "4" },
-    
-    { "id": "10", "estudiante": "Gisella Ortiz", "contenido": "Los proyectos químicos presentados tenían un gran nivel técnico.", "calificacion": 5, "anonimo": false, "eventoId": "5" },
-    { "id": "11", "estudiante": "Jorge Intriago", "contenido": "Un poco desorganizado el orden de los stands, pero buena experiencia.", "calificacion": 4, "anonimo": false, "eventoId": "5" },
-    
-    { "id": "12", "estudiante": "Robert Castro", "contenido": "El debate sobre chatGPT dejó muchas dudas aclaradas en investigación.", "calificacion": 5, "anonimo": false, "eventoId": "6" },
-    { "id": "13", "estudiante": "Elena Mendoza", "contenido": "Interesante enfoque, aunque el auditorio se llenó demasiado rápido.", "calificacion": 4, "anonimo": true, "eventoId": "6" },
-    
-    { "id": "14", "estudiante": "William Solórzano", "contenido": "Los ejercicios de uniones y triggers sirvieron para pasar el examen de bases.", "calificacion": 5, "anonimo": false, "eventoId": "7" },
-    
-    { "id": "15", "estudiante": "Doménica Vélez", "contenido": "Gran nivel de los jurados de la Facultad de Jurisprudencia. Formativo.", "calificacion": 5, "anonimo": false, "eventoId": "8" },
-    
-    { "id": "16", "estudiante": "Anthony Pita", "contenido": "Explicación muy superficial de AWS, debió ser más práctico.", "calificacion": 3, "anonimo": false, "eventoId": "9" },
-    
-    { "id": "17", "estudiante": "María José Alva", "contenido": "Unity es increíble, salí con mi minijuego funcional en solo tres horas.", "calificacion": 5, "anonimo": false, "eventoId": "10" },
-    { "id": "18", "estudiante": "Cristhian Barros", "contenido": "El profesor dominaba mucho el tema de animaciones 2D.", "calificacion": 5, "anonimo": true, "eventoId": "10" }
+    {
+      "id": "1",
+      "estudiante": "Carlos Vera",
+      "contenido": "Excelente iniciativa para la FCMF, el café estuvo muy bueno.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "1"
+    },
+    {
+      "id": "2",
+      "estudiante": "Ana Solis",
+      "contenido": "Hubiera sido bueno contar con más opciones de pan para los estudiantes.",
+      "calificacion": 4,
+      "anonimo": true,
+      "eventoId": "1"
+    },
+    {
+      "id": "3",
+      "estudiante": "Kevin Mora",
+      "contenido": "Muy dinámico, ideal para arrancar la jornada académica con energía.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "1"
+    },
+    {
+      "id": "4",
+      "estudiante": "Juan Bajaña",
+      "contenido": "El concurso de la Hackathon estuvo muy reñido, excelente organización.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "2"
+    },
+    {
+      "id": "5",
+      "estudiante": "Diana Macías",
+      "contenido": "Faltaron más tomacorrientes en el laboratorio, pero los mentores ayudaron muchísimo.",
+      "calificacion": 4,
+      "anonimo": false,
+      "eventoId": "2"
+    },
+    {
+      "id": "6",
+      "estudiante": "Milena Cedeño",
+      "contenido": "Llegué un poco tarde al taller y ya se habían terminado las guías impresas.",
+      "calificacion": 3,
+      "anonimo": false,
+      "eventoId": "3"
+    },
+    {
+      "id": "7",
+      "estudiante": "Bryan Lucas",
+      "contenido": "El mejor taller de Angular del semestre. Todo muy directo al grano.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "3"
+    },
+    {
+      "id": "8",
+      "estudiante": "Pedro Alarcón",
+      "contenido": "Faltó material de apoyo digital. Sería bueno que compartan los slides al correo institucional.",
+      "calificacion": 3,
+      "anonimo": true,
+      "eventoId": "4"
+    },
+    {
+      "id": "9",
+      "estudiante": "Luis Chiriboga",
+      "contenido": "Temas muy actuales sobre Phishing. Excelente el expositor invitado.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "4"
+    },
+    {
+      "id": "10",
+      "estudiante": "Gisella Ortiz",
+      "contenido": "Los proyectos químicos presentados tenían un gran nivel técnico.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": null
+    },
+    {
+      "id": "11",
+      "estudiante": "Jorge Intriago",
+      "contenido": "Un poco desorganizado el orden de los stands, pero buena experiencia.",
+      "calificacion": 4,
+      "anonimo": false,
+      "eventoId": null
+    },
+    {
+      "id": "12",
+      "estudiante": "Robert Castro",
+      "contenido": "El debate sobre chatGPT dejó muchas dudas aclaradas en investigación.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "6"
+    },
+    {
+      "id": "13",
+      "estudiante": "Elena Mendoza",
+      "contenido": "Interesante enfoque, aunque el auditorio se llenó demasiado rápido.",
+      "calificacion": 4,
+      "anonimo": true,
+      "eventoId": "6"
+    },
+    {
+      "id": "14",
+      "estudiante": "William Solórzano",
+      "contenido": "Los ejercicios de uniones y triggers sirvieron para pasar el examen de bases.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "7"
+    },
+    {
+      "id": "15",
+      "estudiante": "Doménica Vélez",
+      "contenido": "Gran nivel de los jurados de la Facultad de Jurisprudencia. Formativo.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "8"
+    },
+    {
+      "id": "16",
+      "estudiante": "Anthony Pita",
+      "contenido": "Explicación muy superficial de AWS, debió ser más práctico.",
+      "calificacion": 3,
+      "anonimo": false,
+      "eventoId": "9"
+    },
+    {
+      "id": "17",
+      "estudiante": "María José Alva",
+      "contenido": "Unity es increíble, salí con mi minijuego funcional en solo tres horas.",
+      "calificacion": 5,
+      "anonimo": false,
+      "eventoId": "10"
+    },
+    {
+      "id": "18",
+      "estudiante": "Cristhian Barros",
+      "contenido": "El profesor dominaba mucho el tema de animaciones 2D.",
+      "calificacion": 5,
+      "anonimo": true,
+      "eventoId": "10"
+    }
   ],
   "inscripciones": [
-    { "id": "1", "eventoId": "1", "nombre": "Allan Erazo", "cedula": "0999999999" },
-    { "id": "2", "eventoId": "1", "nombre": "Josue Idrovo", "cedula": "0999999999" }
+    {
+      "id": "1",
+      "eventoId": "1",
+      "nombre": "Allan Erazo",
+      "cedula": "0999999999"
+    },
+    {
+      "id": "2",
+      "eventoId": "1",
+      "nombre": "Josue Idrovo",
+      "cedula": "0999999999"
+    },
+    {
+      "eventoId": null,
+      "nombre": "Allan Erazo",
+      "cedula": "0999999999",
+      "id": "DVCznXB-NqY"
+    },
+    {
+      "eventoId": null,
+      "nombre": "Allan Erazo",
+      "cedula": "0999999999",
+      "id": "EK9t5p2mPSw"
+    },
+    {
+      "eventoId": null,
+      "nombre": "Allan Erazo",
+      "cedula": "0999999999",
+      "id": "KQkHQC29IKs"
+    }
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }
