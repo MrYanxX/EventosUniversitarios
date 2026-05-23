@@ -1,0 +1,99 @@
+<div class="dashboard-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">EventosUG</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" routerLink="/dashboard-organizador">
+        <span class="nav-icon">📊</span> Mi Dashboard
+      </a>
+      <a class="nav-item" routerLink="/organizadores">
+        <span class="nav-icon">👥</span> Organizadores
+      </a>
+      <a class="nav-item" routerLink="/eventos">
+        <span class="nav-icon">📅</span> Ver Eventos
+      </a>
+      <a class="nav-item" routerLink="/home">
+        <span class="nav-icon">🏠</span> Inicio
+      </a>
+    </nav>
+
+    <button class="btn-logout" (click)="logout()">
+      <span>🚪</span> Cerrar sesión
+    </button>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+
+    <!-- Bienvenida -->
+    <div class="welcome-banner">
+      <div>
+        <h2 class="mb-1">Bienvenido, {{ organizador?.nombre }} 👋</h2>
+        <p class="mb-0 opacity-75">{{ organizador?.cargo }} · {{ organizador?.facultad }}</p>
+      </div>
+      <div class="welcome-badge">
+        <span class="badge-org">Organizador</span>
+      </div>
+    </div>
+
+    <!-- Tarjetas de perfil -->
+    <div class="row g-3 mb-4">
+
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-icon bg-primary-soft">📧</div>
+          <div>
+            <div class="stat-label">Correo</div>
+            <div class="stat-value">{{ organizador?.email }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-icon bg-success-soft">📞</div>
+          <div>
+            <div class="stat-label">Teléfono</div>
+            <div class="stat-value">{{ organizador?.telefono }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-icon bg-warning-soft">🏛️</div>
+          <div>
+            <div class="stat-label">Facultad</div>
+            <div class="stat-value">{{ organizador?.facultad }}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECCIÓN DE EVENTOS DEL ORGANIZADOR
+         Aquí va la tabla de eventos creados y el botón para crear uno nuevo.
+         ============================================================ -->
+    <div class="events-section">
+      <div class="events-section-header">
+        <h4 class="mb-0">Mis Eventos</h4>
+        <!-- BOTÓN CREAR EVENTO: añade aquí el botón para crear evento -->
+      </div>
+      <div class="events-section-body">
+        <!-- TABLA DE EVENTOS: añade aquí la tabla con los eventos del organizador -->
+        <p class="text-muted text-center py-4">
+          Aquí se mostrarán los eventos que hayas creado.
+        </p>
+      </div>
+    </div>
+    <!-- FIN SECCIÓN DE EVENTOS -->
+
+  </main>
+
+</div>

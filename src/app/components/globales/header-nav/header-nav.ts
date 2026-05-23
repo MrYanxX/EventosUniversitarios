@@ -15,6 +15,10 @@ export class HeaderNav {
     return this.authService.isLoggedIn();
   }
 
+  get esOrganizador(): boolean {
+    return this.authService.isOrganizador();
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']);

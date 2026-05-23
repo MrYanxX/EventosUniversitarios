@@ -1,0 +1,11 @@
+.card-header {
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.table th {
+  white-space: nowrap;
+}
+
+.form-check-input {
+  cursor: pointer;
+}

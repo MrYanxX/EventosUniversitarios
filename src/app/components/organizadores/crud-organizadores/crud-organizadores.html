@@ -1,0 +1,213 @@
+<div class="container mt-4 mb-5">
+
+  <div class="d-flex align-items-center mb-4">
+    <h2 class="mb-0 me-3">Gestión de Organizadores</h2>
+    <span class="badge bg-secondary">{{ orgService.getAll().length }} registrados</span>
+  </div>
+
+  <app-alerta *ngIf="mensaje" [mensaje]="mensaje" [tipo]="tipoMensaje"></app-alerta>
+
+  <!-- Formulario -->
+  <div class="card shadow mb-4">
+    <div class="card-header bg-dark text-white">
+      <h5 class="mb-0">{{ editando ? 'Editar Organizador' : 'Nuevo Organizador' }}</h5>
+    </div>
+    <div class="card-body">
+
+      <form #orgForm="ngForm" (ngSubmit)="guardar(orgForm)">
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Nombre completo *</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="nuevoOrg.nombre"
+              name="nombre"
+              required
+              minlength="3"
+              placeholder="Ej. María García"
+            />
+            <div *ngIf="orgForm.submitted && orgForm.controls['nombre']?.invalid" class="text-danger small mt-1">
+              El nombre es obligatorio (mínimo 3 caracteres).
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Correo institucional *</label>
+            <input
+              type="email"
+              class="form-control"
+              [(ngModel)]="nuevoOrg.email"
+              name="email"
+              required
+              email
+              placeholder="usuario@ug.edu.ec"
+            />
+            <div *ngIf="orgForm.submitted && orgForm.controls['email']?.invalid" class="text-danger small mt-1">
+              Ingrese un correo válido.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Contraseña *</label>
+            <div class="input-group">
+              <input
+                [type]="mostrarPassword ? 'text' : 'password'"
+                class="form-control"
+                [(ngModel)]="nuevoOrg.password"
+                name="password"
+                required
+                minlength="4"
+                placeholder="Mínimo 4 caracteres"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="mostrarPassword = !mostrarPassword"
+              >
+                {{ mostrarPassword ? 'Ocultar' : 'Ver' }}
+              </button>
+            </div>
+            <div *ngIf="orgForm.submitted && orgForm.controls['password']?.invalid" class="text-danger small mt-1">
+              La contraseña es obligatoria (mínimo 4 caracteres).
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Facultad *</label>
+            <select
+              class="form-select"
+              [(ngModel)]="nuevoOrg.facultad"
+              name="facultad"
+              required
+            >
+              <option value="">— Seleccione facultad —</option>
+              <option>FCMF</option>
+              <option>FING</option>
+              <option>FACS</option>
+              <option>FCCEE</option>
+              <option>FAPUR</option>
+              <option>Club Estudiantil</option>
+            </select>
+            <div *ngIf="orgForm.submitted && orgForm.controls['facultad']?.invalid" class="text-danger small mt-1">
+              Seleccione una facultad.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Cargo *</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="nuevoOrg.cargo"
+              name="cargo"
+              required
+              placeholder="Ej. Docente Titular, Director de Club"
+            />
+            <div *ngIf="orgForm.submitted && orgForm.controls['cargo']?.invalid" class="text-danger small mt-1">
+              El cargo es obligatorio.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Teléfono *</label>
+            <input
+              type="tel"
+              class="form-control"
+              [(ngModel)]="nuevoOrg.telefono"
+              name="telefono"
+              required
+              pattern="[0-9]{7,10}"
+              placeholder="Ej. 0991234567"
+            />
+            <div *ngIf="orgForm.submitted && orgForm.controls['telefono']?.invalid" class="text-danger small mt-1">
+              Ingrese un teléfono válido (7–10 dígitos).
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="activoCheck"
+                [(ngModel)]="nuevoOrg.activo"
+                name="activo"
+              />
+              <label class="form-check-label fw-semibold" for="activoCheck">
+                Cuenta activa
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            {{ editando ? 'Actualizar' : 'Registrar' }}
+          </button>
+          <button *ngIf="editando" type="button" class="btn btn-secondary" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Buscador -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar por nombre, correo o facultad..."
+      [(ngModel)]="busqueda"
+    />
+  </div>
+
+  <!-- Tabla -->
+  <div class="card shadow">
+    <div class="card-body p-0">
+      <table class="table table-bordered table-hover table-striped mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Facultad</th>
+            <th>Cargo</th>
+            <th>Teléfono</th>
+            <th class="text-center">Estado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="organizadoresFiltrados.length === 0">
+            <td colspan="8" class="text-center text-muted py-3">No se encontraron organizadores.</td>
+          </tr>
+          <tr *ngFor="let org of organizadoresFiltrados; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ org.nombre }}</td>
+            <td>{{ org.email }}</td>
+            <td>{{ org.facultad }}</td>
+            <td>{{ org.cargo }}</td>
+            <td>{{ org.telefono }}</td>
+            <td class="text-center">
+              <span [class]="org.activo ? 'badge bg-success' : 'badge bg-secondary'">
+                {{ org.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm me-1" (click)="editar(org)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="eliminar(org.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
