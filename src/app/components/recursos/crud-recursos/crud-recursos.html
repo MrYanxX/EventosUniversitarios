@@ -1,0 +1,126 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">Gestión de Recursos</h2>
+
+  <app-alerta *ngIf="mensaje" [mensaje]="mensaje" [tipo]="tipoMensaje"></app-alerta>
+
+  <form #recursoForm="ngForm" (ngSubmit)="guardarRecurso()" class="card p-4 shadow">
+
+    <div class="mb-3">
+
+      <label>Nombre</label>
+
+      <input type="text" class="form-control" [(ngModel)]="nuevoRecurso.nombre" name="nombre" required minlength="3" />
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>Tipo</label>
+
+      <select class="form-select" [(ngModel)]="nuevoRecurso.tipo" name="tipo" required>
+
+        <option value="">Seleccione</option>
+        <option>Audio</option>
+        <option>Video</option>
+        <option>Tecnología</option>
+        <option>Mobiliario</option>
+
+      </select>
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>Cantidad</label>
+
+      <input type="number" class="form-control" [(ngModel)]="nuevoRecurso.cantidad" name="cantidad" required min="1" />
+
+    </div>
+
+    <div class="form-check mb-3">
+
+      <input type="checkbox" class="form-check-input" [(ngModel)]="nuevoRecurso.disponible" name="disponible" />
+
+      <label class="form-check-label">
+
+        Disponible
+
+      </label>
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>Descripción</label>
+
+      <textarea class="form-control" [(ngModel)]="nuevoRecurso.descripcion" name="descripcion" required></textarea>
+
+    </div>
+
+    <button class="btn btn-success" [disabled]="recursoForm.invalid">
+
+      {{ editando ? 'Actualizar' : 'Guardar' }}
+
+    </button>
+
+  </form>
+
+  <input type="text" class="form-control mb-3 mt-4" placeholder="Buscar recurso..." [(ngModel)]="busqueda"
+    name="busqueda" />
+
+  <table class="table table-bordered table-hover table-striped mt-4">
+
+    <thead class="table-dark">
+
+      <tr>
+
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Cantidad</th>
+        <th>Disponible</th>
+        <th>Acciones</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let recurso of recursosFiltrados">
+
+        <td>{{ recurso.nombre }}</td>
+
+        <td>{{ recurso.tipo }}</td>
+
+        <td>{{ recurso.cantidad }}</td>
+
+        <td>
+
+          {{ recurso.disponible ? 'Sí' : 'No' }}
+
+        </td>
+
+        <td>
+
+          <button class="btn btn-warning btn-sm me-2" (click)="editarRecurso(recurso)">
+
+            Editar
+
+          </button>
+
+          <button class="btn btn-danger btn-sm" (click)="eliminarRecurso(recurso.id)">
+
+            Eliminar
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

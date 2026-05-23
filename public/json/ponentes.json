@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan Pérez",
+    "especialidad": "Inteligencia Artificial",
+    "correo": "juan.perez@gmail.com",
+    "telefono": "0991111111",
+    "institucion": "Universidad de Guayaquil",
+    "biografia": "Especialista en IA y Machine Learning."
+  },
+  {
+    "id": 2,
+    "nombre": "María Torres",
+    "especialidad": "Desarrollo Web",
+    "correo": "maria.torres@gmail.com",
+    "telefono": "0992222222",
+    "institucion": "ESPOL",
+    "biografia": "Experta en Angular y frontend."
+  },
+  {
+    "id": 3,
+    "nombre": "Carlos Mena",
+    "especialidad": "Ciberseguridad",
+    "correo": "carlos.mena@gmail.com",
+    "telefono": "0993333333",
+    "institucion": "Universidad Católica",
+    "biografia": "Analista de seguridad informática."
+  },
+  {
+    "id": 4,
+    "nombre": "Andrea Ruiz",
+    "especialidad": "Base de Datos",
+    "correo": "andrea.ruiz@gmail.com",
+    "telefono": "0994444444",
+    "institucion": "UG",
+    "biografia": "Administradora de bases de datos SQL."
+  },
+  {
+    "id": 5,
+    "nombre": "Luis Castro",
+    "especialidad": "Cloud Computing",
+    "correo": "luis.castro@gmail.com",
+    "telefono": "0995555555",
+    "institucion": "ESPOL",
+    "biografia": "Especialista en AWS y Azure."
+  },
+  {
+    "id": 6,
+    "nombre": "Paola León",
+    "especialidad": "Big Data",
+    "correo": "paola.leon@gmail.com",
+    "telefono": "0996666666",
+    "institucion": "Universidad Estatal",
+    "biografia": "Investigadora en análisis de datos."
+  },
+  {
+    "id": 7,
+    "nombre": "Miguel Vera",
+    "especialidad": "Desarrollo Móvil",
+    "correo": "miguel.vera@gmail.com",
+    "telefono": "0997777777",
+    "institucion": "UG",
+    "biografia": "Desarrollador Android y Flutter."
+  },
+  {
+    "id": 8,
+    "nombre": "Fernanda Gómez",
+    "especialidad": "UX/UI",
+    "correo": "fernanda.gomez@gmail.com",
+    "telefono": "0981111111",
+    "institucion": "ESPOL",
+    "biografia": "Diseñadora de experiencia de usuario."
+  },
+  {
+    "id": 9,
+    "nombre": "Jorge Paredes",
+    "especialidad": "Redes",
+    "correo": "jorge.paredes@gmail.com",
+    "telefono": "0982222222",
+    "institucion": "UG",
+    "biografia": "Ingeniero especialista en redes."
+  },
+  {
+    "id": 10,
+    "nombre": "Diana Salazar",
+    "especialidad": "Testing",
+    "correo": "diana.salazar@gmail.com",
+    "telefono": "0983333333",
+    "institucion": "Universidad Católica",
+    "biografia": "QA Automation Engineer."
+  },
+  {
+    "id": 11,
+    "nombre": "Kevin Zambrano",
+    "especialidad": "DevOps",
+    "correo": "kevin.zambrano@gmail.com",
+    "telefono": "0984444444",
+    "institucion": "ESPOL",
+    "biografia": "Especialista CI/CD."
+  },
+  {
+    "id": 12,
+    "nombre": "Valeria Molina",
+    "especialidad": "Frontend",
+    "correo": "valeria.molina@gmail.com",
+    "telefono": "0985555555",
+    "institucion": "UG",
+    "biografia": "Desarrolladora React y Angular."
+  },
+  {
+    "id": 13,
+    "nombre": "José Cabrera",
+    "especialidad": "Backend",
+    "correo": "jose.cabrera@gmail.com",
+    "telefono": "0986666666",
+    "institucion": "ESPOL",
+    "biografia": "Experto en APIs REST."
+  },
+  {
+    "id": 14,
+    "nombre": "Natalia Flores",
+    "especialidad": "Machine Learning",
+    "correo": "natalia.flores@gmail.com",
+    "telefono": "0987777777",
+    "institucion": "UG",
+    "biografia": "Investigadora en aprendizaje automático."
+  },
+  {
+    "id": 15,
+    "nombre": "Ricardo Muñoz",
+    "especialidad": "Blockchain",
+    "correo": "ricardo.munoz@gmail.com",
+    "telefono": "0971111111",
+    "institucion": "Universidad Estatal",
+    "biografia": "Desarrollador blockchain."
+  },
+  {
+    "id": 16,
+    "nombre": "Camila Herrera",
+    "especialidad": "IoT",
+    "correo": "camila.herrera@gmail.com",
+    "telefono": "0972222222",
+    "institucion": "ESPOL",
+    "biografia": "Especialista en Internet de las Cosas."
+  },
+  {
+    "id": 17,
+    "nombre": "Daniel Romero",
+    "especialidad": "Python",
+    "correo": "daniel.romero@gmail.com",
+    "telefono": "0973333333",
+    "institucion": "UG",
+    "biografia": "Instructor de programación Python."
+  },
+  {
+    "id": 18,
+    "nombre": "Sofía Villacrés",
+    "especialidad": "Data Science",
+    "correo": "sofia.villacres@gmail.com",
+    "telefono": "0974444444",
+    "institucion": "ESPOL",
+    "biografia": "Científica de datos."
+  },
+  {
+    "id": 19,
+    "nombre": "Esteban Lara",
+    "especialidad": "Linux",
+    "correo": "esteban.lara@gmail.com",
+    "telefono": "0975555555",
+    "institucion": "UG",
+    "biografia": "Administrador de sistemas Linux."
+  },
+  {
+    "id": 20,
+    "nombre": "Gabriela Núñez",
+    "especialidad": "Scrum",
+    "correo": "gabriela.nunez@gmail.com",
+    "telefono": "0976666666",
+    "institucion": "ESPOL",
+    "biografia": "Scrum Master certificada."
+  }
+]

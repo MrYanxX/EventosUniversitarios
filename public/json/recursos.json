@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "nombre": "Proyector Epson",
+    "tipo": "Video",
+    "cantidad": 2,
+    "disponible": true,
+    "descripcion": "Proyector HD para presentaciones."
+  },
+  {
+    "id": 2,
+    "nombre": "Micrófono inalámbrico",
+    "tipo": "Audio",
+    "cantidad": 5,
+    "disponible": true,
+    "descripcion": "Micrófonos para conferencias."
+  },
+  {
+    "id": 3,
+    "nombre": "Laptop Dell",
+    "tipo": "Tecnología",
+    "cantidad": 3,
+    "disponible": true,
+    "descripcion": "Laptop para expositores."
+  },
+  {
+    "id": 4,
+    "nombre": "Pantalla LED",
+    "tipo": "Video",
+    "cantidad": 1,
+    "disponible": false,
+    "descripcion": "Pantalla principal del evento."
+  },
+  {
+    "id": 5,
+    "nombre": "Parlantes JBL",
+    "tipo": "Audio",
+    "cantidad": 4,
+    "disponible": true,
+    "descripcion": "Sistema de sonido."
+  },
+  {
+    "id": 6,
+    "nombre": "Sillas plegables",
+    "tipo": "Mobiliario",
+    "cantidad": 100,
+    "disponible": true,
+    "descripcion": "Sillas para asistentes."
+  },
+  {
+    "id": 7,
+    "nombre": "Mesa de registro",
+    "tipo": "Mobiliario",
+    "cantidad": 4,
+    "disponible": true,
+    "descripcion": "Mesas para acreditación."
+  },
+  {
+    "id": 8,
+    "nombre": "Router WiFi",
+    "tipo": "Tecnología",
+    "cantidad": 2,
+    "disponible": true,
+    "descripcion": "Conexión inalámbrica."
+  },
+  {
+    "id": 9,
+    "nombre": "Extensión eléctrica",
+    "tipo": "Tecnología",
+    "cantidad": 10,
+    "disponible": true,
+    "descripcion": "Extensiones para equipos."
+  },
+  {
+    "id": 10,
+    "nombre": "Cámara Canon",
+    "tipo": "Video",
+    "cantidad": 2,
+    "disponible": false,
+    "descripcion": "Grabación del evento."
+  },
+  {
+    "id": 11,
+    "nombre": "Trípode",
+    "tipo": "Video",
+    "cantidad": 3,
+    "disponible": true,
+    "descripcion": "Soporte para cámaras."
+  },
+  {
+    "id": 12,
+    "nombre": "Puntero láser",
+    "tipo": "Tecnología",
+    "cantidad": 6,
+    "disponible": true,
+    "descripcion": "Control para presentaciones."
+  },
+  {
+    "id": 13,
+    "nombre": "Aire acondicionado portátil",
+    "tipo": "Mobiliario",
+    "cantidad": 2,
+    "disponible": true,
+    "descripcion": "Climatización del salón."
+  },
+  {
+    "id": 14,
+    "nombre": "Impresora HP",
+    "tipo": "Tecnología",
+    "cantidad": 1,
+    "disponible": true,
+    "descripcion": "Impresión de credenciales."
+  },
+  {
+    "id": 15,
+    "nombre": "Tablet Samsung",
+    "tipo": "Tecnología",
+    "cantidad": 5,
+    "disponible": false,
+    "descripcion": "Registro digital de asistentes."
+  },
+  {
+    "id": 16,
+    "nombre": "Luces LED",
+    "tipo": "Iluminación",
+    "cantidad": 8,
+    "disponible": true,
+    "descripcion": "Iluminación para escenario."
+  },
+  {
+    "id": 17,
+    "nombre": "Tarima modular",
+    "tipo": "Mobiliario",
+    "cantidad": 1,
+    "disponible": true,
+    "descripcion": "Escenario para ponentes."
+  },
+  {
+    "id": 18,
+    "nombre": "Ventiladores industriales",
+    "tipo": "Mobiliario",
+    "cantidad": 3,
+    "disponible": true,
+    "descripcion": "Ventilación adicional."
+  },
+  {
+    "id": 19,
+    "nombre": "Cable HDMI",
+    "tipo": "Tecnología",
+    "cantidad": 15,
+    "disponible": true,
+    "descripcion": "Conexión de video."
+  },
+  {
+    "id": 20,
+    "nombre": "UPS APC",
+    "tipo": "Tecnología",
+    "cantidad": 2,
+    "disponible": true,
+    "descripcion": "Respaldo de energía."
+  }
+]

@@ -1,0 +1,99 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">Gestión de Ponentes</h2>
+
+  <app-alerta *ngIf="mensaje" [mensaje]="mensaje" [tipo]="tipoMensaje"></app-alerta>
+
+  <form #ponenteForm="ngForm" (ngSubmit)="guardarPonente()" class="card p-4 shadow">
+
+    <div class="mb-3">
+      <label>Nombre</label>
+      <input type="text" class="form-control" [(ngModel)]="nuevoPonente.nombre" name="nombre" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Especialidad</label>
+
+      <select class="form-select" [(ngModel)]="nuevoPonente.especialidad" name="especialidad" required>
+
+        <option value="">Seleccione</option>
+        <option>Inteligencia Artificial</option>
+        <option>Desarrollo Web</option>
+        <option>Base de Datos</option>
+
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Correo</label>
+
+      <input type="email" class="form-control" [(ngModel)]="nuevoPonente.correo" name="correo" required email>
+    </div>
+
+    <div class="mb-3">
+      <label>Teléfono</label>
+
+      <input type="text" class="form-control" [(ngModel)]="nuevoPonente.telefono" name="telefono" required
+        minlength="3">
+    </div>
+
+    <div class="mb-3">
+      <label>Institución</label>
+
+      <input type="text" class="form-control" [(ngModel)]="nuevoPonente.institucion" name="institucion">
+    </div>
+
+    <div class="mb-3">
+      <label>Biografía</label>
+
+      <textarea class="form-control" [(ngModel)]="nuevoPonente.biografia" name="biografia"></textarea>
+    </div>
+
+    <button class="btn btn-primary" [disabled]="ponenteForm.invalid">
+      {{ editando ? 'Actualizar' : 'Guardar' }}
+    </button>
+
+  </form>
+
+  <input type="text" class="form-control mb-3" placeholder="Buscar ponente..." [(ngModel)]="busqueda" name="busqueda" />
+
+  <table class="table table-bordered table-hover table-striped mt-4">
+
+    <thead class="table-dark">
+
+      <tr>
+        <th>Nombre</th>
+        <th>Especialidad</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let ponente of ponentesFiltrados">
+
+        <td>{{ponente.nombre}}</td>
+        <td>{{ponente.especialidad}}</td>
+        <td>{{ponente.correo}}</td>
+
+        <td>
+
+          <button class="btn btn-warning btn-sm me-2" (click)="editarPonente(ponente)">
+            Editar
+          </button>
+
+          <button class="btn btn-danger btn-sm" (click)="eliminarPonente(ponente.id)">
+            Eliminar
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
