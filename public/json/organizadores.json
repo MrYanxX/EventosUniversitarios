@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "nombre": "Carlos Mendoza",
+    "email": "carlos@ug.edu.ec",
+    "password": "1234",
+    "facultad": "FCMF",
+    "cargo": "Docente Titular",
+    "telefono": "0991234567",
+    "activo": true
+  },
+  {
+    "id": 2,
+    "nombre": "Ana Torres",
+    "email": "ana.torres@ug.edu.ec",
+    "password": "1234",
+    "facultad": "FING",
+    "cargo": "Coordinadora de Club",
+    "telefono": "0987654321",
+    "activo": true
+  },
+  {
+    "id": 3,
+    "nombre": "Roberto Silva",
+    "email": "roberto.silva@ug.edu.ec",
+    "password": "1234",
+    "facultad": "FACS",
+    "cargo": "Director Académico",
+    "telefono": "0976543210",
+    "activo": true
+  },
+  {
+    "id": 4,
+    "nombre": "María López",
+    "email": "maria.lopez@ug.edu.ec",
+    "password": "1234",
+    "facultad": "FCMF",
+    "cargo": "Jefa de Departamento",
+    "telefono": "0965432109",
+    "activo": true
+  },
+  {
+    "id": 5,
+    "nombre": "Juan Pérez",
+    "email": "juan.perez@ug.edu.ec",
+    "password": "1234",
+    "facultad": "FING",
+    "cargo": "Docente Investigador",
+    "telefono": "0954321098",
+    "activo": false
+  }
+]

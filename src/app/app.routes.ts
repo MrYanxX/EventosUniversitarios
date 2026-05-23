@@ -11,6 +11,9 @@ import { CuentaComponent } from './components/globales/cuenta/cuenta';
 import { CrudPonentes } from './components/ponentes/crud-ponentes/crud-ponentes';
 import { CrudRecursos } from './components/recursos/crud-recursos/crud-recursos';
 
+import { CrudOrganizadores } from './components/organizadores/crud-organizadores/crud-organizadores';
+import { DashboardOrganizador } from './components/organizadores/dashboard-organizador/dashboard-organizador';
+
 export const routes: Routes = [
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,6 +26,8 @@ export const routes: Routes = [
     { path: 'ponentes', component: CrudPonentes },
     { path: 'recursos', component: CrudRecursos },
     { path: 'cuenta', component: CuentaComponent },
+    { path: 'organizadores', component: CrudOrganizadores },
+    { path: 'dashboard-organizador', component: DashboardOrganizador },
     { path: '**', redirectTo: 'home' }
 
 ]; 

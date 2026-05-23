@@ -2,17 +2,39 @@
   <h2 class="mb-4">Mi Cuenta</h2>
 
   @if (authService.isLoggedIn()) {
-    <div class="card p-4 mb-4">
-      <h4>Bienvenido, {{ authService.getCurrentUser()?.nombre }}</h4>
-      <p>Email: {{ authService.getCurrentUser()?.email }}</p>
-      <p>Carrera: {{ authService.getCurrentUser()?.carrera || 'No especificada' }}</p>
-      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
-    </div>
+
+    @if (authService.isOrganizador()) {
+      <div class="card p-4 mb-4 border-0 shadow-sm">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center" style="width:56px;height:56px;font-size:1.5rem;">🎓</div>
+          <div>
+            <h4 class="mb-0">{{ authService.getCurrentUser()?.nombre }}</h4>
+            <span class="badge bg-dark">Organizador</span>
+          </div>
+        </div>
+        <p class="mb-1"><strong>Correo:</strong> {{ authService.getCurrentUser()?.email }}</p>
+        <div class="mt-3 d-flex gap-2">
+          <a routerLink="/dashboard-organizador" class="btn btn-dark">Ir a mi Dashboard</a>
+          <button class="btn btn-outline-danger" (click)="logout()">Cerrar sesión</button>
+        </div>
+      </div>
+    } @else {
+      <div class="card p-4 mb-4 border-0 shadow-sm">
+        <h4>Bienvenido, {{ authService.getCurrentUser()?.nombre }}</h4>
+        <p>Email: {{ authService.getCurrentUser()?.email }}</p>
+        <p>Carrera: {{ $any(authService.getCurrentUser())?.carrera || 'No especificada' }}</p>
+        <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
+      </div>
+    }
+
   } @else {
+
     <div class="row g-4">
-      <section class="col-md-6">
-        <div class="card p-4 h-100">
-          <h4>Iniciar sesión</h4>
+
+      <!-- Login estudiante -->
+      <section class="col-md-4">
+        <div class="card p-4 h-100 border-0 shadow-sm">
+          <h5 class="mb-3">Iniciar sesión (Estudiante)</h5>
           <div class="mb-3">
             <label class="form-label">Correo</label>
             <input class="form-control" type="email" [(ngModel)]="loginEmail" />
@@ -28,9 +50,10 @@
         </div>
       </section>
 
-      <section class="col-md-6">
-        <div class="card p-4 h-100">
-          <h4>Registro de estudiante</h4>
+      <!-- Registro estudiante -->
+      <section class="col-md-4">
+        <div class="card p-4 h-100 border-0 shadow-sm">
+          <h5 class="mb-3">Registro de estudiante</h5>
           <div class="mb-3">
             <label class="form-label">Nombre</label>
             <input class="form-control" type="text" [(ngModel)]="regNombre" />
@@ -47,12 +70,34 @@
             <label class="form-label">Carrera</label>
             <input class="form-control" type="text" [(ngModel)]="regCarrera" />
           </div>
-          <button class="btn btn-success" (click)="register()">Registrar estudiante</button>
+          <button class="btn btn-success" (click)="register()">Registrar</button>
           @if (mensajeRegistro) {
             <div class="alert alert-info mt-3">{{ mensajeRegistro }}</div>
           }
         </div>
       </section>
+
+      <!-- Login organizador -->
+      <section class="col-md-4">
+        <div class="card p-4 h-100 border-0 shadow-sm">
+          <h5 class="mb-3">Acceso Organizadores</h5>
+          <p class="text-muted small">Si eres organizador registrado, ingresa con tus credenciales.</p>
+          <div class="mb-3">
+            <label class="form-label">Correo institucional</label>
+            <input class="form-control" type="email" [(ngModel)]="orgEmail" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input class="form-control" type="password" [(ngModel)]="orgPassword" />
+          </div>
+          <button class="btn btn-dark" (click)="loginOrganizador()">Ingresar como Organizador</button>
+          @if (mensajeOrg) {
+            <div class="alert alert-warning mt-3">{{ mensajeOrg }}</div>
+          }
+        </div>
+      </section>
+
     </div>
+
   }
 </div>

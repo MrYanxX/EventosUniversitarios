@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
+import { Organizador } from '../../../models/organizador.model';
+import { OrganizerUser } from '../../../models/usuarios';
 
 @Component({
   selector: 'app-cuenta',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './cuenta.html',
   styleUrl: './cuenta.css',
 })
@@ -20,10 +23,18 @@ export class CuentaComponent {
   regPassword = '';
   regCarrera = '';
 
+  orgEmail = '';
+  orgPassword = '';
+
   mensajeLogin = '';
   mensajeRegistro = '';
+  mensajeOrg = '';
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   login(): void {
     this.mensajeLogin = '';
@@ -59,6 +70,34 @@ export class CuentaComponent {
     if (result.success) {
       this.router.navigate(['/home']);
     }
+  }
+
+  loginOrganizador(): void {
+    this.mensajeOrg = '';
+    if (!this.orgEmail || !this.orgPassword) {
+      this.mensajeOrg = 'Ingrese correo y contraseña.';
+      return;
+    }
+    this.http.get<Organizador[]>('json/organizadores.json').subscribe({
+      next: (lista) => {
+        const encontrado = lista.find(
+          o =>
+            o.email.toLowerCase() === this.orgEmail.toLowerCase() &&
+            o.password === this.orgPassword &&
+            o.activo
+        );
+        if (encontrado) {
+          const user: OrganizerUser = { ...encontrado, tipo: 'organizador' };
+          this.authService.loginOrganizador(user);
+          this.router.navigate(['/dashboard-organizador']);
+        } else {
+          this.mensajeOrg = 'Credenciales incorrectas o cuenta inactiva.';
+        }
+      },
+      error: () => {
+        this.mensajeOrg = 'Error al cargar organizadores. Verifique que json-server esté activo.';
+      }
+    });
   }
 
   logout(): void {

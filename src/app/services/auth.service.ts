@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StudentUser } from '../models/usuarios';
+import { AppUser, OrganizerUser, StudentUser } from '../models/usuarios';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -34,13 +34,21 @@ export class AuthService {
     localStorage.removeItem(this.activeUserKey);
   }
 
-  getCurrentUser(): StudentUser | null {
+  loginOrganizador(org: OrganizerUser): void {
+    localStorage.setItem(this.activeUserKey, JSON.stringify(org));
+  }
+
+  getCurrentUser(): AppUser | null {
     const raw = localStorage.getItem(this.activeUserKey);
-    return raw ? (JSON.parse(raw) as StudentUser) : null;
+    return raw ? (JSON.parse(raw) as AppUser) : null;
   }
 
   isLoggedIn(): boolean {
     return !!this.getCurrentUser();
+  }
+
+  isOrganizador(): boolean {
+    return this.getCurrentUser()?.tipo === 'organizador';
   }
 
   private getUsers(): StudentUser[] {
