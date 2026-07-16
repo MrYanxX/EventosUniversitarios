@@ -1,9 +1,10 @@
 export interface Evento {
-    id?:number | string;
-    organizadorId:number;
-    titulo:string;
-    tipoEventoId:string | number;
-    fecha:string;
-    detalles:string;
-    imagen:string;
+    id?: number; 
+    organizadorId: number;
+    titulo: string;
+    tipoEventoId: number; 
+    fecha: string;
+    detalles: string;
+    imagen: string;
 }
+
