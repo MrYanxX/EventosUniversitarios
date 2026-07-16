@@ -31,17 +31,17 @@ export class FormEventos implements OnInit {
   inscritosEliminados = signal<number[]>([]);
 
   isSaving = signal(false);
-  eventoEditandoId: number | null = null; 
+  eventoEditandoId: number | null = null;
 
-  redireccionarTrasModal: boolean = false; 
+  redireccionarTrasModal: boolean = false;
 
   @ViewChild(ModalInscripcion) modalHijo!: ModalInscripcion;
-  @ViewChild(ModalAlerta) modalAlerta!: ModalAlerta; 
+  @ViewChild(ModalAlerta) modalAlerta!: ModalAlerta;
 
   private servicioEventos = inject(ServEventsJsonService);
   private servicioInscripciones = inject(ServInscripcionesJsonService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute); 
+  private route = inject(ActivatedRoute);
 
   ngOnInit() {
     this.servicioEventos.getTipoEventos().subscribe((data) => this.tiposEvento.set(data));
@@ -80,7 +80,7 @@ export class FormEventos implements OnInit {
   abrirModalNuevo() {
     this.modalHijo.openForNew();
   }
-  
+
   abrirModalEditar(inscrito: Inscripcion, index: number) {
     this.modalHijo.openForEdit(inscrito, index);
   }
@@ -108,7 +108,7 @@ export class FormEventos implements OnInit {
   publicarEvento() {
     if (this.eventoForm.invalid) {
       this.eventoForm.markAllAsTouched();
-      this.redireccionarTrasModal = false; 
+      this.redireccionarTrasModal = false;
       this.modalAlerta.mostrar(
         'Atención',
         'Por favor, revisa los campos en rojo, incluyendo la imagen.',
@@ -120,15 +120,20 @@ export class FormEventos implements OnInit {
     this.isSaving.set(true);
     const formVal = this.eventoForm.value;
 
+    // Convertimos tipoEventoId explícitamente a Number
     const datosEvento: Evento = {
       titulo: formVal.titulo || '',
-      tipoEventoId: String(formVal.tipoEventoId),
+      tipoEventoId: Number(formVal.tipoEventoId),
       fecha: formVal.fecha || '',
       detalles: formVal.detalles || '',
       imagen: formVal.imagen || '',
-      organizadorId: 1, 
-      id: this.eventoEditandoId || Date.now(), 
+      organizadorId: 1,
     };
+
+    // Si estamos editando, asignamos el ID original. Si es nuevo, dejamos que el backend lo cree.
+    if (this.eventoEditandoId) {
+      datosEvento.id = this.eventoEditandoId;
+    }
 
     const peticionEvento = this.eventoEditandoId
       ? this.servicioEventos.updateEvento(datosEvento)
@@ -141,7 +146,7 @@ export class FormEventos implements OnInit {
       },
       error: (err) => {
         this.isSaving.set(false);
-        this.redireccionarTrasModal = false; 
+        this.redireccionarTrasModal = false;
         this.modalAlerta.mostrar('Error', 'Hubo un problema al guardar el evento.', true);
       },
     });
@@ -163,22 +168,28 @@ export class FormEventos implements OnInit {
       peticiones.push(this.servicioInscripciones.deleteInscripcion(idBorrado));
     });
 
-    this.redireccionarTrasModal = true; 
+    this.redireccionarTrasModal = true;
 
     if (peticiones.length > 0) {
       forkJoin(peticiones).subscribe(() => {
         this.isSaving.set(false);
-        this.modalAlerta.mostrar('¡Éxito!', 'El evento y sus inscritos se han guardado correctamente.');
+        this.modalAlerta.mostrar(
+          '¡Éxito!',
+          'El evento y sus inscritos se han guardado correctamente.',
+        );
       });
     } else {
       this.isSaving.set(false);
-      this.modalAlerta.mostrar('¡Éxito!', 'El evento se ha guardado correctamente (Sin inscritos).');
+      this.modalAlerta.mostrar(
+        '¡Éxito!',
+        'El evento se ha guardado correctamente (Sin inscritos).',
+      );
     }
   }
 
   manejarCierreModalAlerta() {
     if (this.redireccionarTrasModal) {
-      this.router.navigate(['/tabla-eventos']); 
+      this.router.navigate(['/tabla-eventos']);
     }
   }
 }
