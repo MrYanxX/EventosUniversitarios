@@ -63,7 +63,7 @@ export class ComentariosComponent implements OnInit {
       contenido: datosFormulario.contenido,
       calificacion: Number(datosFormulario.calificacion),
       anonimo: datosFormulario.anonimo,
-      eventoId: String(this.eventoId)
+      eventoId: Number(this.eventoId)
     };
 
     if (this.idComentarioEdicion !== null) {

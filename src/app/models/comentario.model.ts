@@ -1,8 +1,8 @@
 export interface Comentario {
-  id: string;      
+  id: number;      
   estudiante: string;
   contenido: string;
   calificacion: number; 
   anonimo: boolean;
-  eventoId: string;    
+  eventoId: number;    
 }
