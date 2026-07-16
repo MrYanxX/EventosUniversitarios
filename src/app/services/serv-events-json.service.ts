@@ -10,7 +10,7 @@ import { TipoEvento } from '../models/tipoEvento.model';
 export class ServEventsJsonService {
   private http = inject(HttpClient);
   // Reemplaza con tu puerto real de IIS Express o Kestrel local
-  private apiUrl = 'https://localhost:7124/api'; 
+  private apiUrl = 'https://localhost:7205/api'; 
 
   getEventos(): Observable<Evento[]> {
     return this.http.get<Evento[]>(`${this.apiUrl}/eventos`);
