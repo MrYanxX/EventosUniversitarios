@@ -103,13 +103,22 @@ export class CrudPonentes implements OnInit {
 
   eliminarPonente(id: number) {
 
-    this.ponentes = this.ponentes.filter(
-      p => p.id !== id
-    );
+    this.ponenteService.eliminarPonente(id).subscribe({
+      next: () => {
 
-    this.mensaje = 'Ponente eliminado';
+        this.mensaje = 'Ponente eliminado';
+        this.tipoMensaje = 'warning';
 
-    this.tipoMensaje = 'warning';
+        this.ponenteService.getPonentes().subscribe(data => {
+          this.ponentes = data;
+        });
+
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+
   }
 
   limpiarFormulario() {
