@@ -55,51 +55,51 @@ export class CrudPonentes implements OnInit {
 
   guardarPonente() {
 
-  if (this.editando) {
+    if (this.editando) {
 
-    this.ponenteService.actualizarPonente(this.nuevoPonente.id!, this.nuevoPonente)
-      .subscribe({
-        next: () => {
-          this.mensaje = 'Ponente actualizado correctamente';
-          this.tipoMensaje = 'success';
+      this.ponenteService.actualizarPonente(this.nuevoPonente.id!, this.nuevoPonente)
+        .subscribe({
+          next: () => {
+            this.mensaje = 'Ponente actualizado correctamente';
+            this.tipoMensaje = 'success';
 
-          this.ponenteService.getPonentes().subscribe(data => {
-            this.ponentes = data;
-          });
+            this.ponenteService.getPonentes().subscribe(data => {
+              this.ponentes = data;
+            });
 
-          this.editando = false;
-          this.limpiarFormulario();
-        },
-        error: (err) => {
-          console.error(err);
-          this.mensaje = 'Error al actualizar el ponente';
-          this.tipoMensaje = 'danger';
-        }
-      });
+            this.editando = false;
+            this.limpiarFormulario();
+          },
+          error: (err) => {
+            console.error(err);
+            this.mensaje = 'Error al actualizar el ponente';
+            this.tipoMensaje = 'danger';
+          }
+        });
 
-  } else {
+    } else {
 
-    this.ponenteService.crearPonente(this.nuevoPonente)
-      .subscribe({
-        next: () => {
-          this.mensaje = 'Ponente guardado correctamente';
-          this.tipoMensaje = 'success';
+      this.ponenteService.crearPonente(this.nuevoPonente)
+        .subscribe({
+          next: () => {
+            this.mensaje = 'Ponente guardado correctamente';
+            this.tipoMensaje = 'success';
 
-          this.ponenteService.getPonentes().subscribe(data => {
-            this.ponentes = data;
-          });
+            this.ponenteService.getPonentes().subscribe(data => {
+              this.ponentes = data;
+            });
 
-          this.limpiarFormulario();
-        },
-        error: (err) => {
-          console.error(err);
-          this.mensaje = 'Error al guardar el ponente';
-          this.tipoMensaje = 'danger';
-        }
-      });
+            this.limpiarFormulario();
+          },
+          error: (err) => {
+            console.error(err);
+            this.mensaje = 'Error al guardar el ponente';
+            this.tipoMensaje = 'danger';
+          }
+        });
 
+    }
   }
-}
 
   eliminarPonente(id: number) {
 
@@ -123,6 +123,14 @@ export class CrudPonentes implements OnInit {
       institucion: '',
       biografia: ''
     };
+
+  }
+
+  editarPonente(ponente: Ponente) {
+
+    this.nuevoPonente = { ...ponente };
+
+    this.editando = true;
 
   }
 
