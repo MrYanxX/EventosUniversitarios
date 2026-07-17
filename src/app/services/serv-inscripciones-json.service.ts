@@ -8,7 +8,7 @@ import { Inscripcion } from '../models/inscripcion.model';
 })
 export class ServInscripcionesJsonService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://localhost:5109/api'; 
+  private apiUrl = 'https://localhost:7205/api'; 
 
   getInscripcionesByEventoId(eventoId: number): Observable<Inscripcion[]> {
     return this.http.get<Inscripcion[]>(`${this.apiUrl}/inscripciones/evento/${eventoId}`);

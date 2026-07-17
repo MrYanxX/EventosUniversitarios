@@ -1,25 +1,20 @@
 <header class="bg-dark text-white p-3 d-flex justify-content-between align-items-center">
-
   <a class="text-white text-decoration-none" routerLink="/home">
-    <h4 class="mb-0">UG | Sistema de Eventos </h4>
+    <h4 class="mb-0">UG | Sistema de Eventos</h4>
   </a>
 
   <div class="d-flex align-items-center">
+    <a routerLink="/eventos" class="text-white me-3 text-decoration-none"> Eventos </a>
 
-    <a routerLink="/eventos" class="text-white me-3 text-decoration-none">
-      Eventos
+    <a routerLink="/inscripciones" class="text-white me-3 text-decoration-none">
+      Inscripciones
     </a>
 
-    <a routerLink="/ponentes" class="text-white me-3 text-decoration-none">
-      Ponentes
-    </a>
+    <a routerLink="/ponentes" class="text-white me-3 text-decoration-none"> Ponentes </a>
 
-    <a routerLink="/recursos" class="text-white me-3 text-decoration-none">
-      Recursos
-    </a>
+    <a routerLink="/recursos" class="text-white me-3 text-decoration-none"> Recursos </a>
 
     @if (estaLogueado) {
-
       @if (esOrganizador) {
         <a routerLink="/dashboard-organizador" class="text-white me-3 text-decoration-none">
           Mi Dashboard
@@ -28,23 +23,12 @@
           Organizadores
         </a>
       } @else {
-        <a routerLink="/cuenta" class="text-white me-3 text-decoration-none">
-          Mi Cuenta
-        </a>
+        <a routerLink="/cuenta" class="text-white me-3 text-decoration-none"> Mi Cuenta </a>
       }
 
-      <button class="btn btn-danger" (click)="logout()">
-        Salir
-      </button>
-
+      <button class="btn btn-danger" (click)="logout()">Salir</button>
     } @else {
-
-      <button class="btn btn-primary" (click)="irCuenta()">
-        Iniciar Sesión
-      </button>
-
+      <button class="btn btn-primary" (click)="irCuenta()">Iniciar Sesión</button>
     }
-
   </div>
-
 </header>
