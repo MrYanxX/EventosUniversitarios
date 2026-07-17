@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { RecursoService } from '../../../services/recurso.service';
 
 import { Recurso } from '../../../models/recurso.model';
 import { Alerta } from '../../globales/alerta/alerta';
@@ -23,20 +23,17 @@ export class CrudRecursos implements OnInit {
 
   tipoMensaje = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private recursoService: RecursoService) { }
 
   ngOnInit(): void {
 
-    this.http.get<Recurso[]>('json/recursos.json')
-      .subscribe(data => {
-
-        this.recursos = data;
-
-      });
+    this.recursoService.getRecursos().subscribe(data => {
+      this.recursos = data;
+    });
 
   }
 
-  get recursosFiltrados() {
+  recursosFiltrados() {
 
     return this.recursos.filter(r =>
       r.nombre.toLowerCase()
@@ -60,30 +57,49 @@ export class CrudRecursos implements OnInit {
 
     if (this.editando) {
 
-      const index = this.recursos.findIndex(
-        r => r.id === this.nuevoRecurso.id
-      );
+      this.recursoService.actualizarRecurso(this.nuevoRecurso.id, this.nuevoRecurso)
+        .subscribe({
+          next: () => {
 
-      this.recursos[index] = { ...this.nuevoRecurso };
+            this.mensaje = 'Recurso actualizado correctamente';
+            this.tipoMensaje = 'success';
 
-      this.editando = false;
+            this.recursoService.getRecursos().subscribe(data => {
+              this.recursos = data;
+            });
 
-      this.mensaje = 'Recurso actualizado correctamente';
+            this.editando = false;
+            this.limpiarFormulario();
 
-      this.tipoMensaje = 'success';
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
 
     } else {
 
-      this.nuevoRecurso.id = Date.now();
+      this.recursoService.crearRecurso(this.nuevoRecurso)
+        .subscribe({
+          next: () => {
 
-      this.recursos.push({ ...this.nuevoRecurso });
+            this.mensaje = 'Recurso guardado correctamente';
+            this.tipoMensaje = 'success';
 
-      this.mensaje = 'Recurso guardado correctamente';
+            this.recursoService.getRecursos().subscribe(data => {
+              this.recursos = data;
+            });
 
-      this.tipoMensaje = 'success';
+            this.limpiarFormulario();
+
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
+
     }
 
-    this.limpiarFormulario();
   }
 
   editarRecurso(recurso: Recurso) {
@@ -95,13 +111,23 @@ export class CrudRecursos implements OnInit {
 
   eliminarRecurso(id: number) {
 
-    this.recursos = this.recursos.filter(
-      r => r.id !== id
-    );
+    this.recursoService.eliminarRecurso(id)
+      .subscribe({
+        next: () => {
 
-    this.mensaje = 'Recurso eliminado';
+          this.mensaje = 'Recurso eliminado';
+          this.tipoMensaje = 'warning';
 
-    this.tipoMensaje = 'warning';
+          this.recursoService.getRecursos().subscribe(data => {
+            this.recursos = data;
+          });
+
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+
   }
 
   limpiarFormulario() {
@@ -118,3 +144,5 @@ export class CrudRecursos implements OnInit {
   }
 
 }
+
+
