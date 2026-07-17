@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { PonenteService } from '../../../services/ponente.service';
 
 import { Ponente } from '../../../models/ponente.model';
 import { Alerta } from '../../globales/alerta/alerta';
@@ -23,17 +23,13 @@ export class CrudPonentes implements OnInit {
 
   tipoMensaje = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private ponenteService: PonenteService) { }
 
   ngOnInit(): void {
 
-    this.http.get<Ponente[]>('json/ponentes.json')
-      .subscribe(data => {
-
-        this.ponentes = data;
-
-      });
-
+    this.ponenteService.getPonentes().subscribe(data => {
+      this.ponentes = data;
+    });
   }
 
   get ponentesFiltrados() {
