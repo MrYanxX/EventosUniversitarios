@@ -33,7 +33,7 @@ export class CrudRecursos implements OnInit {
 
   }
 
-  recursosFiltrados() {
+  get recursosFiltrados() {
 
     return this.recursos.filter(r =>
       r.nombre.toLowerCase()
