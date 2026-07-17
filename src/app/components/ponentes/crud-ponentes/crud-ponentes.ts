@@ -55,40 +55,51 @@ export class CrudPonentes implements OnInit {
 
   guardarPonente() {
 
-    if (this.editando) {
+  if (this.editando) {
 
-      const index = this.ponentes.findIndex(
-        p => p.id === this.nuevoPonente.id
-      );
+    this.ponenteService.actualizarPonente(this.nuevoPonente.id!, this.nuevoPonente)
+      .subscribe({
+        next: () => {
+          this.mensaje = 'Ponente actualizado correctamente';
+          this.tipoMensaje = 'success';
 
-      this.ponentes[index] = { ...this.nuevoPonente };
+          this.ponenteService.getPonentes().subscribe(data => {
+            this.ponentes = data;
+          });
 
-      this.editando = false;
+          this.editando = false;
+          this.limpiarFormulario();
+        },
+        error: (err) => {
+          console.error(err);
+          this.mensaje = 'Error al actualizar el ponente';
+          this.tipoMensaje = 'danger';
+        }
+      });
 
-      this.mensaje = 'Ponente actualizado correctamente';
+  } else {
 
-      this.tipoMensaje = 'success';
+    this.ponenteService.crearPonente(this.nuevoPonente)
+      .subscribe({
+        next: () => {
+          this.mensaje = 'Ponente guardado correctamente';
+          this.tipoMensaje = 'success';
 
-    } else {
+          this.ponenteService.getPonentes().subscribe(data => {
+            this.ponentes = data;
+          });
 
-      this.nuevoPonente.id = Date.now();
+          this.limpiarFormulario();
+        },
+        error: (err) => {
+          console.error(err);
+          this.mensaje = 'Error al guardar el ponente';
+          this.tipoMensaje = 'danger';
+        }
+      });
 
-      this.ponentes.push({ ...this.nuevoPonente });
-
-      this.mensaje = 'Ponente guardado correctamente';
-
-      this.tipoMensaje = 'success';
-    }
-
-    this.limpiarFormulario();
   }
-
-  editarPonente(ponente: Ponente) {
-
-    this.nuevoPonente = { ...ponente };
-
-    this.editando = true;
-  }
+}
 
   eliminarPonente(id: number) {
 
