@@ -49,8 +49,7 @@ export class CuentaComponent {
     } else {
       this.mensajeLogin = 'Correo o contrasena incorrectos.';
     }
-  });
-}
+  }
 
   register(): void {
     this.mensajeRegistro = '';
