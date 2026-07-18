@@ -71,8 +71,13 @@ export class CrudPonentes implements OnInit {
             this.limpiarFormulario();
           },
           error: (err) => {
-            console.error(err);
-            this.mensaje = 'Error al actualizar el ponente';
+            console.log('ERROR COMPLETO:', err);
+            console.log('RESPUESTA:', err.error);
+            console.log('ERRORES:', err.error.errors);
+
+            alert(JSON.stringify(err.error.errors, null, 2));
+
+            this.mensaje = 'Error al guardar el ponente';
             this.tipoMensaje = 'danger';
           }
         });
