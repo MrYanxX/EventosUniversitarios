@@ -53,58 +53,73 @@ export class CrudPonentes implements OnInit {
 
   editando = false;
 
-  guardarPonente() {
+ guardarPonente() {
 
-    if (this.editando) {
+  console.log("OBJETO A ENVIAR:", this.nuevoPonente);
 
-      this.ponenteService.actualizarPonente(this.nuevoPonente.id!, this.nuevoPonente)
-        .subscribe({
-          next: () => {
-            this.mensaje = 'Ponente actualizado correctamente';
-            this.tipoMensaje = 'success';
+  if (this.editando) {
 
-            this.ponenteService.getPonentes().subscribe(data => {
-              this.ponentes = data;
-            });
+    this.ponenteService.actualizarPonente(this.nuevoPonente.id, this.nuevoPonente)
+      .subscribe({
+        next: () => {
 
-            this.editando = false;
-            this.limpiarFormulario();
-          },
-          error: (err) => {
-            console.log('ERROR COMPLETO:', err);
-            console.log('RESPUESTA:', err.error);
-            console.log('ERRORES:', err.error.errors);
+          this.mensaje = 'Ponente actualizado correctamente';
+          this.tipoMensaje = 'success';
 
-            alert(JSON.stringify(err.error.errors, null, 2));
+          this.ponenteService.getPonentes().subscribe(data => {
+            this.ponentes = data;
+          });
 
-            this.mensaje = 'Error al guardar el ponente';
-            this.tipoMensaje = 'danger';
-          }
-        });
+          this.editando = false;
+          this.limpiarFormulario();
+        },
 
-    } else {
+        error: (err) => {
 
-      this.ponenteService.crearPonente(this.nuevoPonente)
-        .subscribe({
-          next: () => {
-            this.mensaje = 'Ponente guardado correctamente';
-            this.tipoMensaje = 'success';
+          console.log("ERROR COMPLETO:", err);
+          console.log("ERROR DEL SERVIDOR:", err.error);
+          console.log("ERRORES:", err.error?.errors);
 
-            this.ponenteService.getPonentes().subscribe(data => {
-              this.ponentes = data;
-            });
+          alert(JSON.stringify(err.error?.errors, null, 2));
 
-            this.limpiarFormulario();
-          },
-          error: (err) => {
-            console.error(err);
-            this.mensaje = 'Error al guardar el ponente';
-            this.tipoMensaje = 'danger';
-          }
-        });
+          this.mensaje = 'Error al actualizar el ponente';
+          this.tipoMensaje = 'danger';
+        }
+      });
 
-    }
+  } else {
+
+    this.ponenteService.crearPonente(this.nuevoPonente)
+      .subscribe({
+
+        next: () => {
+
+          this.mensaje = 'Ponente guardado correctamente';
+          this.tipoMensaje = 'success';
+
+          this.ponenteService.getPonentes().subscribe(data => {
+            this.ponentes = data;
+          });
+
+          this.limpiarFormulario();
+        },
+
+        error: (err) => {
+
+          console.log("ERROR COMPLETO:", err);
+          console.log("ERROR DEL SERVIDOR:", err.error);
+          console.log("ERRORES:", err.error?.errors);
+
+          alert(JSON.stringify(err.error?.errors, null, 2));
+
+          this.mensaje = 'Error al guardar el ponente';
+          this.tipoMensaje = 'danger';
+        }
+
+      });
+
   }
+}
 
   eliminarPonente(id: number) {
 
