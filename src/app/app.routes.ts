@@ -25,18 +25,18 @@ export const routes: Routes = [
   { path: 'home', component: HomeContenedor },
   { path: 'comentarios', component: ComentariosComponent },
   { path: 'evento/:id', component: MostrarEvento },
+  { path: 'crear-evento', component: FormEventos },
+  { path: 'editar-evento/:id', component: FormEventos },
   { path: 'eventos', component: TablaEventos },
   { path: 'cuenta', component: CuentaComponent },
+  { path: 'organizadores', component: CrudOrganizadores },
+  { path: 'dashboard-organizador', component: DashboardOrganizador },
+  { path: 'inscripciones', component: ListaInscripciones },
+  { path: 'nueva-inscripcion/:id', component: FormInscripcion },
 
   // Rutas protegidas
-  { path: 'crear-evento', component: FormEventos, canActivate: [authGuard] },
-  { path: 'editar-evento/:id', component: FormEventos, canActivate: [authGuard] },
   { path: 'ponentes', component: CrudPonentes, canActivate: [authGuard] },
   { path: 'recursos', component: CrudRecursos, canActivate: [authGuard] },
-  { path: 'organizadores', component: CrudOrganizadores, canActivate: [authGuard] },
-  { path: 'dashboard-organizador', component: DashboardOrganizador, canActivate: [authGuard] },
-  { path: 'inscripciones', component: ListaInscripciones, canActivate: [authGuard] },
-  { path: 'nueva-inscripcion/:id', component: FormInscripcion, canActivate: [authGuard] },
 
   // Ruta por defecto
   { path: '**', redirectTo: 'home' }
