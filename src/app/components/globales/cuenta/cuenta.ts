@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
-import { Organizador } from '../../../models/organizador.model';
+import { OrganizadorService } from '../../../services/organizador.service';
 import { OrganizerUser } from '../../../models/usuarios';
 
 @Component({
@@ -33,21 +33,21 @@ export class CuentaComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private orgService: OrganizadorService
   ) {}
 
   login(): void {
     this.mensajeLogin = '';
     if (!this.loginEmail || !this.loginPassword) {
-      this.mensajeLogin = 'Ingrese correo y contraseña.';
+      this.mensajeLogin = 'Ingrese correo y contrasena.';
       return;
     }
 
     if (this.authService.login(this.loginEmail, this.loginPassword)) {
-      this.mensajeLogin = 'Inicio de sesión correcto.';
+      this.mensajeLogin = 'Inicio de sesion correcto.';
       this.router.navigate(['/home']);
     } else {
-      this.mensajeLogin = 'Correo o contraseña incorrectos.';
+      this.mensajeLogin = 'Correo o contrasena incorrectos.';
     }
   }
 
@@ -72,30 +72,32 @@ export class CuentaComponent {
     }
   }
 
+  /**
+   * Login de organizador contra el backend (.NET).
+   * Antes se leia json/organizadores.json y se comparaba en el navegador;
+   * ahora la validacion la hace el servidor en POST /api/organizadores/login.
+   */
   loginOrganizador(): void {
     this.mensajeOrg = '';
     if (!this.orgEmail || !this.orgPassword) {
-      this.mensajeOrg = 'Ingrese correo y contraseña.';
+      this.mensajeOrg = 'Ingrese correo y contrasena.';
       return;
     }
-    this.http.get<Organizador[]>('json/organizadores.json').subscribe({
-      next: (lista) => {
-        const encontrado = lista.find(
-          o =>
-            o.email.toLowerCase() === this.orgEmail.toLowerCase() &&
-            o.password === this.orgPassword &&
-            o.activo
-        );
-        if (encontrado) {
-          const user: OrganizerUser = { ...encontrado, tipo: 'organizador' };
-          this.authService.loginOrganizador(user);
-          this.router.navigate(['/dashboard-organizador']);
-        } else {
-          this.mensajeOrg = 'Credenciales incorrectas o cuenta inactiva.';
-        }
+
+    this.orgService.login(this.orgEmail, this.orgPassword).subscribe({
+      next: (organizador) => {
+        const user: OrganizerUser = { ...organizador, tipo: 'organizador' };
+        this.authService.loginOrganizador(user);
+        this.router.navigate(['/dashboard-organizador']);
       },
-      error: () => {
-        this.mensajeOrg = 'Error al cargar organizadores. Verifique que json-server esté activo.';
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          this.mensajeOrg = 'Credenciales incorrectas o cuenta inactiva.';
+        } else if (err.status === 0) {
+          this.mensajeOrg = 'No se pudo conectar con el servidor. Verifique que el backend este ejecutandose.';
+        } else {
+          this.mensajeOrg = 'Ocurrio un error al iniciar sesion. Intente nuevamente.';
+        }
       }
     });
   }
