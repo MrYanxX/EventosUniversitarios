@@ -36,20 +36,42 @@ export class CuentaComponent {
     private http: HttpClient
   ) {}
 
-  login(): void {
-    this.mensajeLogin = '';
-    if (!this.loginEmail || !this.loginPassword) {
-      this.mensajeLogin = 'Ingrese correo y contraseña.';
-      return;
-    }
+login(): void {
+  this.mensajeLogin = '';
 
-    if (this.authService.login(this.loginEmail, this.loginPassword)) {
+  if (!this.loginEmail || !this.loginPassword) {
+    this.mensajeLogin = 'Ingrese correo y contraseña.';
+    return;
+  }
+
+  this.authService.login(this.loginEmail, this.loginPassword).subscribe({
+    next: (respuesta) => {
+
+      this.authService.guardarToken(respuesta.token);
+
+      localStorage.setItem(
+        'usuario-activo',
+        JSON.stringify({
+          nombre: respuesta.nombre,
+          email: respuesta.email,
+          tipo: respuesta.tipo
+        })
+      );
+
       this.mensajeLogin = 'Inicio de sesión correcto.';
-      this.router.navigate(['/home']);
-    } else {
+
+      if (respuesta.tipo === 'organizador') {
+        this.router.navigate(['/dashboard-organizador']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+    },
+
+    error: () => {
       this.mensajeLogin = 'Correo o contraseña incorrectos.';
     }
-  }
+  });
+}
 
   register(): void {
     this.mensajeRegistro = '';

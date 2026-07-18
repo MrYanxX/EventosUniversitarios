@@ -53,9 +53,9 @@ logout(): void {
     return raw ? (JSON.parse(raw) as AppUser) : null;
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getCurrentUser();
-  }
+isLoggedIn(): boolean {
+  return !!this.obtenerToken();
+}
 
   isOrganizador(): boolean {
     return this.getCurrentUser()?.tipo === 'organizador';
