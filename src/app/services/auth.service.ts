@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AppUser, OrganizerUser, StudentUser } from '../models/usuarios';
+import { HttpClient } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly storageKey = 'eventos-usuarios';
   private readonly activeUserKey = 'usuario-activo';
+  private http = inject(HttpClient);
+  private apiUrl = 'https://localhost:7205/api/Auth';
 
   registerStudent(user: StudentUser): { success: boolean; message: string } {
     const usuarios = this.getUsers();
@@ -18,21 +23,26 @@ export class AuthService {
     return { success: true, message: 'Registro exitoso. Bienvenido, estudiante.' };
   }
 
-  login(email: string, password: string): boolean {
-    const usuarios = this.getUsers();
-    const usuario = usuarios.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-    );
-    if (!usuario) {
-      return false;
-    }
-    localStorage.setItem(this.activeUserKey, JSON.stringify(usuario));
-    return true;
+login(email: string, password: string): Observable<any> {
+
+  return this.http.post(`${this.apiUrl}/login`, {
+    email,
+    password
+  });
   }
 
-  logout(): void {
-    localStorage.removeItem(this.activeUserKey);
-  }
+  guardarToken(token: string): void {
+  localStorage.setItem('token', token);
+}
+
+obtenerToken(): string | null {
+  return localStorage.getItem('token');
+}
+
+logout(): void {
+  localStorage.removeItem('token');
+  localStorage.removeItem(this.activeUserKey);
+}
 
   loginOrganizador(org: OrganizerUser): void {
     localStorage.setItem(this.activeUserKey, JSON.stringify(org));
@@ -43,9 +53,9 @@ export class AuthService {
     return raw ? (JSON.parse(raw) as AppUser) : null;
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getCurrentUser();
-  }
+isLoggedIn(): boolean {
+  return !!this.obtenerToken();
+}
 
   isOrganizador(): boolean {
     return this.getCurrentUser()?.tipo === 'organizador';

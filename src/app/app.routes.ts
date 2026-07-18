@@ -13,21 +13,32 @@ import { CrudRecursos } from './components/recursos/crud-recursos/crud-recursos'
 
 import { CrudOrganizadores } from './components/organizadores/crud-organizadores/crud-organizadores';
 import { DashboardOrganizador } from './components/organizadores/dashboard-organizador/dashboard-organizador';
+import { ListaInscripciones } from './components/inscripciones/lista-inscripciones/lista-inscripciones';
+import { FormInscripcion } from './components/inscripciones/form-inscripcion/form-inscripcion';
+
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
 
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: HomeContenedor },
-    { path: 'comentarios', component: ComentariosComponent },
-    { path: 'evento/:id', component: MostrarEvento },
-    { path: 'crear-evento', component: FormEventos },
-    { path: 'editar-evento/:id', component: FormEventos },
-    { path: 'eventos', component: TablaEventos },
-    { path: 'ponentes', component: CrudPonentes },
-    { path: 'recursos', component: CrudRecursos },
-    { path: 'cuenta', component: CuentaComponent },
-    { path: 'organizadores', component: CrudOrganizadores },
-    { path: 'dashboard-organizador', component: DashboardOrganizador },
-    { path: '**', redirectTo: 'home' }
+  // Rutas públicas
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeContenedor },
+  { path: 'comentarios', component: ComentariosComponent },
+  { path: 'evento/:id', component: MostrarEvento },
+  { path: 'crear-evento', component: FormEventos },
+  { path: 'editar-evento/:id', component: FormEventos },
+  { path: 'eventos', component: TablaEventos },
+  { path: 'cuenta', component: CuentaComponent },
+  { path: 'organizadores', component: CrudOrganizadores },
+  { path: 'dashboard-organizador', component: DashboardOrganizador },
+  { path: 'inscripciones', component: ListaInscripciones },
+  { path: 'nueva-inscripcion/:id', component: FormInscripcion },
 
-]; 
+  // Rutas protegidas
+  { path: 'ponentes', component: CrudPonentes, canActivate: [authGuard] },
+  { path: 'recursos', component: CrudRecursos, canActivate: [authGuard] },
+
+  // Ruta por defecto
+  { path: '**', redirectTo: 'home' }
+
+];

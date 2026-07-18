@@ -1,0 +1,130 @@
+<div class="container mt-5">
+    
+    <!-- CABECERA -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0">Inscripciones del Evento</h2>
+            @if(evento(); as ev) {
+                <p class="text-primary fw-bold mb-0 fs-5">{{ ev.titulo }}</p>
+            }
+        </div>
+        <div>
+            <button class="btn text-white fw-bold bg-primary border-0 me-2 shadow-sm" (click)="abrirModalNuevo()">
+                + Nueva Inscripción
+            </button>
+            <button class="btn btn-outline-secondary fw-bold shadow-sm" routerLink="/inscripciones">
+                Volver a Eventos
+            </button>
+        </div>
+    </div>
+
+    <!-- TABLA DE DATOS -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Nombre Completo</th>
+                        <th>Cédula</th>
+                        <th>Modalidad</th>
+                        <th>Certificado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (inscrito of inscripciones(); track inscrito.id) {
+                        <tr>
+                            <td class="fw-bold ps-4">{{ inscrito.nombre }}</td>
+                            <td>{{ inscrito.cedula }}</td>
+                            <td>
+                                <span class="badge bg-info text-dark">{{ inscrito.tipoAsistencia }}</span>
+                            </td>
+                            <td>
+                                @if(inscrito.requiereCertificado) {
+                                    <span class="text-success fw-bold">Sí</span>
+                                } @else {
+                                    <span class="text-secondary">No</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-primary me-2" (click)="abrirModalEditar(inscrito)">
+                                    ✏️ Editar
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="eliminarInscripcion(inscrito.id!)">
+                                    ❌ Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                    <!-- MENSAJE VACÍO -->
+                    @if (inscripciones().length === 0) {
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted fst-italic">
+                                No hay personas inscritas en este evento todavía.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ESTRUCTURA DEL MODAL -->
+@if (mostrarModal()) {
+    <div class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold">
+                        {{ inscripcionEnEdicion() ? 'Editar Inscripción' : 'Nueva Inscripción' }}
+                    </h5>
+                    <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+                </div>
+                
+                <div class="modal-body p-4">
+                    <form [formGroup]="inscripcionForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre Completo</label>
+                            <input type="text" class="form-control" formControlName="nombre" placeholder="Ej. Juan Pérez"
+                                   [class.is-invalid]="inscripcionForm.get('nombre')?.invalid && inscripcionForm.get('nombre')?.touched">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Cédula de Identidad</label>
+                            <input type="text" class="form-control" formControlName="cedula" placeholder="Ej. 09xxxxxxxx"
+                                   [class.is-invalid]="inscripcionForm.get('cedula')?.invalid && inscripcionForm.get('cedula')?.touched">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Modalidad de Asistencia</label>
+                            <select class="form-select" formControlName="tipoAsistencia"
+                                    [class.is-invalid]="inscripcionForm.get('tipoAsistencia')?.invalid && inscripcionForm.get('tipoAsistencia')?.touched">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="Presencial">Presencial (En el campus)</option>
+                                <option value="Virtual">Virtual (Vía Zoom/Teams)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-2 form-check bg-light p-3 rounded border">
+                            <input type="checkbox" class="form-check-input ms-2 me-2" formControlName="requiereCertificado" id="checkCertificadoModal">
+                            <label class="form-check-label fw-bold text-primary" for="checkCertificadoModal">
+                                Solicitar certificado al finalizar
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+                    <button type="button" class="btn btn-primary px-4 fw-bold" (click)="guardarInscripcion()" [disabled]="isSaving()">
+                        {{ isSaving() ? 'Guardando...' : 'Guardar Datos' }}
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}

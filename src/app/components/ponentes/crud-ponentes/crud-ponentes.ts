@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { PonenteService } from '../../../services/ponente.service';
 
 import { Ponente } from '../../../models/ponente.model';
 import { Alerta } from '../../globales/alerta/alerta';
@@ -23,17 +23,13 @@ export class CrudPonentes implements OnInit {
 
   tipoMensaje = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private ponenteService: PonenteService) { }
 
   ngOnInit(): void {
 
-    this.http.get<Ponente[]>('json/ponentes.json')
-      .subscribe(data => {
-
-        this.ponentes = data;
-
-      });
-
+    this.ponenteService.getPonentes().subscribe(data => {
+      this.ponentes = data;
+    });
   }
 
   get ponentesFiltrados() {
@@ -57,52 +53,92 @@ export class CrudPonentes implements OnInit {
 
   editando = false;
 
-  guardarPonente() {
+ guardarPonente() {
 
-    if (this.editando) {
+  console.log("OBJETO A ENVIAR:", this.nuevoPonente);
 
-      const index = this.ponentes.findIndex(
-        p => p.id === this.nuevoPonente.id
-      );
+  if (this.editando) {
 
-      this.ponentes[index] = { ...this.nuevoPonente };
+    this.ponenteService.actualizarPonente(this.nuevoPonente.id, this.nuevoPonente)
+      .subscribe({
+        next: () => {
 
-      this.editando = false;
+          this.mensaje = 'Ponente actualizado correctamente';
+          this.tipoMensaje = 'success';
 
-      this.mensaje = 'Ponente actualizado correctamente';
+          this.ponenteService.getPonentes().subscribe(data => {
+            this.ponentes = data;
+          });
 
-      this.tipoMensaje = 'success';
+          this.editando = false;
+          this.limpiarFormulario();
+        },
 
-    } else {
+        error: (err) => {
 
-      this.nuevoPonente.id = Date.now();
+          console.log("ERROR COMPLETO:", err);
+          console.log("ERROR DEL SERVIDOR:", err.error);
+          console.log("ERRORES:", err.error?.errors);
 
-      this.ponentes.push({ ...this.nuevoPonente });
+          alert(JSON.stringify(err.error?.errors, null, 2));
 
-      this.mensaje = 'Ponente guardado correctamente';
+          this.mensaje = 'Error al actualizar el ponente';
+          this.tipoMensaje = 'danger';
+        }
+      });
 
-      this.tipoMensaje = 'success';
-    }
+  } else {
 
-    this.limpiarFormulario();
+    this.ponenteService.crearPonente(this.nuevoPonente)
+      .subscribe({
+
+        next: () => {
+
+          this.mensaje = 'Ponente guardado correctamente';
+          this.tipoMensaje = 'success';
+
+          this.ponenteService.getPonentes().subscribe(data => {
+            this.ponentes = data;
+          });
+
+          this.limpiarFormulario();
+        },
+
+        error: (err) => {
+
+          console.log("ERROR COMPLETO:", err);
+          console.log("ERROR DEL SERVIDOR:", err.error);
+          console.log("ERRORES:", err.error?.errors);
+
+          alert(JSON.stringify(err.error?.errors, null, 2));
+
+          this.mensaje = 'Error al guardar el ponente';
+          this.tipoMensaje = 'danger';
+        }
+
+      });
+
   }
-
-  editarPonente(ponente: Ponente) {
-
-    this.nuevoPonente = { ...ponente };
-
-    this.editando = true;
-  }
+}
 
   eliminarPonente(id: number) {
 
-    this.ponentes = this.ponentes.filter(
-      p => p.id !== id
-    );
+    this.ponenteService.eliminarPonente(id).subscribe({
+      next: () => {
 
-    this.mensaje = 'Ponente eliminado';
+        this.mensaje = 'Ponente eliminado';
+        this.tipoMensaje = 'warning';
 
-    this.tipoMensaje = 'warning';
+        this.ponenteService.getPonentes().subscribe(data => {
+          this.ponentes = data;
+        });
+
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+
   }
 
   limpiarFormulario() {
@@ -116,6 +152,14 @@ export class CrudPonentes implements OnInit {
       institucion: '',
       biografia: ''
     };
+
+  }
+
+  editarPonente(ponente: Ponente) {
+
+    this.nuevoPonente = { ...ponente };
+
+    this.editando = true;
 
   }
 

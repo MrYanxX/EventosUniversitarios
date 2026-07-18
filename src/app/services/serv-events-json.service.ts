@@ -1,45 +1,44 @@
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Evento } from '../models/evento.model';
 import { TipoEvento } from '../models/tipoEvento.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ServEventsJsonService {
-  //endpoints para la api simulada
-  private eventosUrl = 'http://127.0.0.1:3000/eventos'
-  private tiposEventosUrl = 'http://127.0.0.1:3000/tiposEventos';
-  
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  // Reemplaza con tu puerto real de IIS Express o Kestrel local
+  private apiUrl = 'https://localhost:7205/api'; 
 
-  //Obtner todos los eventos
   getEventos(): Observable<Evento[]> {
-    return this.http.get<Evento[]>(this.eventosUrl);
+    return this.http.get<Evento[]>(`${this.apiUrl}/eventos`);
   }
 
-  getEventoPorId(id:number | string): Observable<Evento> {
-    return this.http.get<Evento>(`${this.eventosUrl}/${id}`);
+  getEventoPorId(id: number): Observable<Evento> {
+    return this.http.get<Evento>(`${this.apiUrl}/eventos/${id}`);
   }
 
-  addEvento(evento: Evento) : Observable<Evento> {
-    return this.http.post<Evento>(this.eventosUrl, evento);
+  addEvento(evento: Evento): Observable<Evento> {
+    // Al crear un evento nuevo, no enviamos el ID para dejar que SQL Server lo autogenere
+    const { id, ...nuevoEvento } = evento;
+    return this.http.post<Evento>(`${this.apiUrl}/eventos`, nuevoEvento);
   }
 
-  updateEvento(evento: Evento) : Observable<Evento> {
-    return this.http.put<Evento>(`${this.eventosUrl}/${evento.id}`, evento);
+  updateEvento(evento: Evento): Observable<Evento> {
+    return this.http.put<Evento>(`${this.apiUrl}/eventos/${evento.id}`, evento);
   }
 
-  deleteEvento(id:number | string) : Observable<void> {
-    return this.http.delete<void>(`${this.eventosUrl}/${id}`);
+  deleteEvento(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/eventos/${id}`);
   }
 
   getTipoEventos(): Observable<TipoEvento[]> {
-    return this.http.get<TipoEvento[]>(this.tiposEventosUrl);
+    return this.http.get<TipoEvento[]>(`${this.apiUrl}/tiposevento`);
   }
 
-  getTipoEventoPorId(id:number | string): Observable<TipoEvento> {
-    return this.http.get<TipoEvento>(`${this.tiposEventosUrl}/${id}`);
+  getTipoEventoPorId(id: number): Observable<TipoEvento> {
+    return this.http.get<TipoEvento>(`${this.apiUrl}/tiposevento/${id}`);
   }
 }

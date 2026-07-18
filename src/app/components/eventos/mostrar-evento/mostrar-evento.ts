@@ -2,7 +2,7 @@ import { Component, inject, signal, ViewChild, OnInit } from '@angular/core';
 import { Evento } from '../../../models/evento.model';
 import { ServEventsJsonService } from '../../../services/serv-events-json.service';
 import { ActivatedRoute } from '@angular/router';
-import { ComentariosComponent } from "../../comentarios/comentarios";
+import { ComentariosComponent } from '../../comentarios/comentarios';
 import { LeerInscripciones } from '../../inscripciones/leer-inscripciones/leer-inscripciones';
 
 @Component({
@@ -23,13 +23,13 @@ export class MostrarEvento implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    const paramId = this.route.snapshot.paramMap.get('id') ?? '';
-    const idFinal = isNaN(Number(paramId)) ? paramId : Number(paramId);
+    const paramId = this.route.snapshot.paramMap.get('id');
+    const idFinal = Number(paramId ?? 0); // Conversión limpia y segura a number
 
     this.servicoEventos.getEventoPorId(idFinal).subscribe((data) => {
       this.evento.set(data);
 
-      this.servicoEventos.getTipoEventoPorId(data.tipoEventoId).subscribe((tipo) => {
+      this.servicoEventos.getTipoEventoPorId(Number(data.tipoEventoId)).subscribe((tipo) => {
         this.tipoEvento.set(tipo.nombre);
       });
     });

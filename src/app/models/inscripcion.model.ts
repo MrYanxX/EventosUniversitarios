@@ -1,6 +1,8 @@
 export interface Inscripcion {
-    id?:number;
-    nombre:string;
-    cedula:string;
-    eventoId:number;
+    id?: number;
+    eventoId: number;
+    nombre: string;
+    cedula: string;
+    tipoAsistencia: string;
+    requiereCertificado: boolean;
 }

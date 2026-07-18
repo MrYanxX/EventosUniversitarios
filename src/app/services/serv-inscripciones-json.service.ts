@@ -1,38 +1,29 @@
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Inscripcion } from '../models/inscripcion.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ServInscripcionesJsonService {
+  private http = inject(HttpClient);
+  private apiUrl = 'https://localhost:7205/api'; 
 
-  //endpoints
-  private inscripcionesUrl = 'http://127.0.0.1:3000/inscripciones';
-
-  constructor(private http: HttpClient) {}
-
-  //obtener una lista de inscripciones por ID
-  getInscripcionesByEventoId(id:number): Observable<Inscripcion[]> {
-    return this.http
-    .get<Inscripcion[]>(this.inscripcionesUrl)
-    .pipe(map((inscripcion) => inscripcion.filter((i) => i.eventoId == id)))
-  };
-
-  //post
-  addInscripcion(inscripcion : Inscripcion) : Observable <Inscripcion> {
-    return this.http.post<Inscripcion>(this.inscripcionesUrl, inscripcion);
+  getInscripcionesByEventoId(eventoId: number): Observable<Inscripcion[]> {
+    return this.http.get<Inscripcion[]>(`${this.apiUrl}/inscripciones/evento/${eventoId}`);
   }
 
-  //put
-  updateInscripcion(inscripcion : Inscripcion) : Observable <Inscripcion> {
-    return this.http.put<Inscripcion>(`${this.inscripcionesUrl}/${inscripcion.id}`, inscripcion);
+  addInscripcion(inscripcion: Inscripcion): Observable<Inscripcion> {
+    const { id, ...nuevaInscripcion } = inscripcion;
+    return this.http.post<Inscripcion>(`${this.apiUrl}/inscripciones`, nuevaInscripcion);
   }
 
-  //delete
-  deleteInscripcion(id : number) : Observable<void> {
-    return this.http.delete<void>(`${this.inscripcionesUrl}/${id}`);
+  updateInscripcion(inscripcion: Inscripcion): Observable<Inscripcion> {
+    return this.http.put<Inscripcion>(`${this.apiUrl}/inscripciones/${inscripcion.id}`, inscripcion);
   }
 
+  deleteInscripcion(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/inscripciones/${id}`);
+  }
 }

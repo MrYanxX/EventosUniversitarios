@@ -7,7 +7,7 @@ import { Comentario } from '../models/comentario.model';
   providedIn: 'root'
 })
 export class ComentarioService {
-  private apiUrl = 'http://localhost:3000/comentarios';
+  private apiUrl = 'https://localhost:7205/comentarios';
   private http = inject(HttpClient); 
 
   obtenerComentarios(): Observable<Comentario[]> {
@@ -17,7 +17,6 @@ export class ComentarioService {
   crearComentario(comentario: Omit<Comentario, 'id'>): Observable<Comentario> {
     return this.http.post<Comentario>(this.apiUrl, comentario);
   }
-
 
   actualizarComentario(id: string, comentario: Omit<Comentario, 'id'>): Observable<Comentario> {
     return this.http.put<Comentario>(`${this.apiUrl}/${id}`, comentario);
