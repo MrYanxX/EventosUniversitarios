@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Organizador } from '../../../models/organizador.model';
 import { OrganizadorService } from '../../../services/organizador.service';
 import { Alerta } from '../../globales/alerta/alerta';
@@ -18,13 +19,25 @@ export class CrudOrganizadores implements OnInit {
   tipoMensaje = '';
   editando = false;
   mostrarPassword = false;
+  cargando = false;
 
   nuevoOrg: Organizador = this.orgVacio();
 
   constructor(public orgService: OrganizadorService) {}
 
   ngOnInit(): void {
-    this.orgService.cargar().subscribe();
+    this.cargarLista();
+  }
+
+  private cargarLista(): void {
+    this.cargando = true;
+    this.orgService.cargar().subscribe({
+      next: () => (this.cargando = false),
+      error: (err: HttpErrorResponse) => {
+        this.cargando = false;
+        this.mostrarAlerta(this.textoError(err, 'No se pudo cargar la lista de organizadores.'), 'danger');
+      }
+    });
   }
 
   get organizadoresFiltrados(): Organizador[] {
@@ -41,15 +54,26 @@ export class CrudOrganizadores implements OnInit {
     if (form.invalid) return;
 
     if (this.editando) {
-      this.orgService.actualizar(this.nuevoOrg);
-      this.mostrarAlerta('Organizador actualizado correctamente', 'success');
-      this.editando = false;
+      this.orgService.actualizar(this.nuevoOrg).subscribe({
+        next: () => {
+          this.mostrarAlerta('Organizador actualizado correctamente', 'success');
+          this.editando = false;
+          this.limpiar();
+        },
+        error: (err: HttpErrorResponse) =>
+          this.mostrarAlerta(this.textoError(err, 'No se pudo actualizar el organizador.'), 'danger')
+      });
     } else {
       const { id, ...datos } = this.nuevoOrg;
-      this.orgService.agregar(datos);
-      this.mostrarAlerta('Organizador registrado correctamente', 'success');
+      this.orgService.agregar(datos).subscribe({
+        next: () => {
+          this.mostrarAlerta('Organizador registrado correctamente', 'success');
+          this.limpiar();
+        },
+        error: (err: HttpErrorResponse) =>
+          this.mostrarAlerta(this.textoError(err, 'No se pudo registrar el organizador.'), 'danger')
+      });
     }
-    this.limpiar();
   }
 
   editar(org: Organizador): void {
@@ -59,9 +83,12 @@ export class CrudOrganizadores implements OnInit {
   }
 
   eliminar(id: number): void {
-    if (!confirm('¿Está seguro de eliminar este organizador?')) return;
-    this.orgService.eliminar(id);
-    this.mostrarAlerta('Organizador eliminado', 'warning');
+    if (!confirm('Esta seguro de eliminar este organizador?')) return;
+    this.orgService.eliminar(id).subscribe({
+      next: () => this.mostrarAlerta('Organizador eliminado', 'warning'),
+      error: (err: HttpErrorResponse) =>
+        this.mostrarAlerta(this.textoError(err, 'No se pudo eliminar el organizador.'), 'danger')
+    });
   }
 
   cancelar(): void {
@@ -87,9 +114,17 @@ export class CrudOrganizadores implements OnInit {
     };
   }
 
+  /** Toma el mensaje que envia el backend; si no hay, usa el texto por defecto. */
+  private textoError(err: HttpErrorResponse, porDefecto: string): string {
+    if (err.status === 0) {
+      return 'No se pudo conectar con el servidor. Verifique que el backend este ejecutandose.';
+    }
+    return err.error?.mensaje ?? porDefecto;
+  }
+
   private mostrarAlerta(msg: string, tipo: string): void {
     this.mensaje = msg;
     this.tipoMensaje = tipo;
-    setTimeout(() => (this.mensaje = ''), 3500);
+    setTimeout(() => (this.mensaje = ''), 4000);
   }
 }

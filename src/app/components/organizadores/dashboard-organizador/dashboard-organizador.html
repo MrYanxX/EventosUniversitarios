@@ -77,8 +77,114 @@
     </div>
 
     <!-- ============================================================
+         ESTADÍSTICAS DEL MÓDULO (datos reales del backend)
+         GET /api/organizadores/dashboard
+         ============================================================ -->
+
+    <div *ngIf="cargandoEstadisticas" class="text-muted text-center py-3">
+      Cargando estadísticas...
+    </div>
+
+    <div *ngIf="errorEstadisticas" class="alert alert-danger d-flex justify-content-between align-items-center">
+      <span>{{ errorEstadisticas }}</span>
+      <button class="btn btn-sm btn-outline-danger" (click)="cargarEstadisticas()">Reintentar</button>
+    </div>
+
+    <ng-container *ngIf="estadisticas as stats">
+
+      <!-- Totales -->
+      <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon bg-primary-soft">👥</div>
+            <div>
+              <div class="stat-label">Total de organizadores</div>
+              <div class="stat-value">{{ stats.total }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon bg-success-soft">✅</div>
+            <div>
+              <div class="stat-label">Cuentas activas</div>
+              <div class="stat-value">{{ stats.activos }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon bg-warning-soft">🚫</div>
+            <div>
+              <div class="stat-label">Cuentas inactivas</div>
+              <div class="stat-value">{{ stats.inactivos }}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Distribución por facultad y por cargo -->
+      <div class="row g-3 mb-4">
+
+        <div class="col-md-6">
+          <div class="events-section h-100">
+            <div class="events-section-header">
+              <h5 class="mb-0">Por facultad</h5>
+            </div>
+            <div class="events-section-body">
+              <p *ngIf="stats.porFacultad.length === 0" class="text-muted text-center py-3 mb-0">
+                Sin datos disponibles.
+              </p>
+              <div *ngFor="let item of stats.porFacultad" class="mb-3">
+                <div class="d-flex justify-content-between small fw-semibold">
+                  <span>{{ item.grupo || 'Sin facultad' }}</span>
+                  <span>{{ item.cantidad }}</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div
+                    class="progress-bar bg-primary"
+                    role="progressbar"
+                    [style.width.%]="porcentaje(item.cantidad)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="events-section h-100">
+            <div class="events-section-header">
+              <h5 class="mb-0">Por cargo</h5>
+            </div>
+            <div class="events-section-body">
+              <p *ngIf="stats.porCargo.length === 0" class="text-muted text-center py-3 mb-0">
+                Sin datos disponibles.
+              </p>
+              <ul class="list-group list-group-flush">
+                <li
+                  *ngFor="let item of stats.porCargo"
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <span>{{ item.grupo || 'Sin cargo' }}</span>
+                  <span class="badge bg-secondary rounded-pill">{{ item.cantidad }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </ng-container>
+
+    <!-- ============================================================
          SECCIÓN DE EVENTOS DEL ORGANIZADOR
-         Aquí va la tabla de eventos creados y el botón para crear uno nuevo.
+         Pendiente: depende del módulo de Eventos (otro integrante).
          ============================================================ -->
     <div class="events-section">
       <div class="events-section-header">
