@@ -7,7 +7,7 @@ import { Comentario } from '../models/comentario.model';
   providedIn: 'root'
 })
 export class ComentarioService {
-  private apiUrl = 'https://localhost:7205/api/Comentarios';
+  private apiUrl = 'https://localhost:7205/comentarios';
   private http = inject(HttpClient); 
 
   obtenerComentarios(): Observable<Comentario[]> {
