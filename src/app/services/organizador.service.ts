@@ -7,7 +7,7 @@ import { DashboardOrganizadores } from '../models/dashboard.model';
 @Injectable({ providedIn: 'root' })
 export class OrganizadorService {
   /** URL base del backend .NET (UEventoBackend). */
-  private readonly apiUrl = 'http://localhost:5109/api/organizadores';
+  private readonly apiUrl = 'https://localhost:7205/api/organizadores';
 
   private http = inject(HttpClient);
 
