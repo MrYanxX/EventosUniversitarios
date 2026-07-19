@@ -9,7 +9,6 @@ import { TipoEvento } from '../models/tipoEvento.model';
 })
 export class ServEventsJsonService {
   private http = inject(HttpClient);
-  // Reemplaza con tu puerto real de IIS Express o Kestrel local
   private apiUrl = 'https://localhost:7205/api'; 
 
   getEventos(): Observable<Evento[]> {
@@ -21,7 +20,6 @@ export class ServEventsJsonService {
   }
 
   addEvento(evento: Evento): Observable<Evento> {
-    // Al crear un evento nuevo, no enviamos el ID para dejar que SQL Server lo autogenere
     const { id, ...nuevoEvento } = evento;
     return this.http.post<Evento>(`${this.apiUrl}/eventos`, nuevoEvento);
   }
