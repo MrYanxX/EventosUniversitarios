@@ -12,7 +12,7 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  router.navigate(['/cuenta']); // Cambia esta ruta si tu login está en otra
+  router.navigate(['/cuenta']);
 
   return false;
 };

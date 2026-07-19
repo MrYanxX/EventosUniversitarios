@@ -39,16 +39,39 @@ export class CuentaComponent {
   login(): void {
     this.mensajeLogin = '';
     if (!this.loginEmail || !this.loginPassword) {
-      this.mensajeLogin = 'Ingrese correo y contrasena.';
+      this.mensajeLogin = 'Ingrese correo y contraseña.';
       return;
     }
 
-    if (this.authService.login(this.loginEmail, this.loginPassword)) {
-      this.mensajeLogin = 'Inicio de sesion correcto.';
-      this.router.navigate(['/home']);
-    } else {
-      this.mensajeLogin = 'Correo o contrasena incorrectos.';
-    }
+    this.authService.login(this.loginEmail, this.loginPassword).subscribe({
+      next: (response) => {
+        if (response.token) {
+          this.authService.saveToken(response.token);
+        } else if (response.accessToken) {
+          this.authService.saveToken(response.accessToken);
+        }
+
+        this.mensajeLogin = 'Inicio de sesión correcto.';
+        
+        if (response.user) {
+          localStorage.setItem('usuario-activo', JSON.stringify(response.user));
+        }
+
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 500);
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          this.mensajeLogin = 'Correo o contraseña incorrectos.';
+        } else if (err.status === 0) {
+          this.mensajeLogin = 'No se pudo conectar con el servidor. Verifique que el backend esté ejecutándose.';
+        } else {
+          this.mensajeLogin = 'Ocurrió un error al iniciar sesión. Intente nuevamente.';
+        }
+        console.error('Error de login:', err);
+      }
+    });
   }
 
   register(): void {
@@ -72,11 +95,6 @@ export class CuentaComponent {
     }
   }
 
-  /**
-   * Login de organizador contra el backend (.NET).
-   * Antes se leia json/organizadores.json y se comparaba en el navegador;
-   * ahora la validacion la hace el servidor en POST /api/organizadores/login.
-   */
   loginOrganizador(): void {
     this.mensajeOrg = '';
     if (!this.orgEmail || !this.orgPassword) {
@@ -92,9 +110,9 @@ export class CuentaComponent {
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.mensajeOrg = 'Credenciales incorrectas o cuenta inactiva.';
+          this.mensajeOrg = 'Credenciales incorrectas o no se encuentra registrado.';
         } else if (err.status === 0) {
-          this.mensajeOrg = 'No se pudo conectar con el servidor. Verifique que el backend este ejecutandose.';
+          this.mensajeOrg = 'No se pudo conectar con el servidor.';
         } else {
           this.mensajeOrg = 'Ocurrio un error al iniciar sesion. Intente nuevamente.';
         }

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private readonly storageKey = 'eventos-usuarios';
   private readonly activeUserKey = 'usuario-activo';
-  private tokenKey = 'jwt_token'
+  private readonly tokenKey = 'token'; // 🔧 Usar una única clave consistente
   private http = inject(HttpClient);
   private apiUrl = 'https://localhost:7205/api/Auth';
 
@@ -31,14 +31,12 @@ export class AuthService {
     });
   }
 
-  guardarToken(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
-  saveToken(token: string) {
+  // 🔧 Método unificado para guardar token (cualquier clave)
+  saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
   }
 
+  // 🔧 Método unificado para obtener token
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
@@ -47,12 +45,9 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  logout() {
+  // 🔧 Logout limpia el token correctamente
+  logout(): void {
     localStorage.removeItem(this.tokenKey);
-  }
-
-  obtenerToken(): string | null {
-    return localStorage.getItem('token');
   }
 
   loginOrganizador(org: OrganizerUser): void {
