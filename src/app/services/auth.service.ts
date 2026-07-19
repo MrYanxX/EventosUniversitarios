@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private readonly storageKey = 'eventos-usuarios';
   private readonly activeUserKey = 'usuario-activo';
+  private tokenKey = 'jwt_token'
   private http = inject(HttpClient);
   private apiUrl = 'https://localhost:7205/api/Auth';
 
@@ -23,26 +24,36 @@ export class AuthService {
     return { success: true, message: 'Registro exitoso. Bienvenido, estudiante.' };
   }
 
-login(email: string, password: string): Observable<any> {
-
-  return this.http.post(`${this.apiUrl}/login`, {
-    email,
-    password
-  });
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, {
+      email,
+      password,
+    });
   }
 
   guardarToken(token: string): void {
-  localStorage.setItem('token', token);
-}
+    localStorage.setItem('token', token);
+  }
 
-obtenerToken(): string | null {
-  return localStorage.getItem('token');
-}
+  saveToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
 
-logout(): void {
-  localStorage.removeItem('token');
-  localStorage.removeItem(this.activeUserKey);
-}
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout() {
+    localStorage.removeItem(this.tokenKey);
+  }
+
+  obtenerToken(): string | null {
+    return localStorage.getItem('token');
+  }
 
   loginOrganizador(org: OrganizerUser): void {
     localStorage.setItem(this.activeUserKey, JSON.stringify(org));
@@ -52,10 +63,6 @@ logout(): void {
     const raw = localStorage.getItem(this.activeUserKey);
     return raw ? (JSON.parse(raw) as AppUser) : null;
   }
-
-isLoggedIn(): boolean {
-  return !!this.obtenerToken();
-}
 
   isOrganizador(): boolean {
     return this.getCurrentUser()?.tipo === 'organizador';
