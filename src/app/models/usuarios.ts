@@ -1,4 +1,5 @@
 export interface StudentUser {
+  id?: number; 
   nombre: string;
   email: string;
   password: string;

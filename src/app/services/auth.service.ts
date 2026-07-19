@@ -6,9 +6,9 @@ import { Observable, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly activeUserKey = 'usuario-activo';
-  
+
   private http = inject(HttpClient);
-  
+
   private apiUrl = 'https://localhost:7205/api/Estudiante';
 
   login(email: string, password: string): Observable<StudentUser> {
@@ -16,19 +16,33 @@ export class AuthService {
       tap((user) => {
         const studentUser: StudentUser = { ...user, tipo: 'estudiante' };
         localStorage.setItem(this.activeUserKey, JSON.stringify(studentUser));
-      })
+      }),
     );
   }
 
-  // NUEVO: Ahora hace un POST real a la base de datos
   registerStudent(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user).pipe(
       tap((creado) => {
         // Opcional: Autologuear al usuario inmediatamente después de registrarse
         const studentUser: StudentUser = { ...creado, tipo: 'estudiante' };
         localStorage.setItem(this.activeUserKey, JSON.stringify(studentUser));
-      })
+      }),
     );
+  }
+
+  // GET: Obtener todos
+  getEstudiantes(): Observable<StudentUser[]> {
+    return this.http.get<StudentUser[]>(this.apiUrl);
+  }
+
+  // PUT: Actualizar
+  actualizarEstudiante(id: number, estudiante: StudentUser): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, estudiante);
+  }
+
+  // DELETE: Eliminar
+  eliminarEstudiante(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
   // LOGICA GENERAL Y ORGANIZADORES

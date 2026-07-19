@@ -1,57 +1,129 @@
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      
-      <div class="card border-0 shadow-sm rounded-4">
-        <!-- Encabezado del Dashboard -->
+<div class="container-fluid py-4 bg-light min-vh-100">
+  <div class="row g-4 px-lg-4">
+    
+    <!-- PERFIL DEL USUARIO -->
+    <div class="col-12 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 sticky-lg-top" style="top: 2rem;">
         <div class="card-header bg-primary text-white p-4 rounded-top-4 d-flex align-items-center gap-3">
           <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center shadow-sm" style="width: 60px; height: 60px; font-size: 2rem;">
             👨‍💻
           </div>
           <div>
-            <h3 class="mb-0">Mi Perfil</h3>
-            <span class="badge bg-light text-primary mt-1">Estudiante</span>
+            <h4 class="mb-0">Mi Perfil</h4>
+            <span class="badge bg-light text-primary mt-1">Sesión Activa</span>
           </div>
         </div>
         
-        <!-- Cuerpo con los datos -->
         <div class="card-body p-4">
-          @if (estudiante) {
-            
-            <div class="mb-4">
-              <h6 class="text-muted mb-1 text-uppercase small fw-bold">Nombre Completo</h6>
-              <p class="fs-5 fw-medium mb-0">{{ estudiante.nombre }}</p>
+          @if (usuarioActual) {
+            <div class="mb-3">
+              <h6 class="text-muted small text-uppercase fw-bold mb-1">Nombre</h6>
+              <p class="fs-6 fw-medium mb-0">{{ usuarioActual.nombre }}</p>
             </div>
-
-            <div class="mb-4">
-              <h6 class="text-muted mb-1 text-uppercase small fw-bold">Correo Institucional</h6>
-              <p class="fs-5 fw-medium mb-0">{{ estudiante.email }}</p>
+            <div class="mb-3">
+              <h6 class="text-muted small text-uppercase fw-bold mb-1">Correo</h6>
+              <p class="fs-6 fw-medium mb-0 text-break">{{ usuarioActual.email }}</p>
             </div>
-
-            <div class="mb-4">
-              <h6 class="text-muted mb-1 text-uppercase small fw-bold">Carrera / Facultad</h6>
-              <p class="fs-5 fw-medium mb-0">
-                <!-- Se muestra la carrera, o un texto por defecto si no la ingresó en el registro -->
-                {{ estudiante.carrera || 'Ingeniería de Software (No especificada)' }}
-              </p>
+            <div class="mb-3">
+              <h6 class="text-muted small text-uppercase fw-bold mb-1">Carrera</h6>
+              <p class="fs-6 fw-medium mb-0">{{ usuarioActual.carrera || 'No especificada' }}</p>
             </div>
-
             <hr class="my-4">
-
-            <div class="d-grid mt-4">
-              <button class="btn btn-outline-danger" (click)="logout()">
-                Cerrar Sesión
-              </button>
-            </div>
-
-          } @else {
-            <div class="alert alert-warning text-center">
-              Cargando información del perfil...
+            <div class="d-grid">
+              <button class="btn btn-outline-danger" (click)="logout()">Cerrar Sesión</button>
             </div>
           }
         </div>
       </div>
-
     </div>
+
+    <!-- COLUMNA DERECHA: CRUD DE ESTUDIANTES -->
+    <div class="col-12 col-lg-8">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-body p-4">
+          <h3 class="mb-4">Gestión de Estudiantes</h3>
+          
+          @if (mensajeCrud) {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              {{ mensajeCrud }}
+              <button type="button" class="btn-close" (click)="mensajeCrud = ''"></button>
+            </div>
+          }
+
+          <!-- FORMULARIO DE EDICIÓN  -->
+          @if (estudianteEnEdicion) {
+            <div class="bg-light p-4 rounded-3 mb-4 border">
+              <h5 class="mb-3">Editando a: {{ estudianteEnEdicion.nombre }}</h5>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold">Nombre</label>
+                  <input type="text" class="form-control" [(ngModel)]="estudianteEnEdicion.nombre">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold">Correo</label>
+                  <input type="email" class="form-control" [(ngModel)]="estudianteEnEdicion.email">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold">Carrera</label>
+                  <input type="text" class="form-control" [(ngModel)]="estudianteEnEdicion.carrera">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold">Contraseña</label>
+                  <input type="text" class="form-control" [(ngModel)]="estudianteEnEdicion.password">
+                </div>
+                <div class="col-12 mt-4 d-flex gap-2">
+                  <button class="btn btn-success" (click)="guardarCambios()">Guardar Cambios</button>
+                  <button class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- TABLA RESPONSIVE -->
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Carrera</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (est of listaEstudiantes; track est.id) {
+                  <tr>
+                    <td>{{ est.id }}</td>
+                    <td class="fw-medium">{{ est.nombre }}</td>
+                    <td>{{ est.email }}</td>
+                    <td>{{ est.carrera || '-' }}</td>
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-sm btn-primary" (click)="editarEstudiante(est)">
+                          Editar
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="eliminarEstudiante(est.id)">
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+                @empty {
+                  <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                      No hay estudiantes registrados.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

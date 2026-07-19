@@ -35,10 +35,8 @@ export const routes: Routes = [
   { path: 'inscripciones', component: ListaInscripciones },
   { path: 'nueva-inscripcion/:id', component: FormInscripcion },
   { path: 'dashboard-estudiante', component: DashboardEstudiantesComponent},
-
-  // Rutas protegidas
-  { path: 'ponentes', component: CrudPonentes, canActivate: [authGuard] },
-  { path: 'recursos', component: CrudRecursos, canActivate: [authGuard] },
+  { path: 'ponentes', component: CrudPonentes },
+  { path: 'recursos', component: CrudRecursos },
 
   // Ruta por defecto
   { path: '**', redirectTo: 'home' }
