@@ -6,7 +6,7 @@ import { MostrarEvento } from './components/eventos/mostrar-evento/mostrar-event
 import { FormEventos } from './components/eventos/form-eventos/form-eventos';
 import { TablaEventos } from './components/eventos/tabla-eventos/tabla-eventos';
 
-import { CuentaComponent } from './components/globales/cuenta/cuenta';
+import { CuentaComponent } from './components/globales/login-estudiante/estudiante';
 
 import { CrudPonentes } from './components/ponentes/crud-ponentes/crud-ponentes';
 import { CrudRecursos } from './components/recursos/crud-recursos/crud-recursos';

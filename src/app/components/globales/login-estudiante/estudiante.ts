@@ -11,7 +11,7 @@ import { OrganizerUser } from '../../../models/usuarios';
   selector: 'app-cuenta',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './cuenta.html',
+  templateUrl: './estudiante.html',
   styleUrl: './cuenta.css',
 })
 export class CuentaComponent {
