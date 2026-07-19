@@ -33,7 +33,7 @@ export class CuentaComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private orgService: OrganizadorService
+    private orgService: OrganizadorService,
   ) {}
 
   login(): void {
@@ -44,33 +44,25 @@ export class CuentaComponent {
     }
 
     this.authService.login(this.loginEmail, this.loginPassword).subscribe({
-      next: (response) => {
-        if (response.token) {
-          this.authService.saveToken(response.token);
-        } else if (response.accessToken) {
-          this.authService.saveToken(response.accessToken);
-        }
-
+      next: (estudiante) => {
         this.mensajeLogin = 'Inicio de sesión correcto.';
-        
-        if (response.user) {
-          localStorage.setItem('usuario-activo', JSON.stringify(response.user));
-        }
 
+        // Redirigir al futuro dashboard de estudiantes
         setTimeout(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/dashboard-estudiante']);
         }, 500);
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
           this.mensajeLogin = 'Correo o contraseña incorrectos.';
         } else if (err.status === 0) {
-          this.mensajeLogin = 'No se pudo conectar con el servidor. Verifique que el backend esté ejecutándose.';
+          this.mensajeLogin =
+            'No se pudo conectar con el servidor. Verifique que el backend esté ejecutándose.';
         } else {
           this.mensajeLogin = 'Ocurrió un error al iniciar sesión. Intente nuevamente.';
         }
         console.error('Error de login:', err);
-      }
+      },
     });
   }
 
@@ -81,24 +73,40 @@ export class CuentaComponent {
       return;
     }
 
-    const result = this.authService.registerStudent({
+    // Preparamos el objeto para el backend.
+    // Nota: Asegúrate de que tu modelo en C# tenga la propiedad "Carrera"
+    // si quieres guardarla en la BD. Si no la tiene, EF Core simplemente la ignorará.
+    const nuevoEstudiante = {
       nombre: this.regNombre,
       email: this.regEmail,
       password: this.regPassword,
       carrera: this.regCarrera,
-      tipo: 'estudiante',
-    });
+    };
 
-    this.mensajeRegistro = result.message;
-    if (result.success) {
-      this.router.navigate(['/home']);
-    }
+    // Nos suscribimos a la petición HTTP
+    this.authService.registerStudent(nuevoEstudiante).subscribe({
+      next: (resultado) => {
+        this.mensajeRegistro = 'Registro exitoso en la base de datos. Iniciando sesión...';
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard-estudiante']);
+        }, 1000);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error al registrar:', err);
+        if (err.status === 0) {
+          this.mensajeRegistro = 'Error de conexión con el servidor.';
+        } else {
+          this.mensajeRegistro = 'Ocurrió un error al registrar. Revisa la consola.';
+        }
+      },
+    });
   }
 
   loginOrganizador(): void {
     this.mensajeOrg = '';
     if (!this.orgEmail || !this.orgPassword) {
-      this.mensajeOrg = 'Ingrese correo y contrasena.';
+      this.mensajeOrg = 'Ingrese correo y contraseña.';
       return;
     }
 
@@ -114,9 +122,9 @@ export class CuentaComponent {
         } else if (err.status === 0) {
           this.mensajeOrg = 'No se pudo conectar con el servidor.';
         } else {
-          this.mensajeOrg = 'Ocurrio un error al iniciar sesion. Intente nuevamente.';
+          this.mensajeOrg = 'Ocurrió un error al iniciar sesión. Intente nuevamente.';
         }
-      }
+      },
     });
   }
 

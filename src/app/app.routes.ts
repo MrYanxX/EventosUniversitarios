@@ -17,6 +17,7 @@ import { ListaInscripciones } from './components/inscripciones/lista-inscripcion
 import { FormInscripcion } from './components/inscripciones/form-inscripcion/form-inscripcion';
 
 import { authGuard } from './guards/auth-guard';
+import { DashboardEstudiantesComponent } from './components/globales/login-estudiante/dashboard-estudiantes/dashboard-estudiantes';
 
 export const routes: Routes = [
 
@@ -33,6 +34,7 @@ export const routes: Routes = [
   { path: 'dashboard-organizador', component: DashboardOrganizador },
   { path: 'inscripciones', component: ListaInscripciones },
   { path: 'nueva-inscripcion/:id', component: FormInscripcion },
+  { path: 'dashboard-estudiante', component: DashboardEstudiantesComponent},
 
   // Rutas protegidas
   { path: 'ponentes', component: CrudPonentes, canActivate: [authGuard] },

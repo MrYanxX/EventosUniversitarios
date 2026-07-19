@@ -1,0 +1,57 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      
+      <div class="card border-0 shadow-sm rounded-4">
+        <!-- Encabezado del Dashboard -->
+        <div class="card-header bg-primary text-white p-4 rounded-top-4 d-flex align-items-center gap-3">
+          <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center shadow-sm" style="width: 60px; height: 60px; font-size: 2rem;">
+            👨‍💻
+          </div>
+          <div>
+            <h3 class="mb-0">Mi Perfil</h3>
+            <span class="badge bg-light text-primary mt-1">Estudiante</span>
+          </div>
+        </div>
+        
+        <!-- Cuerpo con los datos -->
+        <div class="card-body p-4">
+          @if (estudiante) {
+            
+            <div class="mb-4">
+              <h6 class="text-muted mb-1 text-uppercase small fw-bold">Nombre Completo</h6>
+              <p class="fs-5 fw-medium mb-0">{{ estudiante.nombre }}</p>
+            </div>
+
+            <div class="mb-4">
+              <h6 class="text-muted mb-1 text-uppercase small fw-bold">Correo Institucional</h6>
+              <p class="fs-5 fw-medium mb-0">{{ estudiante.email }}</p>
+            </div>
+
+            <div class="mb-4">
+              <h6 class="text-muted mb-1 text-uppercase small fw-bold">Carrera / Facultad</h6>
+              <p class="fs-5 fw-medium mb-0">
+                <!-- Se muestra la carrera, o un texto por defecto si no la ingresó en el registro -->
+                {{ estudiante.carrera || 'Ingeniería de Software (No especificada)' }}
+              </p>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-grid mt-4">
+              <button class="btn btn-outline-danger" (click)="logout()">
+                Cerrar Sesión
+              </button>
+            </div>
+
+          } @else {
+            <div class="alert alert-warning text-center">
+              Cargando información del perfil...
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
